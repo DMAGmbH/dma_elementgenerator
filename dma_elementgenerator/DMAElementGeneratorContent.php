@@ -19,7 +19,7 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
+ * @copyright  Dialog- und Medienagentur der ACS mbH 2010-2011
  * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
  * @package    DMAElementGenerator
  * @license    LGPL
@@ -31,8 +31,9 @@
  * 
  * the dynamic contentelement  
  *
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
+ * @copyright  Dialog- und Medienagentur der ACS mbH 2010-2011
  * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
+ * @author 	   Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  */
 
