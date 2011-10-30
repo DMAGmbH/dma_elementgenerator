@@ -222,7 +222,7 @@ class DMAElementGeneratorCallbacks extends Backend
 				),
 				'save_callback' => array(array('DMAElementGeneratorCallbacks','save_data'))
 			);
-      
+
 			// Include palette snippet
 			$GLOBALS['TL_DCA'][$strTable]['palettes'][DMA_EG_PREFIX.$objElement->id]=str_replace(';dma_eg_data',$replace.',dma_eg_data',$palette);
 			// Include language definitions
@@ -294,7 +294,6 @@ class DMAElementGeneratorCallbacks extends Backend
 	{
 		$objElement = $this->Database->prepare("SELECT id,category,module,content FROM tl_dma_eg")
 				 						->execute();
-
 		$arrModuleConfig = array();
 		$arrContentConfig = array();
 		while ($objElement->next())
@@ -352,4 +351,6 @@ class DMAElementGeneratorCallbacks extends Backend
 		$this->store_configuration_without($dc->id);
 	}
      
+}
+  
 }

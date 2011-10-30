@@ -51,11 +51,18 @@ class DMAElementGenerator extends Frontend
 	protected function compile($data)
 	{		
 	
+
+	
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);		
 		
 		$objElement = $this->Database->prepare("SELECT template,class FROM tl_dma_eg WHERE id=?")
 										 ->limit(1)
 										 ->execute($elementID);
+		
+		if (TL_MODE == 'BE')
+		{
+			$objElement->template = $this->strTemplate;
+		}		
 		
 		//eigene Klasse für ce, Überschreibt die Standardmäßige dma_eg_?
 		if ($objElement->class)
@@ -111,6 +118,14 @@ class DMAElementGenerator extends Frontend
 						break;
 						
 				}
+			}
+			
+			//Handling von Textareas ohne RTE 
+			
+			if ($objField->type=='textarea' && !$objField->eval_rte && !$objField->eval_allow_html)
+			{
+				//Einfügen von Zeilenumbrüchen
+				$objFieldTemplate->value = $arrTemplateData[$objField->title]['value'] = nl2br($arrData[$objField->title]);
 			}
 			
 			//Handling von checkboxen
@@ -217,7 +232,7 @@ class DMAElementGenerator extends Frontend
 			$strFields .= $objFieldTemplate->parse();
 		}
 										 
-
+	
 		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $strTemplate));
 		
 										 
