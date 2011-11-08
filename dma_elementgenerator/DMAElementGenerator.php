@@ -154,7 +154,8 @@ class DMAElementGenerator extends Frontend
 						{
 							$arrTemplateData[$objField->title]['value'][] = array(
 								'raw' => $page,
-								'alias' => $this->generateFrontendUrl($objLinkedPage->fetchAssoc())
+								'alias' => $objLinkedPage->alias,
+								'href'  => $this->generateFrontendUrl($objLinkedPage->fetchAssoc())
 							);
 						}
 					
@@ -168,7 +169,8 @@ class DMAElementGenerator extends Frontend
 					if ($objLinkedPage->numRows)
 					{
 						$arrTemplateData[$objField->title]['value'] = array(
-							'alias' => $this->generateFrontendUrl($objLinkedPage->fetchAssoc())
+							'alias' => $objLinkedPage->alias,
+							'href'  => $this->generateFrontendUrl($objLinkedPage->fetchAssoc())
 						);
 						$objFieldTemplate->value = $this->generateFrontendUrl($objLinkedPage->fetchAssoc());
 					}
