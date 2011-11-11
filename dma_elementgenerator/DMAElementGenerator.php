@@ -55,7 +55,7 @@ class DMAElementGenerator extends Frontend
 	
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);		
 		
-		$objElement = $this->Database->prepare("SELECT template,class FROM tl_dma_eg WHERE id=?")
+		$objElement = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE id=?")
 										 ->limit(1)
 										 ->execute($elementID);
 		
@@ -64,7 +64,7 @@ class DMAElementGenerator extends Frontend
 			$objElement->template = $this->strTemplate;
 		}		
 		
-		//eigene Klasse für ce, Überschreibt die Standardmäßige dma_eg_?
+		//eigene Klasse für ce_ oder mod_ Überschreibt die standardmäßige dma_eg_?
 		if ($objElement->class)
 		{
 			$data->type = $objElement->class;
@@ -267,7 +267,7 @@ class DMAElementGenerator extends Frontend
 
 		$objTemplate->style = count($arrStyle) ? implode(' ', $arrStyle) : '';
 		$objTemplate->cssID = ($data->cssID[0] != '') ? ' id="' . $data->cssID[0] . '"' : '';
-		$objTemplate->class = trim(($data->type=='content' ? 'ce_' : 'mod_') . $data->type . ' ' . $data->cssID[1]);		
+		$objTemplate->class = trim(($objElement->type=='content' ? 'ce_' : 'mod_') . $data->type . ' ' . $data->cssID[1]);		
 
 		return $objTemplate->parse();
 		
