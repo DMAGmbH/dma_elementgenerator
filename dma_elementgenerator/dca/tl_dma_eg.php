@@ -55,7 +55,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'mode'                    => 0,
 			'fields'                  => array('sorting'),
 			'flag'                    => 1,
-			'panelLayout'             => '',
+			'panelLayout'             => 'filter;search,limit',
 
 		),
 		'label' => array

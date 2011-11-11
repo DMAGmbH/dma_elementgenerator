@@ -46,8 +46,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'mode'                    => 4,
 			'fields'                  => array('sorting'),
 			'flag'                    => 1,
-			'headerFields'           => array('title','tstamp','template','content','module'),
-			'panelLayout'             => '',
+			'headerFields'            => array('title','tstamp','template','content','module'),
+			'panelLayout'             => 'filter,search,limit',
 			'child_record_callback'   => array('tl_dma_eg_fields', 'listFormFields')
 		),
 		'label' => array
