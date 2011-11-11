@@ -267,7 +267,7 @@ class DMAElementGenerator extends Frontend
 
 		$objTemplate->style = count($arrStyle) ? implode(' ', $arrStyle) : '';
 		$objTemplate->cssID = ($data->cssID[0] != '') ? ' id="' . $data->cssID[0] . '"' : '';
-		$objTemplate->class = trim(($objElement->type=='content' ? 'ce_' : 'mod_') . $data->type . ' ' . $data->cssID[1]);		
+		$objTemplate->class = trim(($objElement->content ? 'ce_' : 'mod_') . $data->type . ' ' . $data->cssID[1]);		
 
 		return $objTemplate->parse();
 		
