@@ -21,6 +21,7 @@
  * PHP version 5
  * @copyright  Dialog- und Medienagentur der ACS mbH 2010
  * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
+ * @author	   Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  * @license    LGPL
  * @filesource
