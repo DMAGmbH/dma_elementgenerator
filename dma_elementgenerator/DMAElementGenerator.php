@@ -59,9 +59,17 @@ class DMAElementGenerator extends Frontend
 										 ->limit(1)
 										 ->execute($elementID);
 		
-		if (TL_MODE == 'BE')
+		
+		if (TL_MODE == 'BE' && version_compare(VERSION.'.'.BUILD, '2.10.0', '>='))
 		{
-			$objElement->template = $this->strTemplate;
+			try 
+			{
+				$this->getTemplate($objElement->template);
+			}
+			catch (Exception $e)
+			{
+				$objElement->template = $this->strTemplate;
+			}
 		}		
 		
 		//eigene Klasse für ce_ oder mod_ Überschreibt die standardmäßige dma_eg_?
