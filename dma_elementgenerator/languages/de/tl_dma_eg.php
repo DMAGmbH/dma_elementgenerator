@@ -32,15 +32,19 @@
   $GLOBALS['TL_LANG']['tl_dma_eg']['template'] = array('Template','Ausgabetemplate');
   $GLOBALS['TL_LANG']['tl_dma_eg']['module'] = array('Als Modul bereitstellen','Soll das Element als Modul zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['content'] = array('Als Inhaltselement bereitstellen','Soll das Element als Inhaltselement zur Verfügung stehen?');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['class'] = array('zusätzliche Klasse für dieses Element','mit dieser Klasse kann die standardmäßig gesetetzte überschrieben werden');
 
   $GLOBALS['TL_LANG']['tl_dma_eg']['new'] = array('Neues Element','Ein neues Element anlegen');
     
   $GLOBALS['TL_LANG']['tl_dma_eg']['edit'] = array('Element bearbeiten','Element ID %s bearbeiten');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['editheader'] = array('Elementeinstellungen bearbeiten','Elementeinstellungen ID %s bearbeiten');
   $GLOBALS['TL_LANG']['tl_dma_eg']['copy'] = array('Element duplizieren','Element ID %s duplizieren');
   $GLOBALS['TL_LANG']['tl_dma_eg']['delete'] = array('Element löschen','Element ID %s löschen');
   $GLOBALS['TL_LANG']['tl_dma_eg']['deleteConfirm'] = 'Soll das Element ID %s wirklich gelöscht werden? Vorsicht: Es werden auch alle darauf basierenden Inhaltselemente und Module gelöscht!';
   $GLOBALS['TL_LANG']['tl_dma_eg']['show'] = array('Details anzeigen','Details des Elementes ID %s anzeigen');
   
   $GLOBALS['TL_LANG']['tl_dma_eg']['tstamp'] = array('Letzte Änderung','');
+  
+  $GLOBALS['TL_LANG']['tl_dma_eg']['expert_legend'] = 'Experteneinstellungen';
   
 ?>
