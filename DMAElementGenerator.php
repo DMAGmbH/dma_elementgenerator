@@ -100,22 +100,25 @@ class DMAElementGenerator extends Frontend
 		                
 		                
 		$strFields = '';
-		$objFieldTemplate = new FrontendTemplate('dma_egfield_default');
 
-		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
-		if ($this->displayInDivs)
-		{
-			$objFieldTemplate->divs = true;
-		}
-		
-		//Ausgabe ohne label ermöglichen
-		if ($objElement->without_label)
-		{
-			$objFieldTemplate->nolabels = true;
-		}
 		
 		while ($objField->next())
 		{
+			
+			$objFieldTemplate = new FrontendTemplate('dma_egfield_default');
+
+			//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
+			if ($this->displayInDivs)
+			{
+				$objFieldTemplate->divs = true;
+			}
+		
+			//Ausgabe ohne label ermöglichen
+			if ($objElement->without_label)
+			{
+				$objFieldTemplate->nolabels = true;
+			}
+			
 			//echo $objField->title;
 			$objFieldTemplate->addImage = false;
 			$objFieldTemplate->title = $objField->title;
@@ -267,7 +270,7 @@ class DMAElementGenerator extends Frontend
 	
 		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $strTemplate));
 		
-		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
+		//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
 		if ($this->displayInDivs)
 		{
 			$objTemplate->divs = true;

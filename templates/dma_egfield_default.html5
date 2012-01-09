@@ -1,4 +1,4 @@
-<?php echo $this->divs; ?>
+
 <?php echo ($this->divs) ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
 <?php if (!$this->nolabels): ?>
   <span class="label"><?php echo $this->label ?></span>
