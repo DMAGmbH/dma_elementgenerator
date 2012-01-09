@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(),
-		'default'                     => 'title,category,template,module,content;{expert_legend:hide},class',
+		'default'                     => '{title_legend},title,category;{settings_legend},template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
 	),
 
 	// Subpalettes
@@ -141,7 +141,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'inputType'             => 'text',
 			'exclude'				=> true,
 			'filter'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'clr')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50')
 		),
 		'template' => array
 		(
@@ -156,13 +156,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['module'],
 			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'clr','isBoolean'=> true)
+			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
 		),
 		'content' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['content'],
 			'inputType'               => 'checkbox',
-			'eval'                    => array('isBoolean'=> true)
+			'eval'                    => array('tl_class'=>'clr w50','isBoolean'=> true)
 		),
 		'class' => array
 		(
@@ -170,7 +170,19 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'inputType'             => 'text',
 			'exclude'					=> true,
 			'filter'						=> true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'clr')
+			'eval'                  => array('tl_class'=>'w50','maxlength'=>255, 'tl_class'=>'clr')
+		),
+		'without_label' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['without_label'],
+			'inputType'               => 'checkbox',
+			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
+		),
+  		'display_in_divs' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'],
+			'inputType'               => 'checkbox',
+			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
 		)
 	)
 );

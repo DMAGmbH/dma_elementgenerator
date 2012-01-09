@@ -40,6 +40,7 @@
 class DMAElementGenerator extends Frontend
 {
 	protected $strTemplate = 'dma_eg_default';
+	private $displayInDivs = false;
 	
 	public function generate($data)
 	{
@@ -59,7 +60,8 @@ class DMAElementGenerator extends Frontend
 										 ->limit(1)
 										 ->execute($elementID);
 		
-		
+
+										 
 		if (TL_MODE == 'BE' && version_compare(VERSION.'.'.BUILD, '2.10.0', '>='))
 		{
 			try 
@@ -70,7 +72,13 @@ class DMAElementGenerator extends Frontend
 			{
 				$objElement->template = $this->strTemplate;
 			}
-		}		
+		}	
+
+		if ($objElement->display_in_divs)
+		{
+			$this->displayInDivs = true;
+			$objTemplate->divs = true;
+		}
 		
 		//eigene Klasse für ce_ oder mod_ Überschreibt die standardmäßige dma_eg_?
 		if ($objElement->class)
@@ -92,6 +100,11 @@ class DMAElementGenerator extends Frontend
 		$strFields = '';
 		$objFieldTemplate = new FrontendTemplate('dma_egfield_default');
 
+		if ($this->displayInDivs)
+		{
+			$objFieldTemplate->divs = true;
+		}
+		
 		while ($objField->next())
 		{
 			//echo $objField->title;
@@ -245,6 +258,10 @@ class DMAElementGenerator extends Frontend
 	
 		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $strTemplate));
 		
+		if ($this->displayInDivs)
+		{
+			$objTemplate->divs = true;
+		}
 										 
 		$objArticle = $this->Database->prepare("SELECT title,alias FROM tl_article WHERE id=?")
 								->limit(1)

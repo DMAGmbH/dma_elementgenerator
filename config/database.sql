@@ -19,6 +19,8 @@ CREATE TABLE `tl_dma_eg` (
   `content` char(1) NOT NULL default '',
   `category` varchar(255) NOT NULL default '',
   `class` varchar(255) NOT NULL default '',
+  `without_label` char(1) NOT NULL default '',
+  `display_in_divs` char(1) NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -37,6 +39,9 @@ CREATE TABLE `tl_dma_eg_fields` (
   `default_value` varchar(255) NOT NULL default '',
   `exclude` char(1) NULL default '',
   `class` varchar(255) NULL default '',
+  `template` varchar(255) NOT NULL default '',
+  `override_label_setting` char(1) NOT NULL default '',
+  `without_label` char(1) NOT NULL default '',
   `eval_field_type` varchar(255) NOT NULL default '',
   `eval_path` varchar(255) NOT NULL default '',
   `eval_mandatory` char(1) NULL default '',
