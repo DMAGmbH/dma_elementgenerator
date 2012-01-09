@@ -61,7 +61,8 @@ class DMAElementGenerator extends Frontend
 										 ->execute($elementID);
 		
 
-										 
+
+		//Im Backend in jedem Fall ein html5-Template verwenden
 		if (TL_MODE == 'BE' && version_compare(VERSION.'.'.BUILD, '2.10.0', '>='))
 		{
 			try 
@@ -74,6 +75,7 @@ class DMAElementGenerator extends Frontend
 			}
 		}	
 
+		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
 		if ($objElement->display_in_divs)
 		{
 			$this->displayInDivs = true;
@@ -100,9 +102,16 @@ class DMAElementGenerator extends Frontend
 		$strFields = '';
 		$objFieldTemplate = new FrontendTemplate('dma_egfield_default');
 
+		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
 		if ($this->displayInDivs)
 		{
 			$objFieldTemplate->divs = true;
+		}
+		
+		//Ausgabe ohne label ermöglichen
+		if ($objElement->without_label)
+		{
+			$objFieldTemplate->nolabels = true;
 		}
 		
 		while ($objField->next())
@@ -258,6 +267,7 @@ class DMAElementGenerator extends Frontend
 	
 		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $strTemplate));
 		
+		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
 		if ($this->displayInDivs)
 		{
 			$objTemplate->divs = true;
