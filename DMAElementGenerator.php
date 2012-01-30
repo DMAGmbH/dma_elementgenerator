@@ -79,7 +79,7 @@ class DMAElementGenerator extends Frontend
 		if ($objElement->display_in_divs)
 		{
 			$this->displayInDivs = true;
-			$objTemplate->divs = true;
+			//$objTemplate->divs = true;
 		}
 		
 		//eigene Klasse für ce_ oder mod_ Überschreibt die standardmäßige dma_eg_?
