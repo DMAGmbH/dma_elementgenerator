@@ -218,7 +218,7 @@ class DMAElementGeneratorCallbacks extends Backend
 				'eval' => array 
 				(
 					'alwaysSave' => true,
-					'mandatory' => true
+					'mandatory' => false
 				),
 				'save_callback' => array(array('DMAElementGeneratorCallbacks','save_data'))
 			);
