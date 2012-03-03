@@ -115,7 +115,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
 		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
 		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class'
+		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+		'pagePicker'				 => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class'
 	),
 
 	// Subpalettes
@@ -131,7 +132,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
       'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
       'inputType' => 'select',
-      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree'),
+      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker'),
       'default' => 'text',
       'exclude' => true,
       'eval' => array('submitOnChange' => true)

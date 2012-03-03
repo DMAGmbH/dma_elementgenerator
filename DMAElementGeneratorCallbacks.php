@@ -166,6 +166,19 @@ class DMAElementGeneratorCallbacks extends Backend
 						$objField->type='checkboxWizard';
 					}
 					
+					$objField->eval_tl_class = $objField->eval_tl_class ? implode(' ',deserialize($objField->eval_tl_class)) : '';
+					
+					// USE PagePicker
+					if ($objField->type == 'pagePicker')
+					{
+						$objField->type = 'text';
+						$objField->wizard = array(array('tl_content','pagePicker'));
+						$objField->eval_rgxp = 'url';
+						$objField->eval_tl_class .= ' wizard';
+						
+						$objField->eval_decodeEntities = true;
+					}
+					
 					//print_r($this->prepareOptions($objField->options));
 					$title = DMA_EG_PREFIX.$objField->title.'_'.$objField->id;
 					$replace .= ','.$title;
@@ -183,7 +196,7 @@ class DMAElementGeneratorCallbacks extends Backend
 							'minlength' => $objField->eval_minlength,
 							'rows' => $objField->eval_rows,
 							'cols' => $objField->eval_cols,
-							'tl_class' => $objField->eval_tl_class ? implode(' ',deserialize($objField->eval_tl_class)) : '',
+							'tl_class' => $objField->eval_tl_class,
 							'rgxp' => $objField->eval_rgxp,
 							'allowHtml' => $objField->eval_allow_html || $objField->eval_rte,
 							'rte' => $objField->eval_rte ? ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE') : '',
@@ -195,8 +208,10 @@ class DMAElementGeneratorCallbacks extends Backend
 							'fieldType' => substr($objField->eval_field_type,3),
 							'alwaysSave' => true,
 							'doNotSaveEmpty' => true,
-							'multiple' => $objField->type=='checkboxWizard' ? true : false
+							'multiple' => $objField->type=='checkboxWizard' ? true : false,
+							'decodeEntities' => $objField->eval_decodeEntities ? true : false
 						),
+						'wizard' => $objField->wizard ? $objField->wizard : '',
 						'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
 						'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
 					);
