@@ -110,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'default'                     => '{type_legend},type',
 		'legend'                      => '{type_legend},type,label,hidden',
 		'text'                        => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
-		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
+		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
 		'select'                      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
 		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
 		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
@@ -254,10 +254,10 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'eval_maxlength' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'],
-			'default'              => 255,
+			'default'              => '',
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit')
+			'eval'                  => array('maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit')
 		),
 		'eval_field_type' => array
 		(

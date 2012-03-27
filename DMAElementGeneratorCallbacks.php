@@ -218,7 +218,7 @@ class DMAElementGeneratorCallbacks extends Backend
 					{
 						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['minlength'] = $objField->eval_minlength;
 					}
-					if ($objField->eval_maxlength && $objField->type=='text')
+					if ($objField->eval_maxlength)
 					{
 						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['maxlength'] = $objField->eval_maxlength;
 					}
