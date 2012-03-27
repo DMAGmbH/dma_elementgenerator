@@ -146,7 +146,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		'template' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
-			'default'                 => 'ce_designer_default',
+			'default'                 => 'dma_eg_default',
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_dma_eg','getElementTemplates'),

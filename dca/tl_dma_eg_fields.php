@@ -109,14 +109,14 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'__selector__'                => array('type'),
 		'default'                     => '{type_legend},type',
 		'legend'                      => '{type_legend},type,label,hidden',
-		'text'                        => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
-		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
-		'select'                      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
-		'pagePicker'				 => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class'
+		'text'                        => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'select'                      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class,template;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
+		'pagePicker'				 => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template'
 	),
 
 	// Subpalettes
@@ -316,8 +316,17 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'],
 			'inputType'             => 'text',
 			'exclude'				        => true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'clr', 'rgxp' => 'extnd')
-		),    
+			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr', 'rgxp' => 'extnd')
+		),   
+		'template' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
+			'default'                 => 'dma_egfield_default',
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options_callback'        => array('tl_dma_eg_fields','getElementTemplates'),
+			'eval'                    => array('tl_class'=>'w50')
+		) 
 	)
 );
 
