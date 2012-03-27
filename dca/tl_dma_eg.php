@@ -202,6 +202,7 @@ class tl_dma_eg extends Backend
 	 * @return array
 	 */
 	public function getElementTemplates(DataContainer $dc)
+	{
 		if(version_compare(VERSION.BUILD, '2.9.0','>='))
 		{
 			$intPid = $dc->activeRecord->pid;
@@ -209,12 +210,12 @@ class tl_dma_eg extends Backend
 			{
 				$intPid = $this->Input->get('id');
 			}
-	    	return $this->getTemplateGroup('dma_eg_', $intPid);
+	   		return $this->getTemplateGroup('dma_eg_', $intPid);
 		}
-		else
+		else 
 		{
-	   	return $this->getTemplateGroup('dma_eg_');
-		}
+			return $this->getTemplateGroup('dma_eg_');
+		}	
 	}
 	
 }
