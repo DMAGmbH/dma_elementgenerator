@@ -181,7 +181,7 @@ class DMAElementGeneratorCallbacks extends Backend
 					
 					//print_r($this->prepareOptions($objField->options));
 					$title = DMA_EG_PREFIX.$objField->title.'_'.$objField->id;
-					$replace .= ','.$title;
+					$replace .= ',' . $title;
 					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array 
 					(
 						'label' => array($objField->label,$objField->explanation),
@@ -190,12 +190,7 @@ class DMAElementGeneratorCallbacks extends Backend
 						'exclude' => $objField->exclude,
 						'eval' => array 
 						(
-							'path' => $objField->eval_path,
 							'mandatory' => $objField->eval_mandatory,
-							'maxlength' => $objField->type!='text' ? '0' : $objField->eval_maxlength,
-							'minlength' => $objField->eval_minlength,
-							'rows' => $objField->eval_rows,
-							'cols' => $objField->eval_cols,
 							'tl_class' => $objField->eval_tl_class,
 							'rgxp' => $objField->eval_rgxp,
 							'allowHtml' => $objField->eval_allow_html || $objField->eval_rte,
@@ -215,6 +210,26 @@ class DMAElementGeneratorCallbacks extends Backend
 						'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
 						'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
 					);
+					if ($objField->eval_path)
+					{
+						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['path'] = $objField->eval_path;
+					}
+					if ($objField->eval_minlength)
+					{
+						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['minlength'] = $objField->eval_minlength;
+					}
+					if ($objField->eval_maxlength && $objField->type=='text')
+					{
+						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['maxlength'] = $objField->eval_maxlength;
+					}
+					if ($objField->eval_rows)
+					{
+						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['rows'] = $objField->eval_rows;
+					}
+					if ($objField->eval_cols)
+					{
+						$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['cols'] = $objField->eval_cols;
+					}
 					if ($create) 
 					{
 						$fields[$objField->title] = $objField->default_value;
@@ -369,3 +384,4 @@ class DMAElementGeneratorCallbacks extends Backend
 }
   
 
+?>
