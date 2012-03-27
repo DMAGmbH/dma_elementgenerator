@@ -205,12 +205,47 @@ class tl_dma_eg extends Backend
 	{
 		if(version_compare(VERSION.BUILD, '2.9.0','>='))
 		{
-			$intPid = $dc->activeRecord->pid;
-	    	if ($this->Input->get('act') == 'overrideAll')
+			$arrTemplates = array();
+			$strPrefix = 'dma_eg_';
+			
+			// get the standard-template routine
+			$arrControllerTemplates = $this->getTemplateGroup($strPrefix);
+			foreach ($arrControllerTemplates as $value)
 			{
-				$intPid = $this->Input->get('id');
+				$arrTemplates[$value] = $value;
 			}
-	   		return $this->getTemplateGroup('dma_eg_', $intPid);
+			
+			// found other theme-templates
+			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
+									   ->execute('');
+
+			if ($objTheme->numRows > 0)
+			{
+				while ($objTheme->next())
+				{
+
+					$strFolder = TL_ROOT .'/'. $objTheme->templates;
+					
+					// Find all matching templates
+					$arrFiles = preg_grep('/^' . preg_quote($strPrefix, '/') . '/i',  scan($strFolder));
+					$arrThemeTemplates = array();
+					foreach ($arrFiles as $strTemplate)
+					{
+						$strName = basename($strTemplate);
+						$arrThemeTemplates[] = substr($strName, 0, strrpos($strName, '.'));
+					}
+					
+
+					natcasesort($arrThemeTemplates);
+					$arrThemeTemplates = array_unique($arrThemeTemplates);
+
+					foreach ($arrThemeTemplates as $value)
+					{
+						$arrTemplates[$value] = str_replace('templates/','',$objTheme->templates) . '/' . $value;
+					}
+				}
+			}
+	   		return $arrTemplates;
 		}
 		else 
 		{
