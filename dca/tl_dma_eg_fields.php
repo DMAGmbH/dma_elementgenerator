@@ -116,7 +116,9 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
 		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
 		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class,template;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
-		'pagePicker'				 => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template'
+		'pagePicker'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'listWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	  	'tableWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class'
 	),
 
 	// Subpalettes
@@ -132,7 +134,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
       'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
       'inputType' => 'select',
-      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker'),
+      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard'),
       'default' => 'text',
       'exclude' => true,
       'eval' => array('submitOnChange' => true)

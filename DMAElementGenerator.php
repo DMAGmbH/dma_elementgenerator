@@ -56,7 +56,7 @@ class DMAElementGenerator extends Frontend
 	
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);		
 		
-		$objElement = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE id=?")
+		$objElement = $this->Database->prepare("SELECT template,display_in_divs,class,without_label,content,module FROM tl_dma_eg WHERE id=?")
 										 ->limit(1)
 										 ->execute($elementID);
 		
