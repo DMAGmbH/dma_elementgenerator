@@ -166,9 +166,11 @@ class DMAElementGenerator extends Frontend
 			if ($objField->type=='checkbox' && is_array(deserialize($arrData[$objField->title])))
 			{
 				$tempArrCbx = deserialize($arrData[$objField->title]);
+				$objFieldTemplate->value = '';
 				foreach ($tempArrCbx as $checkbox)
 				{
-					$objFieldTemplate->value = $arrTemplateData[$objField->title]['value'][] = $checkbox;
+					$objFieldTemplate->value .= '<span class="cbx_entry">' . $checkbox . '</span>';
+					$arrTemplateData[$objField->title]['value'][] = $checkbox;
 				}
 			}
 			
