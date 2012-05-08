@@ -56,7 +56,7 @@ class DMAElementGenerator extends Frontend
 	
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);		
 		
-		$objElement = $this->Database->prepare("SELECT template,display_in_divs,class,without_label,content,module FROM tl_dma_eg WHERE id=?")
+		$objElement = $this->Database->prepare("SELECT title,template,display_in_divs,class,without_label,content,module FROM tl_dma_eg WHERE id=?")
 										 ->limit(1)
 										 ->execute($elementID);
 		
@@ -297,7 +297,28 @@ class DMAElementGenerator extends Frontend
 		$objTemplate->classes = $arrClasses;
 		$objTemplate->fields = $strFields;
 		$objTemplate->data = $arrTemplateData;	
-		$objTemplate->counter = $GLOBALS['DMA_EG']['EL_COUNT']++;
+		
+		// Counter for Elements and Global
+		if (!isset($GLOBALS['DMA_EG']['EL_COUNT']['all']))
+		{
+			$GLOBALS['DMA_EG']['EL_COUNT']['all'] = 0;
+		}
+		else {
+			$GLOBALS['DMA_EG']['EL_COUNT']['all']++;// = 0;
+		}
+
+		if (!isset($GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)]))
+		{
+			$GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)] = 0;
+		}
+		else {
+			$GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)]++;
+		}
+		
+		
+		$objTemplate->gobalCounter = $GLOBALS['DMA_EG']['EL_COUNT']['all'];
+		$objTemplate->singleCounter = $GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)];
+		//print_r($GLOBALS['DMA_EG']['EL_COUNT']);
 		
 		$arrStyle = array();
 
