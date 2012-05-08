@@ -298,13 +298,14 @@ class DMAElementGenerator extends Frontend
 		$objTemplate->fields = $strFields;
 		$objTemplate->data = $arrTemplateData;	
 		
+		
 		// Counter for Elements and Global
 		if (!isset($GLOBALS['DMA_EG']['EL_COUNT']['all']))
 		{
 			$GLOBALS['DMA_EG']['EL_COUNT']['all'] = 0;
 		}
 		else {
-			$GLOBALS['DMA_EG']['EL_COUNT']['all']++;// = 0;
+			$GLOBALS['DMA_EG']['EL_COUNT']['all']++;
 		}
 
 		if (!isset($GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)]))
@@ -314,11 +315,9 @@ class DMAElementGenerator extends Frontend
 		else {
 			$GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)]++;
 		}
-		
-		
 		$objTemplate->gobalCounter = $GLOBALS['DMA_EG']['EL_COUNT']['all'];
 		$objTemplate->singleCounter = $GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)];
-		//print_r($GLOBALS['DMA_EG']['EL_COUNT']);
+
 		
 		$arrStyle = array();
 
