@@ -297,6 +297,7 @@ class DMAElementGenerator extends Frontend
 		$objTemplate->classes = $arrClasses;
 		$objTemplate->fields = $strFields;
 		$objTemplate->data = $arrTemplateData;	
+		$objTemplate->counter = $GLOBALS['DMA_EG']['EL_COUNT']++;
 		
 		$arrStyle = array();
 
