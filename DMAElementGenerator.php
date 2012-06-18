@@ -261,10 +261,13 @@ class DMAElementGenerator extends Frontend
 								'size'		=> $objFile->size
 							)
 						);
-						$arrImage = array(
-							'singleSRC' => $arrData[$objField->title]
-						);
-						$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+						if (getimagesize($arrData[$objField->title]))
+						{
+							$arrImage = array(
+								'singleSRC' => $arrData[$objField->title]
+							);
+							$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+						}
 						$objFieldTemplate->value = '';
 					}
 				}
