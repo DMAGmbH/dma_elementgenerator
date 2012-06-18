@@ -261,7 +261,7 @@ class DMAElementGenerator extends Frontend
 								'size'		=> $objFile->size
 							)
 						);
-						if (getimagesize($arrData[$objField->title]))
+						if (getimagesize(TL_ROOT . '/' . $arrData[$objField->title]))
 						{
 							$arrImage = array(
 								'singleSRC' => $arrData[$objField->title]
