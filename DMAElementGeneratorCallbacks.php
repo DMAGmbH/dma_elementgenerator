@@ -196,6 +196,8 @@ class DMAElementGeneratorCallbacks extends Backend
 						$this->addImageToPalette($objField);
 					}
 					
+					if ($GLOBALS['BE_FFL'][$objField->type])
+					{
 					$this->paletteReplace .= ',' . $title;
 					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array 
 					(
@@ -249,7 +251,9 @@ class DMAElementGeneratorCallbacks extends Backend
 					{
 						$fields[$objField->title] = $objField->default_value;
 					}
+					}
 				}
+				
 			}
 
 
