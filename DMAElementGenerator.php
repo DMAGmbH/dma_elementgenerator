@@ -273,6 +273,21 @@ class DMAElementGenerator extends Frontend
 				}
 			}
 			
+			// Handling von kompletten Links
+			if ($objField->type=='hyperlink')
+			{
+				$linkData = array();
+				$arrHyperlinkData = deserialize($objField->hyperlink_data);
+
+				foreach ($arrHyperlinkData as $hyperlinkData)
+				{
+					$linkData[$hyperlinkData] =  $arrData[$objField->title . '--' . $hyperlinkData];
+				}
+
+				$objHyperlink = new dmaHyperlinkHelper($linkData);
+				$objFieldTemplate->value = $objHyperlink->generate();
+			}
+			
 			$strFields .= $objFieldTemplate->parse();
 			$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
 		}
@@ -343,4 +358,16 @@ class DMAElementGenerator extends Frontend
 	}
 }
 
+class dmaHyperlinkHelper extends ContentHyperlink
+{
+	public function __construct($arrData) 
+	{
+		$this->type = 'hyperlink';
+		$this->url = $arrData['url'];
+		$this->target = $arrData['target'];
+		$this->linkTitle = $arrData['linkTitle'];
+		$this->rel = $arrData['rel'];
+		$this->embed = $arrData['embed'];
+	}
+}
 ?>

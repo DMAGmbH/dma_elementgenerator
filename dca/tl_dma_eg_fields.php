@@ -118,7 +118,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class,template;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
 		'pagePicker'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
 		'listWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
-	  	'tableWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class'
+	  	'tableWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	  	'hyperlink'						=> '{type_legend},type,label,title,explanation;{input_legend},hyperlink_data;{expert_legend:hide},exclude,class,template'
 	),
 
 	// Subpalettes
@@ -134,7 +135,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
       'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
       'inputType' => 'select',
-      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard'),
+      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink'),
       'default' => 'text',
       'exclude' => true,
       'eval' => array('submitOnChange' => true)
@@ -328,7 +329,16 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_dma_eg_fields','getElementTemplates'),
 			'eval'                    => array('tl_class'=>'w50')
-		) 
+		),
+		'hyperlink_data' => array
+		(
+			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['hyperlink_data'],
+			'exclude' 								=> true,
+			'inputType'               => 'checkbox',
+			'options'                 => array('url','target','linkTitle','rel','embed'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'],
+			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
+		)
 	)
 );
 

@@ -42,6 +42,8 @@ class DMAElementGeneratorCallbacks extends Backend
 	* @var array
 	*/      
 	static $_dma_fields;
+	protected $paletteReplace;
+	protected $strTable;
   
 	/** 
 	* The palettes to generate according to the type of element
@@ -106,6 +108,7 @@ class DMAElementGeneratorCallbacks extends Backend
 
 		// Database table is prefixed
 		$strTable = 'tl_'.$strTableName;
+		$this->strTable = $strTable;
 
 		// If field values are empty get them from Database
 		if (!is_array($fields)) 
@@ -146,6 +149,7 @@ class DMAElementGeneratorCallbacks extends Backend
       
 			// Empty the palette snippet
 			$replace = '';
+			$this->paletteReplace = '';
 
 			// Fill the options for the field  
 			while ($objField->next())
@@ -153,8 +157,8 @@ class DMAElementGeneratorCallbacks extends Backend
 				// A legend just needs an entry in the palette
 				if ($objField->type == 'legend') 
 				{
-					$title = DMA_EG_PREFIX.$objField->id.'_legend_'.$objField->id;
-					$replace .= ';{'.$title.($objField->hidden ? ':hide' : '').'}';
+					$title = DMA_EG_PREFIX . $objField->id . '_legend_' . $objField->id;
+					$this->paletteReplace .= ';{' . $title . ($objField->hidden ? ':hide' : '') . '}';
 					$GLOBALS['TL_LANG'][$strTable][$title]  = $objField->label;
 					// Otherwise fill all options      
 				} 
@@ -178,10 +182,17 @@ class DMAElementGeneratorCallbacks extends Backend
 						
 						$objField->eval_decodeEntities = true;
 					}
-					
+					//echo $objField->type . ' - ' . $objField->label . ' : ';
 					//print_r($this->prepareOptions($objField->options));
-					$title = DMA_EG_PREFIX.$objField->title.'_'.$objField->id;
-					$replace .= ',' . $title;
+					$title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id;
+					//echo $title;
+					//echo $objField->title;
+					if ($objField->type == 'hyperlink')
+					{
+						$this->addHyperlinkToPalette($objField);
+					}
+					
+					$this->paletteReplace .= ',' . $title;
 					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array 
 					(
 						'label' => array($objField->label,$objField->explanation),
@@ -254,11 +265,38 @@ class DMAElementGeneratorCallbacks extends Backend
 			);
 
 			// Include palette snippet
-			$GLOBALS['TL_DCA'][$strTable]['palettes'][DMA_EG_PREFIX.$objElement->id]=str_replace(';dma_eg_data',$replace.',dma_eg_data',$palette);
+			$GLOBALS['TL_DCA'][$strTable]['palettes'][DMA_EG_PREFIX.$objElement->id]=str_replace(';dma_eg_data',$this->paletteReplace.',dma_eg_data',$palette);
 			// Include language definitions
 			$GLOBALS['TL_LANG'][$this->dma_lang[$strTableName]][DMA_EG_PREFIX.$objElement->id]  = array($objElement->title,'');
 		}
 	}
+  
+  //protected function add
+  
+  protected function addFieldToPalette($objField)
+  {
+	  //$this->paletteReplace .= ',hyperlink';
+	  //echo $objField->type;
+  }
+  
+  protected function addHyperlinkToPalette($objField)
+  {
+
+	  $arrHyperlinkData = deserialize($objField->hyperlink_data);
+	  foreach ($arrHyperlinkData as $hyperlinkData)
+	  {
+		  $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
+		  $this->paletteReplace .= ',' . $title;
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$hyperlinkData];
+			
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
+	  }
+
+  }
+  
   
 	/**
 	* Generate DCA for module table
@@ -299,11 +337,14 @@ class DMAElementGeneratorCallbacks extends Backend
 	*/   
 	public function load_field($strName,$varValue)
 	{
+		//echo $strName;
+		//print_r(self::$_dma_fields);
 		return self::$_dma_fields[$strName];
 	}
 
 	public function save_field($strName,$varValue) 
 	{
+		//echo " - ww: - " . $strName;
 		self::$_dma_fields[$strName] = $varValue;
 		return('');
 	}
@@ -340,6 +381,7 @@ class DMAElementGeneratorCallbacks extends Backend
 				}
 			}
 		}
+		print_r($arrContentConfig);
 		$this->Config->update("\$GLOBALS['TL_CONFIG']['dma_eg_content']", serialize($arrContentConfig));
 		$this->Config->update("\$GLOBALS['TL_CONFIG']['dma_eg_modules']", serialize($arrModuleConfig));
 	}
