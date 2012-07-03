@@ -52,7 +52,12 @@
                                                               'checkbox' => 'Checkboxen',
                                                               'radio' => 'Radiobuttons',
                                                               'pageTree' => 'Seitenauswahl',
-                                                              'fileTree' => 'Dateiauswahl'
+                                                              'fileTree' => 'Dateiauswahl',
+                                                              'pagePicker' => 'Seitenpicker',
+                                                              'listWizard' => 'Liste',
+                                                              'tableWizard' => 'Tabelle',
+                                                              'hyperlink' => 'Hyperlink',
+                                                              'image' => 'Bild'
                                                             );
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['label'] = array('Beschriftung','Beschriftung des Feldes, erscheint im Formular');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['title'] = array('Feldname','Eindeutige Benennung in der Datenbank');
@@ -102,6 +107,19 @@
 		'linkTitle' => 'Link-Text',
 		'rel' => 'Lightbox',
 		'embed' => 'Den Link einbetten'
+	);
+
+  $GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'] = array('Bild-Daten','Welche Daten sollen für das Bild abgefragt werden?');
+	$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'] = array(
+		'singleSRC' => 'Quelldatei',
+		'alt' => 'Alternativer Text',
+		'title' => 'Titel',
+		'size' => 'Bildbreite und Bildhöhe',
+		'imagemargin' => 'Bildabstand',
+		'imageUrl' => 'Bildlink-Adresse',
+		'fullsize' => 'Großansicht/Neues Fenster',
+		'caption' => 'Bildunterschrift',
+		'floating' => 'Bildausrichtung' 
 	);
 
   

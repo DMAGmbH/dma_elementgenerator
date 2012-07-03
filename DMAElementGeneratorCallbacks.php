@@ -191,6 +191,10 @@ class DMAElementGeneratorCallbacks extends Backend
 					{
 						$this->addHyperlinkToPalette($objField);
 					}
+					if ($objField->type == 'image')
+					{
+						$this->addImageToPalette($objField);
+					}
 					
 					$this->paletteReplace .= ',' . $title;
 					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array 
@@ -281,22 +285,33 @@ class DMAElementGeneratorCallbacks extends Backend
   
   protected function addHyperlinkToPalette($objField)
   {
-
 	  $arrHyperlinkData = deserialize($objField->hyperlink_data);
 	  foreach ($arrHyperlinkData as $hyperlinkData)
 	  {
 		  $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
 		  $this->paletteReplace .= ',' . $title;
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$hyperlinkData];
-			
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
 	  }
-
   }
-  
+
+  protected function addImageToPalette($objField)
+  {
+	  $arrImageData = deserialize($objField->image_data);
+	  foreach ($arrImageData as $imageData)
+	  {
+		  $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
+		  $this->paletteReplace .= ',' . $title;
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$imageData];
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
+			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
+	  }
+  }  
   
 	/**
 	* Generate DCA for module table

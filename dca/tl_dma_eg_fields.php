@@ -116,10 +116,11 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
 		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
 		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class,template;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
-		'pagePicker'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
-		'listWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
-	  	'tableWizard'				  => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
-	  	'hyperlink'						=> '{type_legend},type,label,title,explanation;{input_legend},hyperlink_data;{expert_legend:hide},exclude,class,template'
+		'pagePicker'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'listWizard'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	  'tableWizard'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	  'hyperlink'										=> '{type_legend},type,label,title,explanation;{input_legend},hyperlink_data;{expert_legend:hide},exclude,class,template',
+	  'image'											 	=>	'{type_legend},type,label,title,explanation;{input_legend},image_data;{expert_legend:hide},exclude,class,template'
 	),
 
 	// Subpalettes
@@ -135,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
       'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
       'inputType' => 'select',
-      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink'),
+      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink','image'),
       'default' => 'text',
       'exclude' => true,
       'eval' => array('submitOnChange' => true)
@@ -337,6 +338,15 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'inputType'               => 'checkbox',
 			'options'                 => array('url','target','linkTitle','rel','embed'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'],
+			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
+		),
+		'image_data' => array
+		(
+			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'],
+			'exclude' 								=> true,
+			'inputType'               => 'checkbox',
+			'options'                 => array('singleSRC','alt','title','size','imagemargin','imageUrl','fullsize','caption','floating'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'],
 			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
 		)
 	)

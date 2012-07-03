@@ -288,6 +288,21 @@ class DMAElementGenerator extends Frontend
 				$objFieldTemplate->value = $objHyperlink->generate();
 			}
 			
+			// Handling von kompletten Bildern
+			if ($objField->type=='image')
+			{
+				$imageData = array();
+				$arrImageData = deserialize($objField->image_data);
+
+				foreach ($arrImageData as $imageData)
+				{
+					$arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData];
+				}
+
+				$this->addImageToTemplate($objFieldTemplate, $arrImage);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
+				//$objFieldTemplate->value = $objHyperlink->generate();
+			}
+			
 			$strFields .= $objFieldTemplate->parse();
 			$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
 		}
@@ -370,4 +385,6 @@ class dmaHyperlinkHelper extends ContentHyperlink
 		$this->embed = $arrData['embed'];
 	}
 }
+
+
 ?>
