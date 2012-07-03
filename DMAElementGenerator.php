@@ -291,7 +291,7 @@ class DMAElementGenerator extends Frontend
 			// Handling von kompletten Bildern
 			if ($objField->type=='image')
 			{
-				$imageData = array();
+				$arrImage = array();
 				$arrImageData = deserialize($objField->image_data);
 
 				foreach ($arrImageData as $imageData)
