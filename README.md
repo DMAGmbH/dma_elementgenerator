@@ -1,6 +1,6 @@
-### DMA Elementgenerator
+## DMA Elementgenerator
 
-## Contao-Erweiterung
+### Contao-Erweiterung
 
 Mit dem dma_elementgenerator können eigene Contentelemente bzw. Frontendmodule angelegt werden. Das erlaubt es, beim Pflegen der Seite einfacher einheitliche Strukturen beizubehalten oder sogar zu "erzwingen".
 
