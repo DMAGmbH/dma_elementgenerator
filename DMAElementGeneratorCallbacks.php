@@ -400,7 +400,6 @@ class DMAElementGeneratorCallbacks extends Backend
 				}
 			}
 		}
-		print_r($arrContentConfig);
 		$this->Config->update("\$GLOBALS['TL_CONFIG']['dma_eg_content']", serialize($arrContentConfig));
 		$this->Config->update("\$GLOBALS['TL_CONFIG']['dma_eg_modules']", serialize($arrModuleConfig));
 	}

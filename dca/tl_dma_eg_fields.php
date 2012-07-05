@@ -400,7 +400,7 @@ class tl_dma_eg_fields extends Backend
 		return '<div class="cte_type">'
             . ($arrRow['type'] ? ' [' . $arrRow['type'] . ']' : '') . '</div>'."\n"
             .'<div class="block">'
-            . $arrRow['title']."\n"
+            . '<strong>' . $arrRow['label'] . '</strong>' . ($arrRow['title'] ? (' [' . $arrRow['title'] . ']') : '') ."\n"
             .'</div>' . "\n";
 	}
 	
