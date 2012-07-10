@@ -286,6 +286,7 @@ class DMAElementGenerator extends Frontend
 
 				$objHyperlink = new dmaHyperlinkHelper($linkData);
 				$objFieldTemplate->value = $objHyperlink->generate();
+				$arrElements[$objField->title] = $objHyperlink->generate();
 			}
 			
 			// Handling von kompletten Bildern
@@ -301,10 +302,16 @@ class DMAElementGenerator extends Frontend
 
 				$this->addImageToTemplate($objFieldTemplate, $arrImage);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
 				//$objFieldTemplate->value = $objHyperlink->generate();
+				$arrImage['type'] = 'image';
+				$objImage = new dmaContentImageHelper($arrImage);
+				
+				$arrElements[$objField->title] = $objImage->generate();
+				
 			}
 			
 			$strFields .= $objFieldTemplate->parse();
 			$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
+			//$arrElements[$objField->title] = $objFieldTemplate->parse();
 		}
 										 
 	
@@ -386,5 +393,15 @@ class dmaHyperlinkHelper extends ContentHyperlink
 	}
 }
 
+
+class dmaContentImageHelper extends ContentImage
+{
+	public function __construct($arrData)
+	{
+		$this->type = 'image';
+		$this->singleSRC = $arrData['singleSRC'];
+		$this->arrData = $arrData;
+	}
+}
 
 ?>
