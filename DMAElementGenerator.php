@@ -51,7 +51,6 @@ class DMAElementGenerator extends Frontend
 	
 	protected function compile($data)
 	{		
-	
 
 	
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);		
@@ -329,6 +328,7 @@ class DMAElementGenerator extends Frontend
 		
 
 		$objTemplate->contentElement = true;
+		$objTemplate->id = $data->id;
 		$objTemplate->articleID = $data->pid;
 		$objTemplate->articleTitle = $objArticle->title;
 		$objTemplate->articleAlias = $objArticle->alias;
