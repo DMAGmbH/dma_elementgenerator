@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at http://www.gnu.org/licenses/.
@@ -28,76 +28,81 @@
 
 /**
  * Class DMAElementGeneratorCallbacks
- *   
+ *
  *
  * @copyright  Dialog- und Medienagentur der ACS mbH 2010
  * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
  * @package    DMAElementGenerator
  */
-class DMAElementGeneratorCallbacks extends Backend 
+class DMAElementGeneratorCallbacks extends Backend
 {
-  
+
 	/**
-	*	* The field values
-	* @var array
-	*/      
+	 *	* The field values
+	 * @var array
+	 */
 	static $_dma_fields;
-  
-	/** 
-	* The palettes to generate according to the type of element
-	* @var array
-	*/      
-	protected $dma_palettes = array 
+
+	/**
+	 * The palettes to generate according to the type of element
+	 * @var array
+	 */
+	protected $dma_palettes = array
 	(
 		'content' => '{type_legend},type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space',
 		'module' => '{type_legend},name,type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space'
 	);
-  
-	/** 
-	*  The name of the language array according to the type of element
-	*  @var array
-	*/      
-	protected $dma_lang = array 
+
+	/**
+	 *  The name of the language array according to the type of element
+	 *  @var array
+	 */
+	protected $dma_lang = array
 	(
 		'content' => 'CTE',
 		'module' => 'FMD'
 	);
 
 
-	protected function prepareOptions($arrOptions) 
+	protected function prepareOptions($objField)
 	{
-		if (!is_array($arrOptions)) 
+		$arrOptions = deserialize($objField->options, true);
+
+		if (empty($arrOptions))
 		{
-			$arrOptions = deserialize($arrOptions);
+			return null;
 		}
-		if (!is_array($arrOptions)) 
+
+		if ($objField->type == 'checkbox' && count($arrOptions) == 1)
 		{
-			return;
+			return null;
 		}
+
 		$arrReturn = array();
 		foreach ($arrOptions as $i=>$option)
 		{
-			if (is_array($option)) 
+			if (is_array($option))
 			{
 				$arrReturn[$option['value']] = $option['label'];
-			} else 
+			} else
 			{
 				$arrReturn[$i] = $option[1];
 			}
 		}
-	return $arrReturn;
+
+		return $arrReturn;
 	}
-  
+
 	/**
-	* Generate the DCA dynamically
-	*/   
-	protected function generateDCA($strTableName, &$dc) 
+	 * Generate the DCA dynamically
+	 */
+	protected function generateDCA($strTableName, &$dc)
 	{
 		if ($strTableName!='module' && $strTableName!='content')
 		{
 			return;
 		}
-		
+
 		$this->import("Database");
 		$create = false;
 
@@ -108,32 +113,32 @@ class DMAElementGeneratorCallbacks extends Backend
 		$strTable = 'tl_'.$strTableName;
 
 		// If field values are empty get them from Database
-		if (!is_array($fields)) 
+		if (!is_array($fields))
 		{
 			$objData = $this->Database->prepare("SELECT dma_eg_data FROM $strTable WHERE id=?")
-											->limit(1)
-											->execute($dc->id);
-      	// No results cause an empty array
-			if ($objData->numRows == 0) 
+				->limit(1)
+				->execute($dc->id);
+			// No results cause an empty array
+			if ($objData->numRows == 0)
 			{
-				$fields = array(); 
+				$fields = array();
 				$create = true;
-			} 
-			else 
+			}
+			else
 			{
 				$fields = deserialize($objData->dma_eg_data);
 			}
 			// This should not happen, but when it happens force empty array
-			if (!is_array($fields) || count($fields) == 0) 
+			if (!is_array($fields) || count($fields) == 0)
 			{
 				$fields = array();
- 				$create = true;
+				$create = true;
 			}
 		}
 
 		// Get the dymamic Elements
 		$objElement = $this->Database->prepare("SELECT id,title FROM tl_dma_eg WHERE `$strTableName` = '1'")
-								 ->execute();
+			->execute();
 
 		// Get the palette for the table						 
 		$palette = $this->dma_palettes[$strTableName];
@@ -142,8 +147,8 @@ class DMAElementGeneratorCallbacks extends Backend
 		{
 			// get the Fields for this Element
 			$objField = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE pid=? ORDER BY sorting")
-									->execute($objElement->id);
-      
+				->execute($objElement->id);
+
 			// Empty the palette snippet
 			$replace = '';
 
@@ -151,31 +156,31 @@ class DMAElementGeneratorCallbacks extends Backend
 			while ($objField->next())
 			{
 				// A legend just needs an entry in the palette
-				if ($objField->type == 'legend') 
+				if ($objField->type == 'legend')
 				{
 					$title = DMA_EG_PREFIX.$objField->id.'_legend_'.$objField->id;
 					$replace .= ';{'.$title.($objField->hidden ? ':hide' : '').'}';
 					$GLOBALS['TL_LANG'][$strTable][$title]  = $objField->label;
 					// Otherwise fill all options      
-				} 
-				else 
+				}
+				else
 				{
 					//checkbox-Menü bei mehreren
 					if ($objField->type=='checkbox' && sizeof($this->prepareOptions($objField->options))>1)
 					{
 						$objField->type='checkboxWizard';
 					}
-					
+
 					//print_r($this->prepareOptions($objField->options));
 					$title = DMA_EG_PREFIX.$objField->title.'_'.$objField->id;
 					$replace .= ','.$title;
-					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array 
+					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array
 					(
 						'label' => array($objField->label,$objField->explanation),
 						'inputType' => $objField->type,
-						'options' => $this->prepareOptions($objField->options),
+						'options' => $this->prepareOptions($objField),
 						'exclude' => $objField->exclude,
-						'eval' => array 
+						'eval' => array
 						(
 							'path' => $objField->eval_path,
 							'mandatory' => $objField->eval_mandatory,
@@ -200,7 +205,7 @@ class DMAElementGeneratorCallbacks extends Backend
 						'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
 						'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
 					);
-					if ($create) 
+					if ($create)
 					{
 						$fields[$objField->title] = $objField->default_value;
 					}
@@ -209,13 +214,13 @@ class DMAElementGeneratorCallbacks extends Backend
 
 
 			// Include invisible widget for the field data
-			$GLOBALS['TL_DCA'][$strTable]['fields']['dma_eg_data'] = array 
+			$GLOBALS['TL_DCA'][$strTable]['fields']['dma_eg_data'] = array
 			(
 				'label' => array('DATA',''),
 				'inputType' => 'dma_eg_hidden',
 				'default' => array(),
 				'exclude' => false,
-				'eval' => array 
+				'eval' => array
 				(
 					'alwaysSave' => true,
 					'mandatory' => true
@@ -229,82 +234,82 @@ class DMAElementGeneratorCallbacks extends Backend
 			$GLOBALS['TL_LANG'][$this->dma_lang[$strTableName]][DMA_EG_PREFIX.$objElement->id]  = array($objElement->title,'');
 		}
 	}
-  
+
 	/**
-	* Generate DCA for module table
-	*/     
-	public function module_onload($dc) 
+	 * Generate DCA for module table
+	 */
+	public function module_onload($dc)
 	{
 		$this->generateDCA('module',$dc);
 	}
-  
-  
+
+
 	/**
-	* Generate DCA for content table
-	*/     
-	public function content_onload($dc) 
-	{ 
+	 * Generate DCA for content table
+	 */
+	public function content_onload($dc)
+	{
 		$this->generateDCA('content',$dc);
-	} 
-  
+	}
+
 	/**
-	* Automatic callback functions for every field
-	* loads or saves the values   
-	*/     
-	public function __call($name,$args) 
+	 * Automatic callback functions for every field
+	 * loads or saves the values
+	 */
+	public function __call($name,$args)
 	{
 		list($type,$param) = explode('_',$name,2);
-		switch($type) 
+		switch($type)
 		{
-			case 'load': 
+			case 'load':
 				return $this->load_field($param,$args[0]);
 				break;
 			case 'save':
 				return $this->save_field($param,$args[0]);
 		}
 	}
-  
+
 	/**
-	* these are called dynamically bei __call
-	*/   
+	 * these are called dynamically bei __call
+	 */
 	public function load_field($strName,$varValue)
 	{
 		return self::$_dma_fields[$strName];
 	}
 
-	public function save_field($strName,$varValue) 
+	public function save_field($strName,$varValue)
 	{
 		self::$_dma_fields[$strName] = $varValue;
 		return('');
 	}
-  
+
 	/**
-	* Saves the field values
-	*/     
-	public function save_data($varValue) 
+	 * Saves the field values
+	 */
+	public function save_data($varValue)
 	{
 		return serialize(self::$_dma_fields);
 	}
-  
+
 	/**
-	* Stores the configuration array without the given element
-	* @param int
-	*/
+	 * Stores the configuration array without the given element
+	 * @param int
+	 */
 	protected function store_configuration_without($without)
 	{
 		$objElement = $this->Database->prepare("SELECT id,category,module,content FROM tl_dma_eg")
-				 						->execute();
+			->execute();
 		$arrModuleConfig = array();
 		$arrContentConfig = array();
 		while ($objElement->next())
 		{
-			if ($objElement->id != $without) 
+			if ($objElement->id != $without)
 			{
-				if ($objElement->module) 
+				if ($objElement->module)
 				{
 					$arrModuleConfig[$objElement->category][] = $objElement->id;
 				}
-				if ($objElement->content) 
+				if ($objElement->content)
 				{
 					$arrContentConfig[$objElement->category][] = $objElement->id;
 				}
@@ -313,19 +318,19 @@ class DMAElementGeneratorCallbacks extends Backend
 		$this->Config->update("\$GLOBALS['TL_CONFIG']['dma_eg_content']", serialize($arrContentConfig));
 		$this->Config->update("\$GLOBALS['TL_CONFIG']['dma_eg_modules']", serialize($arrModuleConfig));
 	}
-  
+
 	/**
-	* Stores the configuration array
-	*/
+	 * Stores the configuration array
+	 */
 	protected function store_configuration()
 	{
 		$this->store_configuration_without(-1);
 	}
-  
-  
+
+
 	/**
-	* Stores the generated Elements in Configuration
-	*/     
+	 * Stores the generated Elements in Configuration
+	 */
 	public function element_onsubmit(DataContainer $dc)
 	{
 		$this->import("Database");
@@ -333,24 +338,24 @@ class DMAElementGeneratorCallbacks extends Backend
 	}
 
 	/**
-	* Deletes Elements from Configuration, Contentelements and Modules
-	*/
-    
+	 * Deletes Elements from Configuration, Contentelements and Modules
+	 */
+
 	public function element_ondelete(DataContainer $dc)
 	{
 		$this->import("Database");
-	
+
 		// Delete from Contentelements
 		$this->Database->prepare("DELETE FROM tl_content WHERE type=?")
-                    ->execute(DMA_EG_PREFIX.$dc->id);
+			->execute(DMA_EG_PREFIX.$dc->id);
 		// Delete from Modules
 		$this->Database->prepare("DELETE FROM tl_module WHERE type=?")
-                    ->execute(DMA_EG_PREFIX.$dc->id);
-			
+			->execute(DMA_EG_PREFIX.$dc->id);
+
 		// Delete from Configuration
 		$this->store_configuration_without($dc->id);
 	}
-     
-}
-  
+
+}  
+
 
