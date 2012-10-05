@@ -171,8 +171,10 @@ class DMAElementGeneratorCallbacks extends Backend
 						$objField->type='checkboxWizard';
 					}
 
-					//print_r($this->prepareOptions($objField->options));
-					$title = DMA_EG_PREFIX.$objField->title.'_'.$objField->id;
+					// don't add an integer at the end of a field name as Contao javascript (e.g. the file tree reload)
+					// will strip integers at the end as they are used in multi edit mode!
+					// this will kill ajax reload functionality
+					$title = DMA_EG_PREFIX . $objField->title;
 					$replace .= ','.$title;
 					$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array
 					(
