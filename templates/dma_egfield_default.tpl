@@ -1,12 +1,15 @@
-<li class="<?php echo $this->class; ?>">
+
+<?php echo ($this->divs) ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
+<?php if (!$this->nolabels): ?>
   <span class="label"><?php echo $this->label ?></span>
   <span class="value">
+<?php endif; ?>
   <?php if ($this->addImage): ?>
 <div class="image_container"<?php if ($this->margin): ?> style="<?php echo $this->margin; ?>"<?php endif; ?>>
 <?php if ($this->href): ?>
 <a href="<?php echo $this->href; ?>"<?php echo $this->attributes; ?> title="<?php echo $this->alt; ?>">
 <?php endif; ?>
-<img src="<?php echo $this->src; ?>"<?php echo $this->imgSize; ?> alt="<?php echo $this->alt; ?>">
+<img src="<?php echo $this->src; ?>"<?php echo $this->imgSize; ?> alt="<?php echo $this->alt; ?>" />
 <?php if ($this->href): ?>
 </a>
 <?php endif; ?>
@@ -17,6 +20,8 @@
   <?php else: ?>
   <?php echo $this->value ?>
   <?php endif; ?>
+<?php if (!$this->nolabels): ?> 
   </span>
-</li>
+<?php endif; ?>
+<?php echo ($this->divs) ? '</div>' : '</li>'; ?>
   

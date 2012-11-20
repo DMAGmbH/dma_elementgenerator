@@ -116,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(),
-		'default'                     => 'title,category,template,module,content;{expert_legend:hide},class',
+		'default'                     => '{title_legend},title,category;{settings_legend},template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
 	),
 
 	// Subpalettes
@@ -141,12 +141,12 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'inputType'             => 'text',
 			'exclude'				=> true,
 			'filter'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'clr')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50')
 		),
 		'template' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
-			'default'                 => 'ce_designer_default',
+			'default'                 => 'dma_eg_default',
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_dma_eg','getElementTemplates'),
@@ -156,13 +156,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['module'],
 			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'clr','isBoolean'=> true)
+			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
 		),
 		'content' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['content'],
 			'inputType'               => 'checkbox',
-			'eval'                    => array('isBoolean'=> true)
+			'eval'                    => array('tl_class'=>'clr w50','isBoolean'=> true)
 		),
 		'class' => array
 		(
@@ -170,7 +170,19 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'inputType'             => 'text',
 			'exclude'					=> true,
 			'filter'						=> true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'clr')
+			'eval'                  => array('tl_class'=>'w50','maxlength'=>255, 'tl_class'=>'clr')
+		),
+		'without_label' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['without_label'],
+			'inputType'               => 'checkbox',
+			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
+		),
+  		'display_in_divs' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'],
+			'inputType'               => 'checkbox',
+			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
 		)
 	)
 );
@@ -190,20 +202,55 @@ class tl_dma_eg extends Backend
 	 * @return array
 	 */
 	public function getElementTemplates(DataContainer $dc)
-   {
+	{
 		if(version_compare(VERSION.BUILD, '2.9.0','>='))
 		{
-			$intPid = $dc->activeRecord->pid;
-	    	if ($this->Input->get('act') == 'overrideAll')
+			$arrTemplates = array();
+			$strPrefix = 'dma_eg_';
+			
+			// get the standard-template routine
+			$arrControllerTemplates = $this->getTemplateGroup($strPrefix);
+			foreach ($arrControllerTemplates as $value)
 			{
-				$intPid = $this->Input->get('id');
+				$arrTemplates[$value] = $value;
 			}
-	    	return $this->getTemplateGroup('dma_eg_', $intPid);
+			
+			// found other theme-templates
+			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
+									   ->execute('');
+
+			if ($objTheme->numRows > 0)
+			{
+				while ($objTheme->next())
+				{
+
+					$strFolder = TL_ROOT .'/'. $objTheme->templates;
+					
+					// Find all matching templates
+					$arrFiles = preg_grep('/^' . preg_quote($strPrefix, '/') . '/i',  scan($strFolder));
+					$arrThemeTemplates = array();
+					foreach ($arrFiles as $strTemplate)
+					{
+						$strName = basename($strTemplate);
+						$arrThemeTemplates[] = substr($strName, 0, strrpos($strName, '.'));
+					}
+					
+
+					natcasesort($arrThemeTemplates);
+					$arrThemeTemplates = array_unique($arrThemeTemplates);
+
+					foreach ($arrThemeTemplates as $value)
+					{
+						$arrTemplates[$value] = str_replace('templates/','',$objTheme->templates) . '/' . $value;
+					}
+				}
+			}
+	   		return $arrTemplates;
 		}
-		else
+		else 
 		{
-	   	return $this->getTemplateGroup('dma_eg_');
-		}
+			return $this->getTemplateGroup('dma_eg_');
+		}	
 	}
 	
 }

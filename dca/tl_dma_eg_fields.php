@@ -109,13 +109,18 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'__selector__'                => array('type'),
 		'default'                     => '{type_legend},type',
 		'legend'                      => '{type_legend},type,label,hidden',
-		'text'                        => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
-		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class',
-		'select'                      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class',
-		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class'
+		'text'                        => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'select'                      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class,template;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
+		'pagePicker'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
+		'listWizard'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	  'tableWizard'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	  'hyperlink'										=> '{type_legend},type,label,title,explanation;{input_legend},hyperlink_data;{expert_legend:hide},exclude,class,template',
+	  'image'											 	=>	'{type_legend},type,label,title,explanation;{input_legend},image_data;{expert_legend:hide},exclude,class,template'
 	),
 
 	// Subpalettes
@@ -131,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
       'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
       'inputType' => 'select',
-      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree'),
+      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink','image'),
       'default' => 'text',
       'exclude' => true,
       'eval' => array('submitOnChange' => true)
@@ -253,10 +258,10 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'eval_maxlength' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'],
-			'default'              => 255,
+			'default'              => '',
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit')
+			'eval'                  => array('maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit')
 		),
 		'eval_field_type' => array
 		(
@@ -315,8 +320,35 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'],
 			'inputType'             => 'text',
 			'exclude'				        => true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'clr', 'rgxp' => 'extnd')
-		),    
+			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr', 'rgxp' => 'extnd')
+		),   
+		'template' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
+			'default'                 => 'dma_egfield_default',
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options_callback'        => array('tl_dma_eg_fields','getElementTemplates'),
+			'eval'                    => array('tl_class'=>'w50')
+		),
+		'hyperlink_data' => array
+		(
+			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['hyperlink_data'],
+			'exclude' 								=> true,
+			'inputType'               => 'checkbox',
+			'options'                 => array('url','target','linkTitle','rel','embed'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'],
+			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
+		),
+		'image_data' => array
+		(
+			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'],
+			'exclude' 								=> true,
+			'inputType'               => 'checkbox',
+			'options'                 => array('singleSRC','alt','title','size','imagemargin','imageUrl','fullsize','caption','floating'),
+			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'],
+			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
+		)
 	)
 );
 
@@ -368,8 +400,61 @@ class tl_dma_eg_fields extends Backend
 		return '<div class="cte_type">'
             . ($arrRow['type'] ? ' [' . $arrRow['type'] . ']' : '') . '</div>'."\n"
             .'<div class="block">'
-            . $arrRow['title']."\n"
+            . '<strong>' . $arrRow['label'] . '</strong>' . ($arrRow['title'] ? (' [' . $arrRow['title'] . ']') : '') ."\n"
             .'</div>' . "\n";
 	}
+	
+	public function getElementTemplates(DataContainer $dc)
+	{
+		if(version_compare(VERSION.BUILD, '2.9.0','>='))
+		{
+			$arrTemplates = array();
+			$strPrefix = 'dma_egfield_';
+			
+			// get the standard-template routine
+			$arrControllerTemplates = $this->getTemplateGroup($strPrefix);
+			foreach ($arrControllerTemplates as $value)
+			{
+				$arrTemplates[$value] = $value;
+			}
+			
+			// found other theme-templates
+			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
+									   ->execute('');
+
+			if ($objTheme->numRows > 0)
+			{
+				while ($objTheme->next())
+				{
+
+					$strFolder = TL_ROOT .'/'. $objTheme->templates;
+					
+					// Find all matching templates
+					$arrFiles = preg_grep('/^' . preg_quote($strPrefix, '/') . '/i',  scan($strFolder));
+					$arrThemeTemplates = array();
+					foreach ($arrFiles as $strTemplate)
+					{
+						$strName = basename($strTemplate);
+						$arrThemeTemplates[] = substr($strName, 0, strrpos($strName, '.'));
+					}
+					
+
+					natcasesort($arrThemeTemplates);
+					$arrThemeTemplates = array_unique($arrThemeTemplates);
+
+					foreach ($arrThemeTemplates as $value)
+					{
+						$arrTemplates[$value] = str_replace('templates/','',$objTheme->templates) . '/' . $value;
+					}
+				}
+			}
+	   		return $arrTemplates;
+		}
+		else 
+		{
+			return $this->getTemplateGroup('dma_egfield_');
+		}	
+	}
+	
 }
 ?>

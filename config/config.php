@@ -73,5 +73,10 @@ foreach ($arrContent as $strCategory => $arrElements)
 
 // Define dummy data widget		
 $GLOBALS['BE_FFL']['dma_eg_hidden'] = 'DMAElementGeneratorHiddenWidget';
+$GLOBALS['DMA_EG']['EL_COUNT'] = array();
+
+
+
+
 
 ?>

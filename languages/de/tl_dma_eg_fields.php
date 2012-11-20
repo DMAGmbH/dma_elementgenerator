@@ -52,9 +52,15 @@
                                                               'checkbox' => 'Checkboxen',
                                                               'radio' => 'Radiobuttons',
                                                               'pageTree' => 'Seitenauswahl',
-                                                              'fileTree' => 'Dateiauswahl'
+                                                              'fileTree' => 'Dateiauswahl',
+                                                              'pagePicker' => 'Seitenpicker',
+                                                              'listWizard' => 'Liste',
+                                                              'tableWizard' => 'Tabelle',
+                                                              'hyperlink' => 'Hyperlink',
+                                                              'image' => 'Bild'
                                                             );
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['label'] = array('Beschriftung','Beschriftung des Feldes, erscheint im Formular');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['hidden'] = array('Den nachfolgenden Block initial ausblenden','Soll der nachfolgende Block zunächst ausgeblendet werden?');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['title'] = array('Feldname','Eindeutige Benennung in der Datenbank');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['explanation'] = array('Beschreibung','Beschreibung, erscheint unter dem Feld');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['default_value'] = array('Vorgabe','Vorgabewert des Feldes');
@@ -94,5 +100,29 @@
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_unique'] = array('Einmaliger Wert','Der Wert dieses Feldes darf nur einmal vergeben werden');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_do_not_copy'] = array('Nicht kopieren','Werte dieses Feldes werden beim Kopieren des Elements ignoriert');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'] = array('CSS-Klasse','Geben Sie eine oder mehrere durch Leerzeichen getrennte Klassen an');
+  
+  $GLOBALS['TL_LANG']['tl_dma_eg_fiels']['hyperlink_data'] = array('Hyperlink-Daten','Welche Daten sollen für den Hyperlink abgefragt werden?');
+	$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'] = array(
+		'url' => 'Link-Adresse',
+		'target' => 'In neuem Fenster öffnen',
+		'linkTitle' => 'Link-Text',
+		'rel' => 'Lightbox',
+		'embed' => 'Den Link einbetten'
+	);
+
+  $GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'] = array('Bild-Daten','Welche Daten sollen für das Bild abgefragt werden?');
+	$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'] = array(
+		'singleSRC' => 'Quelldatei',
+		'alt' => 'Alternativer Text',
+		'title' => 'Titel',
+		'size' => 'Bildbreite und Bildhöhe',
+		'imagemargin' => 'Bildabstand',
+		'imageUrl' => 'Bildlink-Adresse',
+		'fullsize' => 'Großansicht/Neues Fenster',
+		'caption' => 'Bildunterschrift',
+		'floating' => 'Bildausrichtung' 
+	);
+
+  
 
 ?>

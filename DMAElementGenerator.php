@@ -40,6 +40,7 @@
 class DMAElementGenerator extends Frontend
 {
 	protected $strTemplate = 'dma_eg_default';
+	private $displayInDivs = false;
 	
 	public function generate($data)
 	{
@@ -50,16 +51,17 @@ class DMAElementGenerator extends Frontend
 	
 	protected function compile($data)
 	{		
-	
 
 	
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);		
 		
-		$objElement = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE id=?")
+		$objElement = $this->Database->prepare("SELECT title,template,display_in_divs,class,without_label,content,module FROM tl_dma_eg WHERE id=?")
 										 ->limit(1)
 										 ->execute($elementID);
 		
-		
+
+
+		//Im Backend in jedem Fall ein html5-Template verwenden
 		if (TL_MODE == 'BE' && version_compare(VERSION.'.'.BUILD, '2.10.0', '>='))
 		{
 			try 
@@ -70,7 +72,14 @@ class DMAElementGenerator extends Frontend
 			{
 				$objElement->template = $this->strTemplate;
 			}
-		}		
+		}	
+
+		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
+		if ($objElement->display_in_divs)
+		{
+			$this->displayInDivs = true;
+			//$objTemplate->divs = true;
+		}
 		
 		//eigene Klasse für ce_ oder mod_ Überschreibt die standardmäßige dma_eg_?
 		if ($objElement->class)
@@ -90,10 +99,26 @@ class DMAElementGenerator extends Frontend
 		                
 		                
 		$strFields = '';
-		$objFieldTemplate = new FrontendTemplate('dma_egfield_default');
 
+		
 		while ($objField->next())
 		{
+			
+			$objFieldTemplate = new FrontendTemplate($objField->template ?$objField->template : 'dma_egfield_default');
+
+
+			//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
+			if ($this->displayInDivs)
+			{
+				$objFieldTemplate->divs = true;
+			}
+		
+			//Ausgabe ohne label ermöglichen
+			if ($objElement->without_label)
+			{
+				$objFieldTemplate->nolabels = true;
+			}
+			
 			//echo $objField->title;
 			$objFieldTemplate->addImage = false;
 			$objFieldTemplate->title = $objField->title;
@@ -140,9 +165,11 @@ class DMAElementGenerator extends Frontend
 			if ($objField->type=='checkbox' && is_array(deserialize($arrData[$objField->title])))
 			{
 				$tempArrCbx = deserialize($arrData[$objField->title]);
+				$objFieldTemplate->value = '';
 				foreach ($tempArrCbx as $checkbox)
 				{
-					$objFieldTemplate->value = $arrTemplateData[$objField->title]['value'][] = $checkbox;
+					$objFieldTemplate->value .= '<span class="cbx_entry">' . $checkbox . '</span>';
+					$arrTemplateData[$objField->title]['value'][] = $checkbox;
 				}
 			}
 			
@@ -160,10 +187,12 @@ class DMAElementGenerator extends Frontend
 												  ->execute($page);
 						if ($objLinkedPage->numRows)
 						{
+							
 							$arrTemplateData[$objField->title]['value'][] = array(
 								'raw' => $page,
 								'alias' => $objLinkedPage->alias,
-								'href'  => $this->generateFrontendUrl($objLinkedPage->fetchAssoc())
+								'href'  => $this->generateFrontendUrl($objLinkedPage->fetchAssoc()),
+								'title' => $objLinkedPage->title
 							);
 						}
 					
@@ -178,9 +207,10 @@ class DMAElementGenerator extends Frontend
 					{
 						$arrTemplateData[$objField->title]['value'] = array(
 							'alias' => $objLinkedPage->alias,
-							'href'  => $this->generateFrontendUrl($objLinkedPage->fetchAssoc())
+							'href'  => $this->generateFrontendUrl($objLinkedPage->row()),
+							'title' => $objLinkedPage->title
 						);
-						$objFieldTemplate->value = $this->generateFrontendUrl($objLinkedPage->fetchAssoc());
+						$objFieldTemplate->value = $this->generateFrontendUrl($objLinkedPage->row());
 					}
 				}
 
@@ -230,21 +260,67 @@ class DMAElementGenerator extends Frontend
 								'size'		=> $objFile->size
 							)
 						);
-						$arrImage = array(
-							'singleSRC' => $arrData[$objField->title]
-						);
-						$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+						if (getimagesize(TL_ROOT . '/' . $arrData[$objField->title]))
+						{
+							$arrImage = array(
+								'singleSRC' => $arrData[$objField->title]
+							);
+							$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+						}
 						$objFieldTemplate->value = '';
 					}
 				}
 			}
 			
+			// Handling von kompletten Links
+			if ($objField->type=='hyperlink')
+			{
+				$linkData = array();
+				$arrHyperlinkData = deserialize($objField->hyperlink_data);
+
+				foreach ($arrHyperlinkData as $hyperlinkData)
+				{
+					$linkData[$hyperlinkData] =  $arrData[$objField->title . '--' . $hyperlinkData];
+				}
+
+				$objHyperlink = new dmaHyperlinkHelper($linkData);
+				$objFieldTemplate->value = $objHyperlink->generate();
+				$arrElements[$objField->title] = $objHyperlink->generate();
+			}
+			
+			// Handling von kompletten Bildern
+			if ($objField->type=='image')
+			{
+				$arrImage = array();
+				$arrImageData = deserialize($objField->image_data);
+
+				foreach ($arrImageData as $imageData)
+				{
+					$arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData];
+				}
+
+				$this->addImageToTemplate($objFieldTemplate, $arrImage);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
+				//$objFieldTemplate->value = $objHyperlink->generate();
+				$arrImage['type'] = 'image';
+				$objImage = new dmaContentImageHelper($arrImage);
+				
+				$arrElements[$objField->title] = $objImage->generate();
+				
+			}
+			
 			$strFields .= $objFieldTemplate->parse();
+			$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
+			//$arrElements[$objField->title] = $objFieldTemplate->parse();
 		}
 										 
 	
 		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $strTemplate));
 		
+		//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
+		if ($this->displayInDivs)
+		{
+			$objTemplate->divs = true;
+		}
 										 
 		$objArticle = $this->Database->prepare("SELECT title,alias FROM tl_article WHERE id=?")
 								->limit(1)
@@ -252,6 +328,7 @@ class DMAElementGenerator extends Frontend
 		
 
 		$objTemplate->contentElement = true;
+		$objTemplate->id = $data->id;
 		$objTemplate->articleID = $data->pid;
 		$objTemplate->articleTitle = $objArticle->title;
 		$objTemplate->articleAlias = $objArticle->alias;
@@ -260,6 +337,27 @@ class DMAElementGenerator extends Frontend
 		$objTemplate->classes = $arrClasses;
 		$objTemplate->fields = $strFields;
 		$objTemplate->data = $arrTemplateData;	
+		
+		
+		// Counter for Elements and Global
+		if (!isset($GLOBALS['DMA_EG']['EL_COUNT']['all']))
+		{
+			$GLOBALS['DMA_EG']['EL_COUNT']['all'] = 0;
+		}
+		else {
+			$GLOBALS['DMA_EG']['EL_COUNT']['all']++;
+		}
+
+		if (!isset($GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)]))
+		{
+			$GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)] = 0;
+		}
+		else {
+			$GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)]++;
+		}
+		$objTemplate->gobalCounter = $GLOBALS['DMA_EG']['EL_COUNT']['all'];
+		$objTemplate->singleCounter = $GLOBALS['DMA_EG']['EL_COUNT'][standardize($objElement->title)];
+
 		
 		$arrStyle = array();
 
@@ -279,6 +377,30 @@ class DMAElementGenerator extends Frontend
 
 		return $objTemplate->parse();
 		
+	}
+}
+
+class dmaHyperlinkHelper extends ContentHyperlink
+{
+	public function __construct($arrData) 
+	{
+		$this->type = 'hyperlink';
+		$this->url = $arrData['url'];
+		$this->target = $arrData['target'];
+		$this->linkTitle = $arrData['linkTitle'];
+		$this->rel = $arrData['rel'];
+		$this->embed = $arrData['embed'];
+	}
+}
+
+
+class dmaContentImageHelper extends ContentImage
+{
+	public function __construct($arrData)
+	{
+		$this->type = 'image';
+		$this->singleSRC = $arrData['singleSRC'];
+		$this->arrData = $arrData;
 	}
 }
 
