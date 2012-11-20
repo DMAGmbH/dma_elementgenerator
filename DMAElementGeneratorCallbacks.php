@@ -193,7 +193,7 @@ class DMAElementGeneratorCallbacks extends Backend
 					// don't add an integer at the end of a field name as Contao javascript (e.g. the file tree reload)
 					// will strip integers at the end as they are used in multi edit mode!
 					// this will kill ajax reload functionality
-					$title = DMA_EG_PREFIX . $objField->title;
+					$title = DMA_EG_PREFIX . $objField->id . '_' . $objField->title;
 
 					if ($objField->type == 'hyperlink')
 					{
