@@ -282,7 +282,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'eval_path' => array
 		(
 		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'],
-		  'default'               => 'tl_files',
+		  'default'               => '',
 		  'inputType'             => 'fileTree',
 		  'exclude'               => true,
 		  'eval'                  => array('mandatory' => false, 'multiple' => true,'fieldType' => 'radio','files'=>false, 'tl_class' => 'clr')
