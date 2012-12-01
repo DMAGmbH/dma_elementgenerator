@@ -242,6 +242,13 @@ class DMAElementGeneratorCallbacks extends Backend
 							{
 								$objField->eval_path = deserialize($objField->eval_path);
 							}
+							
+							// backward-compatibility
+							if ($objField->eval_path=='tl_files')
+							{
+								$objField->eval_path = '';
+							}
+							
 							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['path'] = $objField->eval_path;
 						}
 						if ($objField->eval_minlength)
