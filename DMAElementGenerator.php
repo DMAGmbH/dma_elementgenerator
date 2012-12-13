@@ -266,12 +266,24 @@ class DMAElementGenerator extends Frontend
 						}
 					}
 					
+					// Send the file to the browser
+					if (\Input::get('file', true) && \Input::get('file', true) != '')
+					{
+						$file = \Input::get('file', true);
+
+						if ($file == $arrImage['singleSRC'])
+						{
+							$this->sendFileToBrowser($file);
+						}
+					}
 					
 					if ($objFile) {
 						
 
 						$arrTemplateData[$objField->title]['value'] = array(
 							'raw' => $arrData[$objField->title],
+							'src' => $arrImage['singleSRC'],
+							'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($arrImage['singleSRC']),
 							'attributes' => array(
 								'width'   => $objFile->width,
 								'height'  => $objFile->height,
