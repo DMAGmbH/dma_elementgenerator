@@ -252,6 +252,7 @@ class DMAElementGenerator extends Frontend
 		
 
 		$objTemplate->contentElement = true;
+		$objTemplate->id = $data->id;		
 		$objTemplate->articleID = $data->pid;
 		$objTemplate->articleTitle = $objArticle->title;
 		$objTemplate->articleAlias = $objArticle->alias;
