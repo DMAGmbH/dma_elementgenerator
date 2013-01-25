@@ -163,9 +163,9 @@ class DMAElementGenerator extends Frontend
 			}
 
 			//Handling von checkboxen
-			if ($objField->type=='checkbox' && is_array(deserialize($arrData[$objField->title])))
+			if ($objField->type=='checkbox' && is_array(trimsplit(',',$arrData[$objField->title])))
 			{
-				$tempArrCbx = deserialize($arrData[$objField->title]);
+				$tempArrCbx = trimsplit(',',$arrData[$objField->title]);
 				$objFieldTemplate->value = '';
 				foreach ($tempArrCbx as $checkbox)
 				{
@@ -177,6 +177,13 @@ class DMAElementGenerator extends Frontend
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{
+			
+				if (substr($objField->eval_field_type,3)=='checkbox')
+				{
+					$tempArray = trimsplit(',',$arrData[$objField->title]);
+					$arrData[$objField->title] = serialize($tempArray);
+				}
+
 				if (is_array(deserialize($arrData[$objField->title])))
 				{
 					//mehrere Seiten
@@ -220,19 +227,48 @@ class DMAElementGenerator extends Frontend
 			//Dateihandling - zusätzliche Informationen
 			if ($objField->type=='fileTree')
 			{
+				if (substr($objField->eval_field_type,3)=='checkbox')
+				{
+					$tempArray = trimsplit(',',$arrData[$objField->title]);
+					$arrData[$objField->title] = serialize($tempArray);
+				}
 				if (is_array(deserialize($arrData[$objField->title])))
 				{
 					//mehrere Dateien
 					$tempArrFiles = deserialize($arrData[$objField->title]);
 					foreach ($tempArrFiles as $file)
 					{
+					
+						if (is_numeric($file))
+						{
+							$objFile = \FilesModel::findByPk($file);
+							$arrImage = array(
+									'singleSRC' => $objFile->path
+							);
+						}
 						if (is_file(TL_ROOT . '/' . $file))
 						{
 							$objFile = new file($file);
-
+						}
+						
+						// Send the file to the browser
+						if (\Input::get('file', true) && \Input::get('file', true) != '')
+						{
+							$file = \Input::get('file', true);
+	
+							if ($file == $objFile->path)
+							{
+								$this->sendFileToBrowser($file);
+							}
+						}
+						
+						if ($objFile) 
+						{
 
 							$arrTemplateData[$objField->title]['value'][] = array(
 								'raw' => $file,
+								'src' => $objFile->path,
+								'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
 								'attributes' => array(
 									'width'   => $objFile->width,
 									'height'  => $objFile->height,
@@ -271,7 +307,7 @@ class DMAElementGenerator extends Frontend
 					{
 						$file = \Input::get('file', true);
 
-						if ($file == $arrImage['singleSRC'])
+						if ($file == $objFile->path)
 						{
 							$this->sendFileToBrowser($file);
 						}
@@ -282,8 +318,8 @@ class DMAElementGenerator extends Frontend
 
 						$arrTemplateData[$objField->title]['value'] = array(
 							'raw' => $arrData[$objField->title],
-							'src' => $arrImage['singleSRC'],
-							'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($arrImage['singleSRC']),
+							'src' => $objFile->path,
+							'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
 							'attributes' => array(
 								'width'   => $objFile->width,
 								'height'  => $objFile->height,

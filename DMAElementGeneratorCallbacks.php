@@ -228,8 +228,9 @@ class DMAElementGeneratorCallbacks extends Backend
 								'fieldType' => substr($objField->eval_field_type,3),
 								'alwaysSave' => true,
 								'doNotSaveEmpty' => true,
-								'multiple' => $objField->type=='checkboxWizard' ? true : false,
-								'decodeEntities' => $objField->eval_decodeEntities ? true : false
+								'multiple' => ($objField->type=='checkboxWizard' || substr($objField->eval_field_type,3)=='checkbox') ? true : false,
+								'decodeEntities' => $objField->eval_decodeEntities ? true : false,
+								'csv' => ','
 							),
 							'wizard' => $objField->wizard ? $objField->wizard : '',
 							'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
@@ -269,7 +270,15 @@ class DMAElementGeneratorCallbacks extends Backend
 						}
 						if ($create)
 						{
+
 							$fields[$objField->title] = $objField->default_value;
+						}
+						else 
+						{
+							if ($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['multiple'] && isset($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv']))
+							{
+								$fields[$objField->title] = trimsplit($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv'], $fields[$objField->title]);
+							}
 						}
 					}
 				}
@@ -362,12 +371,12 @@ class DMAElementGeneratorCallbacks extends Backend
 		list($type,$param) = explode('_',$name,2);
 		switch($type)
 		{
-		case 'load':
-			return $this->load_field($param,$args[0]);
-			break;
-		case 'save':
-			return $this->save_field($param,$args[0]);
-		}
+			case 'load':
+				return $this->load_field($param,$args[0]);
+				break;
+			case 'save':
+				return $this->save_field($param,$args[0]);
+			}
 	}
 
 	/**
