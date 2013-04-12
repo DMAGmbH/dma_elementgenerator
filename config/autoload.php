@@ -32,6 +32,7 @@ TemplateLoader::addFiles(array
 	'be_dma_eg_hidden'    => 'system/modules/dma_elementgenerator/templates',
 	'ce_dma_eg'           => 'system/modules/dma_elementgenerator/templates',
 	'dma_eg_default'      => 'system/modules/dma_elementgenerator/templates',
+	'dma_eg_debug'      => 'system/modules/dma_elementgenerator/templates',
 	'dma_egfield'         => 'system/modules/dma_elementgenerator/templates',
 	'dma_egfield_default' => 'system/modules/dma_elementgenerator/templates',
 	'mod_dma_eg'          => 'system/modules/dma_elementgenerator/templates',
