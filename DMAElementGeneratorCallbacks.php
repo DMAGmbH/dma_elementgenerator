@@ -53,7 +53,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	 */
 	protected $dma_palettes = array
 	(
-		'content' => '{type_legend},type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space',
+		'content' => '{type_legend},type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
 		'module' => '{type_legend},name,type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space'
 	);
 
@@ -268,6 +268,18 @@ class DMAElementGeneratorCallbacks extends Backend
 						{
 							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['cols'] = $objField->eval_cols;
 						}
+						
+						if ($objField->eval_sortable)
+						{
+							//$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['orderField'] = DMA_EG_PREFIX . $objField->id . '_' . 'orderSRC';
+							//$GLOBALS['TL_DCA'][$strTable]['fields'][DMA_EG_PREFIX . $objField->id . '_' . 'orderSRC'] = array
+							//(
+							//	'label' => &$GLOBALS['TL_LANG']['tl_content']['orderSRC']
+							//);
+							
+						}
+						 
+						
 						if ($create)
 						{
 
