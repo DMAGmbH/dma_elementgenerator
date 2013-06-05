@@ -19,14 +19,18 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
+ * @copyright  DMA GmbH
+ * @author     Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  * @license    LGPL
  * @filesource
  */
 
 // Define callbacks
-  $GLOBALS['TL_DCA']['tl_module']['config']['onload_callback'][] = array('DMAElementGeneratorCallbacks','module_onload');
+$GLOBALS['TL_DCA']['tl_module']['config']['onload_callback'][] = array('DMAElementGeneratorCallbacks','module_onload');
 
+if (TL_MODE == 'BE' && version_compare(VERSION.BUILD, '3.10','>='))
+{
+    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dma_elementgenerator/html/DMA-uncompressed.js';
+}
 ?>
