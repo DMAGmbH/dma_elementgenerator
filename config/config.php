@@ -83,4 +83,7 @@ $GLOBALS['BE_FFL']['dma_eg_hidden'] = 'DMAElementGeneratorHiddenWidget';
 $GLOBALS['DMA_EG']['EL_COUNT'] = array();
 
 
+// Hooks
+$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
+
 ?>

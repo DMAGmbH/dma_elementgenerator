@@ -197,16 +197,76 @@ class DMAElementGeneratorCallbacks extends Backend
 
 					if ($objField->type == 'hyperlink')
 					{
-						$this->addHyperlinkToPalette($objField);
+						if ($objField->useCheckboxCondition)
+						{
+							if ($objField->subpaletteSelector)
+							{
+								$objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
+																								 ->limit(1)
+																								 ->execute($objField->subpaletteSelector);
+								if ($objSubSelector->numRows == 1)
+								{
+									if ($fields[$objSubSelector->title])
+									{
+										$this->addHyperlinkToPalette($objField);
+									}
+								}
+							}
+						}
+						else {
+							$this->addHyperlinkToPalette($objField);
+						}
 					}
 					if ($objField->type == 'image')
 					{
-						$this->addImageToPalette($objField);
+						if ($objField->useCheckboxCondition)
+						{
+							if ($objField->subpaletteSelector)
+							{
+								$objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
+																								 ->limit(1)
+																								 ->execute($objField->subpaletteSelector);
+								if ($objSubSelector->numRows == 1)
+								{
+									if ($fields[$objSubSelector->title])
+									{
+										$this->addImageToPalette($objField);
+									}
+								}
+							}
+						}
+						else 
+						{
+							$this->addImageToPalette($objField);
+						}
 					}
 
 					if ($GLOBALS['BE_FFL'][$objField->type])
 					{
-						$this->paletteReplace .= ',' . $title;
+						
+						
+						if ($objField->useCheckboxCondition)
+						{
+							if ($objField->subpaletteSelector)
+							{
+								$objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
+																								 ->limit(1)
+																								 ->execute($objField->subpaletteSelector);
+								if ($objSubSelector->numRows == 1)
+								{
+									if ($fields[$objSubSelector->title])
+									{
+										$this->paletteReplace .= ',' . $title;
+									}
+								}
+							}
+						} 
+						else
+						{
+							$this->paletteReplace .= ',' . $title;
+						}
+						//$dma_subpalettes
+						
 						$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array
 						(
 							'label' => array($objField->label,$objField->explanation),
@@ -278,7 +338,11 @@ class DMAElementGeneratorCallbacks extends Backend
 							//);
 							
 						}
-						 
+
+                        if ($objField->type == 'tableWizard')
+                        {
+                            $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['style'] = 'width:142px;height:66px';
+                        }
 						
 						if ($create)
 						{
@@ -318,6 +382,7 @@ class DMAElementGeneratorCallbacks extends Backend
 			// Include language definitions
 			$GLOBALS['TL_LANG'][$this->dma_lang[$strTableName]][DMA_EG_PREFIX.$objElement->id]  = array($objElement->title,'');
 		}
+        //print_r($GLOBALS['TL_DCA']['tl_content']['fields']);
 	}
 
 	//protected function addFieldToPalette
@@ -338,6 +403,7 @@ class DMAElementGeneratorCallbacks extends Backend
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
+            $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
 		}
 	}
@@ -353,6 +419,7 @@ class DMAElementGeneratorCallbacks extends Backend
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
+            $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
 		}
 	}

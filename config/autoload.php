@@ -2,14 +2,13 @@
 
 /**
  * Contao Open Source CMS
- * 
+ *
  * Copyright (C) 2005-2012 Leo Feyer
- * 
+ *
  * @package Dma_elementgenerator
  * @link    http://contao.org
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  */
-
 
 /**
  * Register the classes
@@ -35,5 +34,8 @@ TemplateLoader::addFiles(array
 	'dma_eg_debug'      => 'system/modules/dma_elementgenerator/templates',
 	'dma_egfield'         => 'system/modules/dma_elementgenerator/templates',
 	'dma_egfield_default' => 'system/modules/dma_elementgenerator/templates',
+	'dma_egfield_h1' => 'system/modules/dma_elementgenerator/templates',
+  'dma_egfield_h2' => 'system/modules/dma_elementgenerator/templates',
+  'dma_egfield_h3' => 'system/modules/dma_elementgenerator/templates',
 	'mod_dma_eg'          => 'system/modules/dma_elementgenerator/templates',
 ));

@@ -29,4 +29,9 @@
 // Define callbacks	
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('DMAElementGeneratorCallbacks','content_onload');
 
+if (TL_MODE == 'BE')
+{
+    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dma_elementgenerator/html/DMA-uncompressed.js';
+}
+
 ?>

@@ -106,26 +106,27 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('type'),
-		'default'                     => '{type_legend},type',
-		'legend'                      => '{type_legend},type,label,hidden',
-		'text'                        => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class,template',
-		'textarea'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_allow_html,class,template',
-		'select'                      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
-		'checkbox'                    => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
-		'radio'                       => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
-		'fileTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
-		'pageTree'                    => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class,template;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
-		'pagePicker'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{expert_legend:hide},exclude,class,template',
-		'listWizard'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
-	  'tableWizard'				  				=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
-	  'hyperlink'										=> '{type_legend},type,label,title,explanation;{input_legend},hyperlink_data;{expert_legend:hide},exclude,class,template',
-	  'image'											 	=>	'{type_legend},type,label,title,explanation;{input_legend},image_data;{expert_legend:hide},exclude,class,template'
+		'__selector__'  => array('type','useCheckboxCondition'),
+		'default'       => '{type_legend},type',
+		'legend'        => '{type_legend},type,label,hidden;{subpalette_legend:hide},useCheckboxCondition',
+		'text'          => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'textarea'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'select'        => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'checkbox'      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'radio'         => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'fileTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'pageTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
+        'pagePicker'	=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'listWizard'	=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	    'tableWizard'	=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class',
+	    'hyperlink'		=> '{type_legend},type,label,title,explanation;{input_legend},hyperlink_data;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+	    'image'			=>	'{type_legend},type,label,title,explanation;{input_legend},image_data;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(		
+		'useCheckboxCondition' => 'subpaletteSelector'
 	),
 
 	// Fields
@@ -315,6 +316,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		  'exclude'               => true,
 		  'eval'                  => array('tl_class' => 'w50')
     ),
+    'eval_sortable' => array
+    (
+    	'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable'],
+		  'inputType'             => 'checkbox',
+		  'exclude'               => true,
+		  'eval'                  => array('tl_class' => 'w50')
+    ),
 		'class' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'],
@@ -348,7 +356,23 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'options'                 => array('singleSRC','alt','title','size','imagemargin','imageUrl','fullsize','caption','floating'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'],
 			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
-		)
+		),
+		'useCheckboxCondition' => array
+		(
+			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['useCheckboxCondition'],
+			'exclude' 								=> true,
+			'inputType'               => 'checkbox',
+			'eval'                  => array('tl_class' => 'w50','submitOnChange' => true)
+		),
+		'subpaletteSelector' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['subpaletteSelector'],
+			'default'                 => '',
+			'exclude'                 => true,
+			'inputType'               => 'select',
+			'options_callback'        => array('tl_dma_eg_fields','getCheckboxelements'),
+			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50')
+		),
 	)
 );
 
@@ -400,12 +424,39 @@ class tl_dma_eg_fields extends Backend
 		return '<div class="cte_type">'
             . ($arrRow['type'] ? ' [' . $arrRow['type'] . ']' : '') . '</div>'."\n"
             .'<div class="block">'
-            . '<strong>' . $arrRow['label'] . '</strong>' . ($arrRow['title'] ? (' [' . $arrRow['title'] . ']') : '') ."\n"
+            . '<strong>' . ($arrRow['type']=='legend' ? '<i>' : '') . $arrRow['label'] . ($arrRow['type']=='legend' ? '</i>' : '') . '</strong>' . ($arrRow['title'] ? (' [' . $arrRow['title'] . ']') : '') ."\n"
             .'</div>' . "\n";
+	}
+	
+	public function getCheckboxelements(DataContainer $dc) 
+	{
+		$objCheckboxes = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE pid=? AND type=?")
+																		->execute($dc->activeRecord->pid,'checkbox');
+		
+		if ($objCheckboxes->numRows > 0)
+		{
+			$arrCheckboxes = array();
+			while ($objCheckboxes->next())
+			{
+                // aktuell werden nur einfache Checkboxen unterstützt
+                if (sizeof(deserialize($objCheckboxes->options)) == 1)
+                {
+				    $arrCheckboxes[$objCheckboxes->id] = $objCheckboxes->label;
+                }
+			}
+			return $arrCheckboxes;
+		}
+		return false;
 	}
 	
 	public function getElementTemplates(DataContainer $dc)
 	{
+
+        if (version_compare(VERSION.BUILD, '3.0.0','>='))
+        {
+        	return $this->getTemplateGroup('dma_egfield_');
+        }
+
 		if(version_compare(VERSION.BUILD, '2.9.0','>='))
 		{
 			$arrTemplates = array();

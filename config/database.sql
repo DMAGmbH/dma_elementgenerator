@@ -56,8 +56,11 @@ CREATE TABLE `tl_dma_eg_fields` (
   `eval_allow_html` char(1) NULL default '',
   `eval_unique` char(1) NULL default '',
   `eval_do_not_copy` char(1) NULL default '',
+  `eval_sortable` char(1) NULL default '',
   `hyperlink_data` blob NULL,
   `image_data` blob NULL,
+  `useCheckboxCondition` char(1) NULL default '',
+  `subpaletteSelector` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

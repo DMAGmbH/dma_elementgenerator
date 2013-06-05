@@ -131,7 +131,9 @@ class DMAElementGenerator extends Frontend
 			$arrTemplateData[$objField->title] = array();
 
 			$arrTemplateData[$objField->title]['raw'] = $arrData[$objField->title];
+			$arrTemplateData[$objField->title]['value'] = $arrData[$objField->title];
 			$arrTemplateData[$objField->title]['type'] = $objField->type;
+			$arrTemplateData[$objField->title]['label'] = $objField->label;
 
 			//formatierte Ausgabe von bekannten Fällen
 			if ($objField->eval_rgxp)
@@ -167,6 +169,7 @@ class DMAElementGenerator extends Frontend
 			{
 				$tempArrCbx = trimsplit(',',$arrData[$objField->title]);
 				$objFieldTemplate->value = '';
+				$arrTemplateData[$objField->title]['value'] = array();
 				foreach ($tempArrCbx as $checkbox)
 				{
 					$objFieldTemplate->value .= '<span class="cbx_entry">' . $checkbox . '</span>';
@@ -188,6 +191,7 @@ class DMAElementGenerator extends Frontend
 				{
 					//mehrere Seiten
 					$tempArrPages = deserialize($arrData[$objField->title]);
+					$arrTemplateData[$objField->title]['value'] = array();
 					foreach ($tempArrPages as $page)
 					{
 						$objLinkedPage = $this->Database->prepare("SELECT * FROM tl_page WHERE id=?")
@@ -236,15 +240,17 @@ class DMAElementGenerator extends Frontend
 				{
 					//mehrere Dateien
 					$tempArrFiles = deserialize($arrData[$objField->title]);
+					$arrTemplateData[$objField->title]['value'] = array();
 					foreach ($tempArrFiles as $file)
 					{
 					
 						if (is_numeric($file))
 						{
-							$objFile = \FilesModel::findByPk($file);
+							$objFiles = \FilesModel::findByPk($file);
 							$arrImage = array(
 									'singleSRC' => $objFile->path
 							);
+							$objFile = new \File($objFiles->path, true);
 						}
 						if (is_file(TL_ROOT . '/' . $file))
 						{
@@ -268,6 +274,8 @@ class DMAElementGenerator extends Frontend
 							$arrTemplateData[$objField->title]['value'][] = array(
 								'raw' => $file,
 								'src' => $objFile->path,
+                                'meta' => $objFiles ? deserialize($objFiles->meta) : '',
+								'value' => $objFile->path,
 								'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
 								'attributes' => array(
 									'width'   => $objFile->width,
@@ -279,6 +287,16 @@ class DMAElementGenerator extends Frontend
 							);
 						}
 					}
+					
+					//print_r($arrData);
+					if ($arrData['orderSRC'] != '')
+					{
+						//echo "order";
+					}
+					//echo "<pre>";
+					//print_r($arrTemplateData[$objField->title]);
+					//echo "</pre>";
+					
 				}
 				else
 				{
@@ -286,10 +304,11 @@ class DMAElementGenerator extends Frontend
 					// file-handling for Contao 3
 					if (is_numeric($arrData[$objField->title]))
 					{
-						$objFile = \FilesModel::findByPk($arrData[$objField->title]);
+						$objFiles = \FilesModel::findByPk($arrData[$objField->title]);
 						$arrImage = array(
-								'singleSRC' => $objFile->path
+								'singleSRC' => $objFiles->path
 						);
+						$objFile = new \File($objFiles->path, true);
 					}
 					else
 					{
@@ -301,6 +320,8 @@ class DMAElementGenerator extends Frontend
 							);
 						}
 					}
+					//var_dump($objFile);
+					//$objFile = new file($arrData['singleSRC']);
 					
 					// Send the file to the browser
 					if (\Input::get('file', true) && \Input::get('file', true) != '')
@@ -318,7 +339,9 @@ class DMAElementGenerator extends Frontend
 
 						$arrTemplateData[$objField->title]['value'] = array(
 							'raw' => $arrData[$objField->title],
+                            'meta' => $objFiles ? deserialize($objFiles->meta) : '',
 							'src' => $objFile->path,
+							'value' => $objFile->path,
 							'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
 							'attributes' => array(
 								'width'   => $objFile->width,
@@ -328,8 +351,10 @@ class DMAElementGenerator extends Frontend
 								'size'  => $objFile->size
 							)
 						);
-						
-						$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+						if ($objFile->width && $objFile->height)
+						{
+							$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+						}
 						$objFieldTemplate->value = '';
 					}
 				}
@@ -340,15 +365,19 @@ class DMAElementGenerator extends Frontend
 			{
 				$linkData = array();
 				$arrHyperlinkData = deserialize($objField->hyperlink_data);
-
 				foreach ($arrHyperlinkData as $hyperlinkData)
 				{
 					$linkData[$hyperlinkData] =  $arrData[$objField->title . '--' . $hyperlinkData];
 				}
 
-				$objHyperlink = new dmaHyperlinkHelper($linkData);
-				$objFieldTemplate->value = $objHyperlink->generate();
-				$arrElements[$objField->title] = $objHyperlink->generate();
+				if ($linkData['url'])
+				{
+					$objHyperlink = new dmaHyperlinkHelper($linkData);
+					$objFieldTemplate->value = $objHyperlink->generate();
+					$arrElements[$objField->title] = $objHyperlink->generate();
+					$arrTemplateData[$objField->title]['raw'] = $linkData;//deserialize($objField->hyperlink_data);
+					$arrTemplateData[$objField->title]['value'] = $linkData['url'];
+				}
 			}
 
 			// Handling von kompletten Bildern
@@ -362,20 +391,29 @@ class DMAElementGenerator extends Frontend
 					$arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData];
 				}
 
+				$arrImagePrecompiled = $arrImage;
 				// file-handling for Contao 3
+				
 				if (is_numeric($arrImage['singleSRC']))
 				{
 					$objFile = \FilesModel::findByPk($arrImage['singleSRC']);
-					if ($objFile === null || !is_file(TL_ROOT . '/' . $objFile->path))
+					/*if ($objFile === null || !is_file(TL_ROOT . '/' . $objFile->path))
 					{
 						$arrImage['singleSRC'] = '';
-					}
-					$arrImage['singleSRC'] = $objFile->path;
+					}*/
+					$arrTemplateData[$objField->title]['raw'] = $arrImage;//['singleSRC'];
+                    if ($objFile->meta)
+                    {
+                        $arrTemplateData[$objField->title]['meta'] = deserialize($objFile->meta);
+                    }
+					$arrTemplateData[$objField->title]['value'] = $objFile->path;
+					$arrImagePrecompiled['singleSRC'] = $objFile->path;
 				}
-				$arrTemplateData[$objField->title]['raw'] = $arrImage['singleSRC'];
+				//$arrTemplateData[$objField->title]['raw'] = $arrImage['singleSRC'];
 
+				//print_r($arrImage);
 
-				$this->addImageToTemplate($objFieldTemplate, $arrImage);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
+				$this->addImageToTemplate($objFieldTemplate, $arrImagePrecompiled);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
 				//$objFieldTemplate->value = $objHyperlink->generate();
 				$arrImage['type'] = 'image';
 				$objImage = new dmaContentImageHelper($arrImage);
@@ -384,9 +422,12 @@ class DMAElementGenerator extends Frontend
 
 			}
 
-			$strFields .= $objFieldTemplate->parse();
-			$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
-			//$arrElements[$objField->title] = $objFieldTemplate->parse();
+			if ($arrTemplateData[$objField->title]['value'])
+			{
+				$strFields .= $objFieldTemplate->parse();
+				$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
+				//$arrElements[$objField->title] = $objFieldTemplate->parse();
+			}
 		}
 
 
@@ -452,6 +493,97 @@ class DMAElementGenerator extends Frontend
 
 		return $objTemplate->parse();
 
+	}
+	
+	// we need to use an own method for the executePostActions-function
+	// the table-fields are no real fields
+	public function fixedAjaxRequest($strAction, \DataContainer $dc) {
+		if ($strAction=='reloadPagetreeDMA' || $strAction=='reloadFiletreeDMA')
+		{
+			$intId = \Input::get('id');
+			$strField = $strFieldName = \Input::post('name');
+	
+			// Handle the keys in "edit multiple" mode
+			if (\Input::get('act') == 'editAll')
+			{
+				$intId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', $strField);
+				$strField = preg_replace('/(.*)_[0-9a-zA-Z]+$/', '$1', $strField);
+			}
+	
+			// Validate the request data
+			if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
+			{
+				// The field does not exist
+				if (!array_key_exists($strField, $GLOBALS['TL_CONFIG']))
+				{
+					$this->log('Field "' . $strField . '" does not exist in the global configuration', 'Ajax executePostActions()', TL_ERROR);
+					header('HTTP/1.1 400 Bad Request');
+					die('Bad Request');
+				}
+			}
+			elseif ($this->Database->tableExists($dc->table))
+			{
+				// The field does not exist
+				if (!$this->Database->fieldExists($strField, $dc->table))
+				{
+					$this->log('Field "' . $strField . '" does not exist in table "' . $dc->table . '"', 'Ajax executePostActions()', TL_ERROR);
+					//header('HTTP/1.1 400 Bad Request');
+					//die('Bad Request');
+				}
+	
+				$objRow = $this->Database->prepare("SELECT * FROM " . $dc->table . " WHERE id=?")
+										 ->execute($intId);
+	
+				// The record does not exist
+				if ($objRow->numRows < 1)
+				{
+					$this->log('A record with the ID "' . $intId . '" does not exist in table "' . $dc->table . '"', 'Ajax executePostActions()', TL_ERROR);
+					//header('HTTP/1.1 400 Bad Request');
+					//die('Bad Request');
+				}
+			}
+	
+			$varValue = \Input::post('value');
+			$strKey = ($strAction == 'reloadPagetreeDMA') ? 'pageTree' : 'fileTree';
+
+			// Convert the selected values
+			if ($varValue != '')
+			{
+				$varValue = trimsplit(',', $varValue);
+	
+				// Automatically add resources to the DBAFS
+				if ($strKey == 'fileTree')
+				{
+					foreach ($varValue as $k=>$v)
+					{
+						$varValue[$k] = \Dbafs::addResource($v)->id;
+					}
+				}
+	
+				$varValue = serialize($varValue);
+			}
+	
+			// Set the new value
+			if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
+			{
+				$GLOBALS['TL_CONFIG'][$strField] = $varValue;
+				$arrAttribs['activeRecord'] = null;
+			}
+			elseif ($this->Database->tableExists($dc->table))
+			{
+				$objRow->$strField = $varValue;
+				$arrAttribs['activeRecord'] = $objRow;
+			}
+	
+			$arrAttribs['id'] = $strFieldName;
+			$arrAttribs['name'] = $strFieldName;
+			$arrAttribs['value'] = $varValue;
+			$arrAttribs['strTable'] = $dc->table;
+			$arrAttribs['strField'] = $strField;
+	
+			$objWidget = new $GLOBALS['BE_FFL'][$strKey]($arrAttribs);
+			echo $objWidget->generate();
+		}
 	}
 }
 

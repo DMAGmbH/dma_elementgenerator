@@ -203,6 +203,11 @@ class tl_dma_eg extends Backend
 	 */
 	public function getElementTemplates(DataContainer $dc)
 	{
+		if (version_compare(VERSION.BUILD, '3.0.0','>='))
+		{
+			return $this->getTemplateGroup('dma_eg_');
+		}
+
 		if(version_compare(VERSION.BUILD, '2.9.0','>='))
 		{
 			$arrTemplates = array();
@@ -245,7 +250,7 @@ class tl_dma_eg extends Backend
 					}
 				}
 			}
-	   		return $arrTemplates;
+	   	return $arrTemplates;
 		}
 		else 
 		{

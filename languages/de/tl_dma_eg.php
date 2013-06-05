@@ -28,14 +28,14 @@
 
   
   $GLOBALS['TL_LANG']['tl_dma_eg']['title'] = array('Bezeichnung','Bezeichnung des Elementes');
-  $GLOBALS['TL_LANG']['tl_dma_eg']['category'] = array('Kategorie','Unter welcher Überschrift soll das Element in der Modul/Inhaltselementliste geführt werden?');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['category'] = array('Kategorie','Unter welcher Überschrift/Kategorie soll das Element in der Modul-/Inhaltselementliste geführt werden? (Inhaltselemente: texts, links, media, files, includes; Module: navigationMenu, user, application, miscellaneous');
   $GLOBALS['TL_LANG']['tl_dma_eg']['template'] = array('Template','Ausgabetemplate');
   $GLOBALS['TL_LANG']['tl_dma_eg']['module'] = array('Als Modul bereitstellen','Soll das Element als Modul zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['content'] = array('Als Inhaltselement bereitstellen','Soll das Element als Inhaltselement zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['class'] = array('zusätzliche Klasse für dieses Element','mit dieser Klasse kann die standardmäßig gesetetzte überschrieben werden');
 
   $GLOBALS['TL_LANG']['tl_dma_eg']['without_label'] = array('Feldausgabe ohne Label','Sollen die Felder ohne Label ausgegeben werden?');
-  $GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'] = array('Felder in divs ausgeben','Standardmäßig werden die Inhalte als ul ausgegeben. Hier können Sie als divs ausgegeben werden.');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'] = array('Felder in divs ausgeben','Standardmäßig werden die Inhalte als ul ausgegeben. Alternativ ist auch eine Ausgabe in divs möglich.');
   
   
   $GLOBALS['TL_LANG']['tl_dma_eg']['new'] = array('Neues Element','Ein neues Element anlegen');
