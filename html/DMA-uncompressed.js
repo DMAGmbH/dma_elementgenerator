@@ -3,7 +3,7 @@ Class.refactor(Request.Contao, {
 			if (options) {
 				// Try to replace the action with the dma-action
 				try	{
-					if ('dma_eg_'.indexOf(options.data.name)) {
+					if ('dma_eg_'.indexOf(options.data.name) && (options.data.action=='reloadPagetree' || options.data.action=='reloadFiletree')) {
 						options.data.action = options.data.action + 'DMA';
 					}
 				} catch(e) {}
