@@ -84,6 +84,8 @@ $GLOBALS['DMA_EG']['EL_COUNT'] = array();
 
 
 // Hooks
-$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
+if(version_compare(VERSION.BUILD, '3.10','>=')) {
+	$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
+}
 
 ?>
