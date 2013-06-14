@@ -252,7 +252,14 @@ class DMAElementGeneratorCallbacks extends Backend
 								$objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
 																								 ->limit(1)
 																								 ->execute($objField->subpaletteSelector);
-								if ($objSubSelector->numRows == 1)
+
+                                // funktioniert nur mit Contao >= 3.1 fehlerfrei
+                                if(version_compare(VERSION.BUILD, '3.10','>='))
+                                {
+                                    $GLOBALS['TL_DCA'][$strTable]['fields'][DMA_EG_PREFIX . $objSubSelector->id . '_' . $objSubSelector->title]['eval']['submitOnChange'] = true;
+                                }
+
+                                if ($objSubSelector->numRows == 1)
 								{
 									if ($fields[$objSubSelector->title])
 									{
