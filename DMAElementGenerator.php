@@ -19,8 +19,8 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
+ * @copyright  DMA GmbH
+ * @author     Carsten Kollmeier
  * @author     Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  * @license    LGPL
@@ -32,8 +32,9 @@
  *
  * the dynamic contentelement
  *
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
+ * @copyright  DMA GmbH
+ * @author     Carsten Kollmeier
+ * @author     Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  */
 
@@ -305,10 +306,14 @@ class DMAElementGenerator extends Frontend
 					if (is_numeric($arrData[$objField->title]))
 					{
 						$objFiles = \FilesModel::findByPk($arrData[$objField->title]);
-						$arrImage = array(
+
+                        if ($objFiles)
+                        {
+						    $arrImage = array(
 								'singleSRC' => $objFiles->path
-						);
-						$objFile = new \File($objFiles->path, true);
+						    );
+						    $objFile = new \File($objFiles->path, true);
+                        }
 					}
 					else
 					{
