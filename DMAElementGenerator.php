@@ -259,9 +259,9 @@ class DMAElementGenerator extends Frontend
 						}
 						
 						// Send the file to the browser
-						if (\Input::get('file', true) && \Input::get('file', true) != '')
+						if ($this->Input->get('file', true) && $this->Input->get('file', true) != '')
 						{
-							$file = \Input::get('file', true);
+							$file = $this->Input->get('file', true);
 	
 							if ($file == $objFile->path)
 							{
@@ -277,7 +277,7 @@ class DMAElementGenerator extends Frontend
 								'src' => $objFile->path,
                                 'meta' => $objFiles ? deserialize($objFiles->meta) : '',
 								'value' => $objFile->path,
-								'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
+								'dl' => $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
 								'attributes' => array(
 									'width'   => $objFile->width,
 									'height'  => $objFile->height,
@@ -329,9 +329,9 @@ class DMAElementGenerator extends Frontend
 					//$objFile = new file($arrData['singleSRC']);
 					
 					// Send the file to the browser
-					if (\Input::get('file', true) && \Input::get('file', true) != '')
+					if ($this->Input->get('file', true) && $this->Input->get('file', true) != '')
 					{
-						$file = \Input::get('file', true);
+						$file = $this->Input->get('file', true);
 
 						if ($file == $objFile->path)
 						{
@@ -347,7 +347,7 @@ class DMAElementGenerator extends Frontend
                             'meta' => $objFiles ? deserialize($objFiles->meta) : '',
 							'src' => $objFile->path,
 							'value' => $objFile->path,
-							'dl' => \Environment::get('request') . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos(\Environment::get('request'), '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
+							'dl' => $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
 							'attributes' => array(
 								'width'   => $objFile->width,
 								'height'  => $objFile->height,
