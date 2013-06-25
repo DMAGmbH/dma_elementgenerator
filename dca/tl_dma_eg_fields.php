@@ -19,9 +19,9 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
- * @author	   Janosch Skuplik <skuplik@dma.do>
+ * @copyright  DMA GmbH
+ * @author     Carsten Kollmeier
+ * @author     Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  * @license    LGPL
  * @filesource
@@ -140,14 +140,15 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink','image'),
       'default' => 'text',
       'exclude' => true,
-      'eval' => array('submitOnChange' => true)
+      'load_callback'        => array(array('tl_dma_eg_fields','loadTypeField')),
+      'eval' => array('submitOnChange' => true, 'tl_class' => 'w50')
     ),
 		'label' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['label'],
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr')
 		),
 		'title' => array
 		(
@@ -385,6 +386,16 @@ class tl_dma_eg_fields extends Backend
 	 * @param object
 	 * @return string
 	 */
+    public function loadTypeField($varValue, DataContainer $dc)
+    {
+        if ($dc->activeRecord->title != '')
+        {
+            $GLOBALS['TL_DCA']['tl_dma_eg_fields']['fields']['type']['eval']['disabled'] = true;
+            $GLOBALS['TL_DCA']['tl_dma_eg_fields']['fields']['type']['label'] = $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_disabled'];
+        }
+        return $varValue;
+    }
+
 	public function generateTitle($varValue, DataContainer $dc)
 	{
 		$autoAlias = false;

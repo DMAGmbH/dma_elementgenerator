@@ -45,6 +45,7 @@
  
   
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'] = array('Feldtyp','Feldtyp auswählen');
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_disabled'] = array('Feldtyp','Feldtyp können nachträglich leider nicht mehr geändert werden. Um den Feldtypen zu ändern löschen Sie bitte dieses Feld und fügen ein neues hinzu.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'] = array(
                                                               'legend' => 'Legende',
                                                               'text' => 'Textfeld',
