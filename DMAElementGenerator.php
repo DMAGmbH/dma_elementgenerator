@@ -178,6 +178,18 @@ class DMAElementGenerator extends Frontend
 				}
 			}
 
+            // Handling von Listen
+            if ($objField->type=='listWizard' && is_array(trimsplit(',',$arrData[$objField->title])))
+            {
+                $arrTemplateData[$objField->title]['value'] = deserialize($arrData[$objField->title]);
+            }
+
+            // Handling von Tabellen
+            if ($objField->type=='tableWizard' && is_array(trimsplit(',',$arrData[$objField->title])))
+            {
+                $arrTemplateData[$objField->title]['value'] = deserialize($arrData[$objField->title]);
+            }
+
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{
