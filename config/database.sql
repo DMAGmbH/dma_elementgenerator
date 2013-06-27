@@ -61,6 +61,10 @@ CREATE TABLE `tl_dma_eg_fields` (
   `image_data` blob NULL,
   `useCheckboxCondition` char(1) NULL default '',
   `subpaletteSelector` int(10) unsigned NOT NULL default '0',
+  `optionsType` varchar(255) NOT NULL default '',
+  `optDbTable` varchar(255) NOT NULL default '',
+  `optDbQuery` mediumtext NULL,
+  `optDbTitle` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

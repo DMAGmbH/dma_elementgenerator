@@ -190,6 +190,19 @@ class DMAElementGenerator extends Frontend
                 $arrTemplateData[$objField->title]['value'] = deserialize($arrData[$objField->title]);
             }
 
+            // Handling von Selectmenüs mit Datenbankstruktur
+            if ($objField->type == 'select' && $objField->optionsType == 'database')
+            {
+                $objDatabaseData = $this->Database->prepare("SELECT * FROM " . $objField->optDbTable . " WHERE id=?")
+                                                  ->limit(1)
+                                                  ->execute($arrData[$objField->title]);
+                if ($objDatabaseData->numRows == 1)
+                {
+                    $arrTemplateData[$objField->title]['value'] = $objDatabaseData->row();
+                }
+
+            }
+
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{

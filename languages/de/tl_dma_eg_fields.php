@@ -127,6 +127,10 @@ $GLOBALS['TL_LANG']['tl_dma_eg']['subpaletteSelector'] = array('Abhängige Check
 		'floating' => 'Bildausrichtung' 
 	);
 
+$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'] = array('Optionen-Art','Optionen können manuell eingegeben werden, oder aus Datanbank generiert werden.');
+$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'] = array('Datenbank-Tabelle','Welche Tabelle innerhalb der Datenbank soll für die Generierung der Optionen genutzt werden?');
+$GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'] = array('Optionale WHERE-Query','Mit einer optionalen WHERE-Query kann das Select-Menü eingeschränkt werden.');
+$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'] = array('Anzuzeigender Name','Welches Feld soll dem Benutzer in der Auswahl angezeigt werden? Standardmäßig wird das ID-Feld verwendet.');
   
 
 ?>

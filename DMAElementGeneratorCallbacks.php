@@ -70,29 +70,58 @@ class DMAElementGeneratorCallbacks extends Backend
 
 	protected function prepareOptions($objField)
 	{
-		$arrOptions = deserialize($objField->options, true);
+        $arrReturn = array();
+        if ($objField->optionsType == 'database')
+        {
+            if ($objField->optDbTable && $this->Database->tableExists($objField->optDbTable))
+            {
+                $strQuery = "SELECT * FROM " . $objField->optDbTable;
 
-		if (empty($arrOptions))
-		{
-			return null;
-		}
+                if ($objField->optDbQuery)
+                {
+                    $strQuery .= " WHERE " . $objField->optDbQuery;
+                }
 
-		if ($objField->type == 'checkbox' && count($arrOptions) == 1)
-		{
-			return null;
-		}
+                $objDatabaseOptions = $this->Database->prepare($strQuery)->execute();
 
-		$arrReturn = array();
-		foreach ($arrOptions as $i=>$option)
-		{
-			if (is_array($option))
-			{
-				$arrReturn[$option['value']] = $option['label'];
-			} else
-			{
-				$arrReturn[$i] = $option[1];
-			}
-		}
+                $strValue = 'id';
+                if ($objField->optDbTitle && $this->Database->fieldExists($objField->optDbTitle,$objField->optDbTable))
+                {
+                    $strValue = $objField->optDbTitle;
+                }
+
+                while ($objDatabaseOptions->next())
+                {
+                    $arrReturn[$objDatabaseOptions->id] = $objDatabaseOptions->$strValue;
+                }
+            }
+        }
+        else
+        {
+            $arrOptions = deserialize($objField->options, true);
+
+            if (empty($arrOptions))
+            {
+                return null;
+            }
+
+            if ($objField->type == 'checkbox' && count($arrOptions) == 1)
+            {
+                return null;
+            }
+
+
+            foreach ($arrOptions as $i=>$option)
+            {
+                if (is_array($option))
+                {
+                    $arrReturn[$option['value']] = $option['label'];
+                } else
+                {
+                    $arrReturn[$i] = $option[1];
+                }
+            }
+        }
 
 		return $arrReturn;
 	}
@@ -350,7 +379,7 @@ class DMAElementGeneratorCallbacks extends Backend
                         {
                             $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['style'] = 'width:142px;height:66px';
                         }
-						
+
 						if ($create)
 						{
 

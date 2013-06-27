@@ -106,12 +106,12 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'  => array('type','useCheckboxCondition'),
+		'__selector__'  => array('type','useCheckboxCondition','optionsType'),
 		'default'       => '{type_legend},type',
 		'legend'        => '{type_legend},type,label,hidden;{subpalette_legend:hide},useCheckboxCondition',
 		'text'          => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
 		'textarea'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
-		'select'        => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'select'        => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,optionsType;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'checkbox'      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'radio'         => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'fileTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
@@ -126,7 +126,9 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	// Subpalettes
 	'subpalettes' => array
 	(		
-		'useCheckboxCondition' => 'subpaletteSelector'
+		'useCheckboxCondition' => 'subpaletteSelector',
+        'optionsType_manual' => 'options',
+        'optionsType_database' => 'optDbTable,optDbTitle,optDbQuery'
 	),
 
 	// Fields
@@ -374,6 +376,37 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'options_callback'        => array('tl_dma_eg_fields','getCheckboxelements'),
 			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50')
 		),
+        'optionsType' => array
+        (
+           'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'],
+            'default' => 'manual',
+            'exclude' => true,
+            'inputType' => 'select',
+            'options' => array('manual','database'),
+            'eval' => array('mandatory'=>true,'submitOnChange' => true,'tl_class'=>'w50 clr')
+        ),
+        'optDbTable' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'],
+            'default' => '',
+            'exclude' => true,
+            'inputType' => 'select',
+            'options_callback' => array('tl_dma_eg_fields','getDatabaseTables'),
+            'eval' => array('includeBlankOption'=>true,'mandatory'=> true, 'submitOnChange' => true, 'tl_class'=>'w50 clr')
+        ),
+        'optDbQuery' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'],
+            'exclude' => true,
+            'inputType' => 'textarea',
+            'eval'      => array('preserveTags'=>true, 'style'=>'height:60px', 'tl_class'=>'clr'),
+        ),
+        'optDbTitle' => array(
+            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'],
+            'default' => '',
+            'exclude' => true,
+            'inputType' => 'select',
+            'options_callback' => array('tl_dma_eg_fields','getDatabaseTableRows'),
+            'eval' => array('includeBlankOption'=>true,'tl_class'=>'w50')
+        )
 	)
 );
 
@@ -459,6 +492,24 @@ class tl_dma_eg_fields extends Backend
 		}
 		return false;
 	}
+
+    public function getDatabaseTables(DataContainer $dc)
+    {
+        $arrDbTables = $this->Database->listTables();
+        return $arrDbTables;
+    }
+
+    public function getDatabaseTableRows(DataContainer $dc)
+    {
+        if ($dc->activeRecord->optDbTable && $this->Database->tableExists($dc->activeRecord->optDbTable))
+        {
+            return $this->Database->getFieldNames($dc->activeRecord->optDbTable);
+        }
+        else
+        {
+            return false;
+        }
+    }
 	
 	public function getElementTemplates(DataContainer $dc)
 	{
