@@ -45,6 +45,8 @@ CREATE TABLE `tl_dma_eg_fields` (
   `eval_field_type` varchar(255) NOT NULL default '',
   `eval_path` varchar(255) NOT NULL default '',
   `eval_mandatory` char(1) NULL default '',
+  `eval_blank_option` char(1) NULL default '',
+  `eval_chosen` char(1) NULL default '',
   `eval_maxlength` int(10) unsigned NOT NULL default '0',
   `eval_minlength` int(10) unsigned NOT NULL default '0',
   `eval_rows` int(10) unsigned NOT NULL default '5',

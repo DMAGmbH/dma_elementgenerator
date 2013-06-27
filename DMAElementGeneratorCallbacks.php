@@ -364,6 +364,15 @@ class DMAElementGeneratorCallbacks extends Backend
 						{
 							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['cols'] = $objField->eval_cols;
 						}
+
+                        if ($objField->eval_blank_option)
+                        {
+                            $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['includeBlankOption'] = $objField->eval_blank_option;
+                        }
+                        if ($objField->eval_chosen)
+                        {
+                            $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['chosen'] = $objField->eval_chosen;
+                        }
 						
 						if ($objField->eval_sortable)
 						{
