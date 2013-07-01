@@ -440,6 +440,9 @@ class DMAElementGeneratorCallbacks extends Backend
 	protected function addHyperlinkToPalette($objField)
 	{
 		$arrHyperlinkData = deserialize($objField->hyperlink_data);
+
+        $this->paletteReplace .= ';{' . $objField->label . '}';
+
 		foreach ($arrHyperlinkData as $hyperlinkData)
 		{
 			$title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
@@ -459,6 +462,7 @@ class DMAElementGeneratorCallbacks extends Backend
         //print_r($arrImageData);
         if ($objField->image_data)
         {
+            $this->paletteReplace .= ';{' . $objField->label . '}';
             foreach ($arrImageData as $imageData)
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
