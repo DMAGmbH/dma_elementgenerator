@@ -549,7 +549,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	 */
 	protected function store_configuration_without($without)
 	{
-		$objElement = $this->Database->prepare("SELECT id,category,module,content FROM tl_dma_eg")
+		$objElement = $this->Database->prepare("SELECT id,category,module,content FROM tl_dma_eg ORDER BY title")
 		->execute();
 		$arrModuleConfig = array();
 		$arrContentConfig = array();
