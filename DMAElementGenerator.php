@@ -274,11 +274,12 @@ class DMAElementGenerator extends Frontend
 						{
 							$objFiles = \FilesModel::findByPk($file);
 							$arrImage = array(
-									'singleSRC' => $objFile->path
+									'singleSRC' => $objFiles->path
 							);
 							$objFile = new \File($objFiles->path, true);
 						}
-						if (is_file(TL_ROOT . '/' . $file))
+
+						elseif (is_file(TL_ROOT . '/' . $file))
 						{
 							$objFile = new file($file);
 						}
@@ -383,7 +384,7 @@ class DMAElementGenerator extends Frontend
 						);
 						if ($objFile->width && $objFile->height)
 						{
-							$this->addImageToTemplate($objFieldTemplate, $arrImage, $intMaxWidth, $strLightboxId);
+							$this->addImageToTemplate($objFieldTemplate, $arrImage, null, null);
 						}
 						$objFieldTemplate->value = '';
 					}
@@ -461,7 +462,7 @@ class DMAElementGenerator extends Frontend
 		}
 
 
-		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $strTemplate));
+		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $this->strTemplate));
 
 		//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
 		if ($this->displayInDivs)
