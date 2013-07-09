@@ -19,9 +19,9 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
- * @author	   Janosch Skuplik <skuplik@dma.do>
+ * @copyright  DMA GmbH
+ * @author     Carsten Kollmeier
+ * @author     Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  * @license    LGPL
  * @filesource
@@ -56,14 +56,15 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'mode'                    => 1,
 			'fields'                  => array('title'),
 			'flag'                    => 1,
-			'panelLayout'             => 'filter;search,limit',
-
+			'panelLayout'             => 'filter;search,limit'
 		),
 		'label' => array
 		(
 			'fields'                  => array('title'),
 			'format'                  => '%s',
+            'label_callback'          => array('tl_dma_eg', 'listFormFields')
 		),
+
 		'global_operations' => array
 		(
 			'all' => array
@@ -103,6 +104,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 				'icon'                => 'delete.gif',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['tl_dma_eg']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
+            'toggle' => array
+            (
+                'label'               => &$GLOBALS['TL_LANG']['tl_content']['toggle'],
+                'icon'                => 'visible.gif',
+                'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
+                'button_callback'     => array('tl_dma_eg', 'toggleIcon')
+            ),
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_dma_eg']['show'],
@@ -195,6 +203,112 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
  */
 class tl_dma_eg extends Backend
 {
+
+
+    /**
+     * returns the list output
+     * @param array
+     * @return string
+     */
+    public function listFormFields($arrRow)
+    {
+        return '<div class="cte_type ' . ($arrRow['invisible'] ? 'unpublished' : 'published') . '">'
+            . ($arrRow['content'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelContentelement'] . ' [' . $arrRow['category'] . ']' : '')
+            . ($arrRow['module'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelFrontendmodule'] . ' [' . $arrRow['category'] . ']' : '')
+            . '</div>'."\n"
+            . '<div class="block">'
+            . '<strong>' . $arrRow['title'] . '</strong>' ."\n"
+            . '</div>' . "\n";
+    }
+
+    /**
+     * Return the "toggle visibility" button
+     * @param array
+     * @param string
+     * @param string
+     * @param string
+     * @param string
+     * @param string
+     * @return string
+     */
+    public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+    {
+        if (strlen(Input::get('tid')))
+        {
+            $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
+            $this->redirect($this->getReferer());
+        }
+
+        // Check permissions AFTER checking the tid, so hacking attempts are logged
+        //if (!$this->User->isAdmin && !$this->User->hasAccess('tl_content::invisible', 'alexf'))
+        //{
+        //    return '';
+        //}
+
+        $href .= '&amp;id='.Input::get('id').'&amp;tid='.$row['id'].'&amp;state='.$row['invisible'];
+
+        if ($row['invisible'])
+        {
+            $icon = 'invisible.gif';
+        }
+
+        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+    }
+
+
+    /**
+     * Toggle the visibility of an element
+     * @param integer
+     * @param boolean
+     */
+    public function toggleVisibility($intId, $blnVisible)
+    {
+        // Check permissions to edit
+        Input::setGet('id', $intId);
+        Input::setGet('act', 'toggle');
+
+        // The onload_callbacks vary depending on the dynamic parent table (see #4894)
+        //if (is_array($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback']))
+        //{
+        //    foreach ($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'] as $callback)
+        //    {
+        //        if (is_array($callback))
+        //        {
+        //            $this->import($callback[0]);
+        //            $this->$callback[0]->$callback[1]($this);
+        //        }
+        //    }
+        //}
+
+        // Check permissions to publish
+        //if (!$this->User->isAdmin && !$this->User->hasAccess('tl_content::invisible', 'alexf'))
+        //{
+        //    $this->log('Not enough permissions to show/hide content element ID "'.$intId.'"', 'tl_content toggleVisibility', TL_ERROR);
+        //    $this->redirect('contao/main.php?act=error');
+        //}
+
+        $objVersions = new Versions('tl_dma_eg', $intId);
+        $objVersions->initialize();
+
+
+        // Update the database
+        $this->Database->prepare("UPDATE tl_dma_eg SET tstamp=". time() .", invisible='" . ($blnVisible ? '' : 1) . "' WHERE id=?")
+                       ->execute($intId);
+
+        $objVersions->create();
+        $this->log('A new version of record "tl_dma_eg.id='.$intId.'" has been created'.$this->getParentEntries('tl_dma_eg', $intId), 'tl_dma_eg toggleVisibility()', TL_GENERAL);
+
+        // Trigger the onsubmit_callback
+        if (is_array($GLOBALS['TL_DCA']['tl_dma_eg']['config']['onsubmit_callback']))
+        {
+           foreach ($GLOBALS['TL_DCA']['tl_dma_eg']['config']['onsubmit_callback'] as $callback)
+            {
+                $this->import($callback[0]);
+                $this->$callback[0]->$callback[1]($this);
+            }
+        }
+
+    }
 
 	/**
 	 * Return all dma_eg templates as array

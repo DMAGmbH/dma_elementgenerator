@@ -21,6 +21,7 @@ CREATE TABLE `tl_dma_eg` (
   `class` varchar(255) NOT NULL default '',
   `without_label` char(1) NOT NULL default '',
   `display_in_divs` char(1) NOT NULL default '',
+  `invisible` char(1) NOT NULL default '',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

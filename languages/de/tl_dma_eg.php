@@ -53,5 +53,9 @@
   $GLOBALS['TL_LANG']['tl_dma_eg']['expert_legend'] = 'Experteneinstellungen';
   $GLOBALS['TL_LANG']['tl_dma_eg']['title_legend'] = 'Name und Kategorie';
   $GLOBALS['TL_LANG']['tl_dma_eg']['settings_legend'] = 'Einstellungen';
+
+  // LABEL
+  $GLOBALS['TL_LANG']['tl_dma_eg']['labelContentelement'] = 'Inhaltselement';
+  $GLOBALS['TL_LANG']['tl_dma_eg']['labelFrontendmodule'] = 'Frontendmodul';
   
 ?>
