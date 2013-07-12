@@ -347,8 +347,8 @@ class DMAElementGeneratorCallbacks extends Backend
 							// path is array for Contao 3
 							if (is_array(deserialize($objField->eval_path)))
 							{
-                                $intPathId = deserialize($objField->eval_path)[0];
-                                $objPath = \FilesModel::findByPk($intPathId);
+                                $intPathIds = deserialize($objField->eval_path);
+                                $objPath = \FilesModel::findByPk($intPathIds[0]);
 								$objField->eval_path = $objPath->path;
 							}
 							
