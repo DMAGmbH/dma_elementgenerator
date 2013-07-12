@@ -233,9 +233,9 @@ class tl_dma_eg extends Backend
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        if (strlen(Input::get('tid')))
+        if (strlen($this->Input->get('tid')))
         {
-            $this->toggleVisibility(Input::get('tid'), (Input::get('state') == 1));
+            $this->toggleVisibility($this->Input->get('tid'), ($this->Input->get('state') == 1));
             $this->redirect($this->getReferer());
         }
 
@@ -245,14 +245,14 @@ class tl_dma_eg extends Backend
         //    return '';
         //}
 
-        $href .= '&amp;id='.Input::get('id').'&amp;tid='.$row['id'].'&amp;state='.$row['invisible'];
+        $href .= '&amp;id='.$this->Input->get('id').'&amp;tid='.$row['id'].'&amp;state='.$row['invisible'];
 
         if ($row['invisible'])
         {
             $icon = 'invisible.gif';
         }
 
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
     }
 
 
@@ -264,8 +264,8 @@ class tl_dma_eg extends Backend
     public function toggleVisibility($intId, $blnVisible)
     {
         // Check permissions to edit
-        Input::setGet('id', $intId);
-        Input::setGet('act', 'toggle');
+        $this->Input->setGet('id', $intId);
+        $this->Input->setGet('act', 'toggle');
 
         // The onload_callbacks vary depending on the dynamic parent table (see #4894)
         //if (is_array($GLOBALS['TL_DCA']['tl_content']['config']['onload_callback']))
