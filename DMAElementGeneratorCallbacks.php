@@ -409,7 +409,9 @@ class DMAElementGeneratorCallbacks extends Backend
 						{
 							if ($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['multiple'] && isset($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv']))
 							{
-								$fields[$objField->title] = trimsplit($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv'], $fields[$objField->title]);
+                                if (!is_array($fields[$objField->title])) {
+								    $fields[$objField->title] = trimsplit($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv'], $fields[$objField->title]);
+                                }
 							}
 						}
 					}
