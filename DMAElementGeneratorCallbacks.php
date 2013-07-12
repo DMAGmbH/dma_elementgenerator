@@ -347,7 +347,9 @@ class DMAElementGeneratorCallbacks extends Backend
 							// path is array for Contao 3
 							if (is_array(deserialize($objField->eval_path)))
 							{
-								$objField->eval_path = deserialize($objField->eval_path);
+                                $intPathId = deserialize($objField->eval_path)[0];
+                                $objPath = \FilesModel::findByPk($intPathId);
+								$objField->eval_path = $objPath->path;
 							}
 							
 							// backward-compatibility
@@ -355,7 +357,6 @@ class DMAElementGeneratorCallbacks extends Backend
 							{
 								$objField->eval_path = '';
 							}
-							
 							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['path'] = $objField->eval_path;
 						}
 						if ($objField->eval_minlength)
