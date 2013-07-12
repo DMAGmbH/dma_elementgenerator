@@ -309,7 +309,8 @@ class DMAElementGenerator extends Frontend
 									'height'  => $objFile->height,
 									'extension' => $objFile->extension,
 									'icon'   => $objFile->icon,
-									'size'  => $objFile->size
+									'size'  => $this->getReadableSize($objFile->filesize, 1),
+									'filename' => $objFile->filename
 								)
 							);
 						}
@@ -379,7 +380,8 @@ class DMAElementGenerator extends Frontend
 								'height'  => $objFile->height,
 								'extension' => $objFile->extension,
 								'icon'   => $objFile->icon,
-								'size'  => $objFile->size
+                                'size'  => $this->getReadableSize($objFile->filesize, 1),
+                                'filename' => $objFile->filename
 							)
 						);
 						if ($objFile->width && $objFile->height)
@@ -580,8 +582,17 @@ class DMAElementGenerator extends Frontend
 			// Convert the selected values
 			if ($varValue != '')
 			{
-				$varValue = trimsplit(',', $varValue);
-	
+
+                if (strstr($varValue, "\t"))
+                {
+                    // Contao 3.1
+				    $varValue = trimsplit("\t", $varValue);
+                }
+                else
+                {
+                    // Contao 3.0
+                    $varValue = trimsplit(',', $varValue);
+                }
 				// Automatically add resources to the DBAFS
 				if ($strKey == 'fileTree')
 				{
