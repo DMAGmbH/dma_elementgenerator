@@ -2,7 +2,7 @@
 /**
  * TYPOlight webCMS
  * Extension DMA Elementgenerator
- * Copyright Dialog- und Medienagentur der ACS mbH  (2010)
+ * Copyright DMA GmbH  (2010)
  *
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -19,8 +19,9 @@
  * Software Foundation website at http://www.gnu.org/licenses/.
  *
  * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
+ * @copyright  DMA GmbH
+ * @author     Carsten Kollmeier
+ * @author     Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  * @license    LGPL
  * @filesource

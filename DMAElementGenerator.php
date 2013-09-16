@@ -106,7 +106,7 @@ class DMAElementGenerator extends Frontend
 		while ($objField->next())
 		{
 
-			$objFieldTemplate = new FrontendTemplate($objField->template ?$objField->template : 'dma_egfield_default');
+			$objFieldTemplate = new FrontendTemplate($objField->template ? $objField->template : 'dma_egfield_default');
 
 
 			//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
@@ -281,7 +281,7 @@ class DMAElementGenerator extends Frontend
 
 						elseif (is_file(TL_ROOT . '/' . $file))
 						{
-							$objFile = new file($file);
+							$objFile = new File($file);
 						}
 						
 						// Send the file to the browser
@@ -289,7 +289,7 @@ class DMAElementGenerator extends Frontend
 						{
 							$file = $this->Input->get('file', true);
 	
-							if ($file == $objFile->path)
+							if ($file == $objFile->value)
 							{
 								$this->sendFileToBrowser($file);
 							}
@@ -300,10 +300,10 @@ class DMAElementGenerator extends Frontend
 
 							$arrTemplateData[$objField->title]['value'][] = array(
 								'raw' => $file,
-								'src' => $objFile->path,
+								'src' => $objFile->value,
                                 'meta' => $objFiles ? deserialize($objFiles->meta) : '',
-								'value' => $objFile->path,
-								'dl' => $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
+								'value' => $objFile->value,
+								'dl' => $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->value),
 								'attributes' => array(
 									'width'   => $objFile->width,
 									'height'  => $objFile->height,
@@ -346,7 +346,7 @@ class DMAElementGenerator extends Frontend
 					{
 						if (is_file(TL_ROOT . '/' . $arrData[$objField->title]))
 						{
-							$objFile = new file($arrData[$objField->title]);
+							$objFile = new File($arrData[$objField->title]);
 							$arrImage = array(
 								'singleSRC' => $arrData[$objField->title]
 							);
@@ -360,7 +360,7 @@ class DMAElementGenerator extends Frontend
 					{
 						$file = $this->Input->get('file', true);
 
-						if ($file == $objFile->path)
+						if ($file == $objFile->value)
 						{
 							$this->sendFileToBrowser($file);
 						}
@@ -372,9 +372,9 @@ class DMAElementGenerator extends Frontend
 						$arrTemplateData[$objField->title]['value'] = array(
 							'raw' => $arrData[$objField->title],
                             'meta' => $objFiles ? deserialize($objFiles->meta) : '',
-							'src' => $objFile->path,
-							'value' => $objFile->path,
-							'dl' => $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->path),
+							'src' => $objFile->value,
+							'value' => $objFile->value,
+							'dl' => $this->Environment->request . (($GLOBALS['TL_CONFIG']['disableAlias'] || strpos($this->Environment->request, '?') !== false) ? '&amp;' : '?') . 'file=' . $this->urlEncode($objFile->value),
 							'attributes' => array(
 								'width'   => $objFile->width,
 								'height'  => $objFile->height,
@@ -457,6 +457,9 @@ class DMAElementGenerator extends Frontend
 
 			if ($arrTemplateData[$objField->title]['value'])
 			{
+
+                $objFieldTemplate->addData = $arrTemplateData[$objField->title];
+
 				$strFields .= $objFieldTemplate->parse();
 				$arrTemplateData[$objField->title]['parsed'] = $objFieldTemplate->parse();
 				//$arrElements[$objField->title] = $objFieldTemplate->parse();
