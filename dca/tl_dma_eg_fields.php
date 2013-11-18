@@ -233,7 +233,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
       'inputType' => 'checkbox',
       'options' => array('w50','clr','long','m12'),
       'exclude' => true,
-      'eval' => array('multiple' => true)
+      'eval' => array('tl_class'=>'w50 clr', 'multiple' => true)
     ),
 		'eval_rows' => array
 		(
