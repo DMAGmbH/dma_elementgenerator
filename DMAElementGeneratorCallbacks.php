@@ -194,7 +194,16 @@ class DMAElementGeneratorCallbacks extends Backend
 				if ($objField->type == 'legend')
 				{
 					$title = DMA_EG_PREFIX . $objField->id . '_legend_' . $objField->id;
-					$this->paletteReplace .= ';{' . $title . ($objField->hidden ? ':hide' : '') . '}';
+
+                    if (substr($this->paletteReplace,-1) == ';')
+                    {
+                        $this->paletteReplace .= '{' . $title . ($objField->hidden ? ':hide' : '') . '}';
+                    }
+                    else
+                    {
+                        $this->paletteReplace .= ';{' . $title . ($objField->hidden ? ':hide' : '') . '}';
+                    }
+
 					$GLOBALS['TL_LANG'][$strTable][$title]  = $objField->label;
 					// Otherwise fill all options
 				}
@@ -302,14 +311,28 @@ class DMAElementGeneratorCallbacks extends Backend
 								{
 									if ($fields[$objSubSelector->title])
 									{
-										$this->paletteReplace .= ',' . $title;
+                                        if (substr($this->paletteReplace,-1) == ';')
+                                        {
+                                            $this->paletteReplace .= '' . $title;
+                                        }
+                                        else
+                                        {
+										    $this->paletteReplace .= ',' . $title;
+                                        }
 									}
 								}
 							}
 						} 
 						else
 						{
-							$this->paletteReplace .= ',' . $title;
+                            if (substr($this->paletteReplace,-1) == ';')
+                            {
+                                $this->paletteReplace .= '' . $title;
+                            }
+                            else
+                            {
+                                $this->paletteReplace .= ',' . $title;
+                            }
 						}
 						//$dma_subpalettes
 						
@@ -467,6 +490,7 @@ class DMAElementGeneratorCallbacks extends Backend
             $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
 			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
 		}
+        $this->paletteReplace .= ';';
 	}
 
 	protected function addImageToPalette($objField)
@@ -488,6 +512,7 @@ class DMAElementGeneratorCallbacks extends Backend
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
             }
         }
+        $this->paletteReplace .= ';';
 	}
 
 	/**
