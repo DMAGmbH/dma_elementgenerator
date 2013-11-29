@@ -124,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(),
-		'default'                     => '{title_legend},title,category;{settings_legend},template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
+		'default'                     => '{title_legend},title,category;{settings_legend},template,be_template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
 	),
 
 	// Subpalettes
@@ -158,8 +158,16 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_dma_eg','getElementTemplates'),
-			'eval'                    => array('tl_class'=>'w50')
+			'eval'                    => array('tl_class'=>'w50', 'chosen'=>true)
 		),
+        'be_template' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['be_template'],
+            'exclude'                 => true,
+            'inputType'               => 'select',
+            'options_callback'        => array('tl_dma_eg','getElementTemplates'),
+            'eval'                    => array('tl_class'=>'w50', 'includeBlankOption'=>true, 'chosen'=>true)
+        ),
 		'module' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['module'],

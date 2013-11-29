@@ -30,6 +30,7 @@
   $GLOBALS['TL_LANG']['tl_dma_eg']['title'] = array('Bezeichnung','Bezeichnung des Elementes');
   $GLOBALS['TL_LANG']['tl_dma_eg']['category'] = array('Kategorie','Unter welcher Überschrift/Kategorie soll das Element in der Modul-/Inhaltselementliste geführt werden? (Inhaltselemente: texts, links, media, files, includes; Module: navigationMenu, user, application, miscellaneous');
   $GLOBALS['TL_LANG']['tl_dma_eg']['template'] = array('Template','Ausgabetemplate');
+$GLOBALS['TL_LANG']['tl_dma_eg']['be_template'] = array('Backend-Template','Manchmal kann es sinnvoll sein im Backend ein anderes Template zu verwenden. Dieses muss im html5-Format vorliegen und muss im Templates-Ordner liegen.');
   $GLOBALS['TL_LANG']['tl_dma_eg']['module'] = array('Als Modul bereitstellen','Soll das Element als Modul zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['content'] = array('Als Inhaltselement bereitstellen','Soll das Element als Inhaltselement zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['class'] = array('zusätzliche Klasse für dieses Element','mit dieser Klasse kann die standardmäßig gesetetzte überschrieben werden');

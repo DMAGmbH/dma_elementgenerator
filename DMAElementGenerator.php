@@ -56,7 +56,7 @@ class DMAElementGenerator extends Frontend
 
 		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);
 
-		$objElement = $this->Database->prepare("SELECT title,template,display_in_divs,class,without_label,content,module FROM tl_dma_eg WHERE id=?")
+		$objElement = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE id=?")
 		->limit(1)
 		->execute($elementID);
 
@@ -74,6 +74,12 @@ class DMAElementGenerator extends Frontend
 				$objElement->template = $this->strTemplate;
 			}
 		}
+
+        if (TL_MODE == 'BE' && $objElement->be_template)
+        {
+            $objElement->template = $objElement->be_template;
+        }
+
 
 		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
 		if ($objElement->display_in_divs)
@@ -465,7 +471,6 @@ class DMAElementGenerator extends Frontend
 				//$arrElements[$objField->title] = $objFieldTemplate->parse();
 			}
 		}
-
 
 		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $this->strTemplate));
 
