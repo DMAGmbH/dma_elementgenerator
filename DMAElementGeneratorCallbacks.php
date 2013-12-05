@@ -141,6 +141,7 @@ class DMAElementGeneratorCallbacks extends Backend
 
 		// Get field values
 		$fields = &self::$_dma_fields;
+		
 
 		// Database table is prefixed
 		$strTable = 'tl_'.$strTableName;
@@ -149,6 +150,7 @@ class DMAElementGeneratorCallbacks extends Backend
 		// If field values are empty get them from Database
 		if (!is_array($fields))
 		{
+
 			$objData = $this->Database->prepare("SELECT dma_eg_data FROM $strTable WHERE id=?")
 			->limit(1)
 			->execute($dc->id);
@@ -425,7 +427,6 @@ class DMAElementGeneratorCallbacks extends Backend
 
 						if ($create)
 						{
-
 							$fields[$objField->title] = $objField->default_value;
 						}
 						else 
@@ -496,7 +497,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	protected function addImageToPalette($objField)
 	{
 		$arrImageData = deserialize($objField->image_data);
-        //print_r($arrImageData);
+
         if ($objField->image_data)
         {
             $this->paletteReplace .= ';{' . $objField->label . '}';
@@ -504,12 +505,19 @@ class DMAElementGeneratorCallbacks extends Backend
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
                 $this->paletteReplace .= ',' . $title;
+
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$imageData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
+
+                if ($imageData == 'floating')
+                {
+                    unset($GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['default']);
+                }
+
             }
         }
         $this->paletteReplace .= ';';
@@ -559,6 +567,13 @@ class DMAElementGeneratorCallbacks extends Backend
 
 	public function save_field($strName,$varValue)
 	{
+
+        // file-handling for contao 3.1.x
+        if (strlen($varValue) == 16)
+        {
+            $varValue = \String::binToUuid($varValue);
+        }
+
 		self::$_dma_fields[$strName] = $varValue;
 		return('');
 	}

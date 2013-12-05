@@ -48,7 +48,7 @@ include TL_ROOT . '/system/config/localconfig.php';
 if ($GLOBALS['TL_CONFIG']['dma_eg_modules'])
 {
 	$arrModules = unserialize($GLOBALS['TL_CONFIG']['dma_eg_modules']);
-} else 
+} else
 {
 	$arrModules = array();
 }
@@ -57,7 +57,7 @@ if ($GLOBALS['TL_CONFIG']['dma_eg_modules'])
 if ($GLOBALS['TL_CONFIG']['dma_eg_content'])
 {
 	$arrContent = unserialize($GLOBALS['TL_CONFIG']['dma_eg_content']);
-} else 
+} else
 {
 	$arrContent = array();
 }
@@ -84,7 +84,7 @@ $GLOBALS['DMA_EG']['EL_COUNT'] = array();
 
 
 // Hooks
-if(version_compare(VERSION.BUILD, '3.10','>=')) {
+if(version_compare(VERSION.BUILD, '3.10','>=') && version_compare(VERSION.BUILD, '3.20','<')) {
 	$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
 }
 
