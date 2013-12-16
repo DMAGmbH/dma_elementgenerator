@@ -577,7 +577,7 @@ class DMAElementGeneratorCallbacks extends Backend
             $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
             $this->getDcaInfos($intDMAEGpid,$strName);
 
-            if ($this->elementDca['type'] == 'fileTree')
+            if ($this->elementDca['type'] == 'fileTree' || strpos($strName,"singleSRC")!==false)
             {
                 $varValue = \String::binToUuid($varValue);
             }

@@ -462,7 +462,7 @@ class DMAElementGenerator extends Frontend
 					$arrImagePrecompiled['singleSRC'] = $objFile->path;
 				}
 
-                elseif (strlen($arrImage['singleSRC'])==36)
+                elseif (\Validator::isUuid($arrImage['singleSRC']))
                 {
                     $objFile = \FilesModel::findByUuid($arrImage['singleSRC']);
                     if ($objFile)
