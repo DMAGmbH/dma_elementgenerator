@@ -461,6 +461,21 @@ class DMAElementGenerator extends Frontend
 					$arrTemplateData[$objField->title]['value'] = $objFile->path;
 					$arrImagePrecompiled['singleSRC'] = $objFile->path;
 				}
+
+                elseif (strlen($arrImage['singleSRC'])==36)
+                {
+                    $objFile = \FilesModel::findByUuid($arrImage['singleSRC']);
+                    if ($objFile)
+                    {
+                        $arrTemplateData[$objField->title]['raw'] = $arrImage;//['singleSRC'];
+                        if ($objFile->meta)
+                        {
+                            $arrTemplateData[$objField->title]['meta'] = deserialize($objFile->meta);
+                        }
+                        $arrTemplateData[$objField->title]['value'] = $objFile->path;
+                        $arrImagePrecompiled['singleSRC'] = $objFile->path;
+                    }
+                }
 				//$arrTemplateData[$objField->title]['raw'] = $arrImage['singleSRC'];
 
 				//print_r($arrImage);
@@ -471,6 +486,7 @@ class DMAElementGenerator extends Frontend
 				$objImage = new dmaContentImageHelper($arrImage);
 
 				$arrElements[$objField->title] = $objImage->generate();
+
 
 			}
 

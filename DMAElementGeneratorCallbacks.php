@@ -46,6 +46,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	static $_dma_fields;
 	protected $paletteReplace;
 	protected $strTable;
+    protected $elementDca;
 
 	/**
 	 * The palettes to generate according to the type of element
@@ -546,6 +547,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	 */
 	public function __call($name,$args)
 	{
+
 		list($type,$param) = explode('_',$name,2);
 		switch($type)
 		{
@@ -571,7 +573,14 @@ class DMAElementGeneratorCallbacks extends Backend
         // file-handling for contao 3.1.x
         if (strlen($varValue) == 16)
         {
-            $varValue = \String::binToUuid($varValue);
+
+            $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
+            $this->getDcaInfos($intDMAEGpid,$strName);
+
+            if ($this->elementDca['type'] == 'fileTree')
+            {
+                $varValue = \String::binToUuid($varValue);
+            }
         }
 
 		self::$_dma_fields[$strName] = $varValue;
@@ -585,6 +594,13 @@ class DMAElementGeneratorCallbacks extends Backend
 	{
 		return serialize(self::$_dma_fields);
 	}
+
+    protected function getDcaInfos($pid,$strName) {
+        $this->elementDca = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE pid=? AND title=? ORDER BY sorting")
+                    ->limit(1)
+        			->execute($pid,$strName)
+                    ->row();
+    }
 
 	/**
 	 * Stores the configuration array without the given element
