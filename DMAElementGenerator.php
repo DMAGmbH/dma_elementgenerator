@@ -408,6 +408,7 @@ class DMAElementGenerator extends Frontend
 							$this->addImageToTemplate($objFieldTemplate, $arrImage, null, null);
 						}
 						$objFieldTemplate->value = '';
+                        $arrElements[$objField->title] = $objFile->path;
 					}
 				}
 			}
