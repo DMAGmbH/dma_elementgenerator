@@ -30,13 +30,20 @@
 
 $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 (
-
 	// Config
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
 		'enableVersioning'            => true,
-		'ptable' => 'tl_dma_eg'
+		'ptable'                      => 'tl_dma_eg',
+		'sql' => array
+		(
+			'keys' => array
+			(
+				'id' => 'primary',
+				'pid' => 'index'
+			)
+		)
 	),
 
 	// List
@@ -126,298 +133,342 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	// Subpalettes
 	'subpalettes' => array
 	(		
-		'useCheckboxCondition' => 'subpaletteSelector',
-        'optionsType_manual' => 'options',
-        'optionsType_database' => 'optDbTable,optDbTitle,optDbQuery'
+		'useCheckboxCondition'		=> 'subpaletteSelector',
+        'optionsType_manual'		=> 'options',
+        'optionsType_database'		=> 'optDbTable,optDbTitle,optDbQuery'
 	),
 
 	// Fields
 	'fields' => array
 	(
-	  'type' => array
-	  (
-      'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
-      'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
-      'inputType' => 'select',
-      'options' => array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink','image'),
-      'default' => 'text',
-      'exclude' => true,
-      'load_callback'        => array(array('tl_dma_eg_fields','loadTypeField')),
-      'eval' => array('submitOnChange' => true, 'tl_class' => 'w50')
-    ),
+		'id' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL auto_increment"
+		),
+		'pid' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
+		),
+		'tstamp' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
+		),
+		'sorting' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
+		),
+        'type' => array
+        (
+			'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'],
+			'reference'				=> &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'],
+			'inputType'				=> 'select',
+			'options'				=> array('legend','text','textarea','select','checkbox','radio','pageTree','fileTree','pagePicker','listWizard','tableWizard','hyperlink','image'),
+			'default'				=> 'text',
+			'exclude'				=> true,
+			'load_callback'        	=> array(array('tl_dma_eg_fields','loadTypeField')),
+			'eval' 					=> array('submitOnChange' => true, 'tl_class' => 'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
+		),
 		'label' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['label'],
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50 clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'title' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['title'],
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                    => array('rgxp'=>'alnum', 'doNotCopy'=>true, 'spaceToUnderscore'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'eval'					=> array('rgxp'=>'alnum', 'doNotCopy'=>true, 'spaceToUnderscore'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
 			'save_callback' => array
 			(
 				array('tl_dma_eg_fields', 'generateTitle')
-			)
+			),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'explanation' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['explanation'],
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr')
+			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'default_value' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['default_value'],
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>255)
+			'eval'                  => array('maxlength'=>255),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'options' => array
 		(
-      'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['options'],
-      'inputType'             => 'optionWizard',
-      'exclude'               => true,
-      'eval'                  => array('tl_class' => 'clr','multiple' => true)
-    ),
+      		'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['options'],
+      		'inputType'             => 'optionWizard',
+      		'exclude'               => true,
+      		'eval'                  => array('tl_class' => 'clr','multiple' => true),
+			'sql'					=> "blob NULL"
+    	),
 		'hidden' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hidden'],
 			'inputType'             => 'checkbox',
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>128, 'tl_class'=>'w50 m12', 'isBoolean' => true)
+			'eval'                  => array('maxlength'=>128, 'tl_class'=>'w50 m12', 'isBoolean' => true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
 		'eval_mandatory' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_mandatory'],
 			'inputType'             => 'checkbox',
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>128, 'tl_class'=>'w50 m12 clr', 'isBoolean' => true)
+			'eval'                  => array('maxlength'=>128, 'tl_class'=>'w50 m12 clr', 'isBoolean' => true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
 		'eval_rgxp' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rgxp'],
 			'reference'             => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rgxp_select'],
 			'inputType'             => 'select',
-			'options'                => array('digit',
-                                        'alpha',
-                                        'alnum',
-                                        'prcnt',
-                                        'extnd',
-                                        'date',
-                                        'time',
-                                        'datim',
-                                        'email',
-//                                        'friendly',
-                                        'url',
-                                        'phone'
-                                  ),
+			'options'               => array('digit','alpha','alnum','prcnt','extnd','date','time','datim','email','url','phone'),
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>128, 'tl_class'=>'w50','includeBlankOption' => true)
+			'eval'                  => array('maxlength'=>128, 'tl_class'=>'w50','includeBlankOption' => true),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'eval_rte' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rte'],
 			'inputType'             => 'checkbox',
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>128, 'tl_class'=>'m12 clr', 'isBoolean' => true)
+			'eval'                  => array('maxlength'=>128, 'tl_class'=>'m12 clr', 'isBoolean' => true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
-	  'eval_tl_class' => array
-	  (
-      'label'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'],
-      'reference'     => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class_options'],
-      'inputType' => 'checkbox',
-      'options' => array('w50','clr','long','m12'),
-      'exclude' => true,
-      'eval' => array('tl_class'=>'w50 clr', 'multiple' => true)
-    ),
+		'eval_tl_class' => array
+		(
+			'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'],
+			'reference'				=> &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class_options'],
+			'inputType'				=> 'checkbox',
+			'options'				=> array('w50','clr','long','m12'),
+			'exclude'				=> true,
+			'eval'					=> array('multiple' => true),
+			'sql'					=> "varchar(255) NOT NULL default ''"
+		),
 		'eval_rows' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rows'],
-			'default'              => 5,
+			'default'				=> 5,
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50 clr', 'rgxp' => 'digit')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50 clr', 'rgxp' => 'digit'),
+			'sql'					=> "int(10) unsigned NOT NULL default '5'"
 		),
 		'eval_cols' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_cols'],
-			'default'              => 100,
+			'default'				=> 100,
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'					=> "int(10) unsigned NOT NULL default '100'"
 		),
 		'eval_minlength' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_minlength'],
-			'default'              => 0,
+			'default'				=> 0,
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50 clr', 'rgxp' => 'digit')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>3, 'tl_class'=>'w50 clr', 'rgxp' => 'digit'),
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
 		),
 		'eval_maxlength' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'],
-			'default'              => '',
+			'default'				=> 0,
 			'inputType'             => 'text',
 			'exclude'				=> true,
-			'eval'                  => array('maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit')
+			'eval'                  => array('maxlength'=>3, 'tl_class'=>'w50', 'rgxp' => 'digit'),
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
 		),
 		'eval_field_type' => array
 		(
-		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_field_type'],
-		  'default'               => 'ft_radio',
-		  'inputType'             => 'radio',
-		  'options'               => array('ft_radio','ft_checkbox'),
-		  'exclude'               => true,
-		  'eval'                  => array('mandatory' => true, 'multiple' => false, 'tl_class' => 'w50')
-    ),
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_field_type'],
+			'default'               => 'ft_radio',
+			'inputType'             => 'radio',
+			'options'               => array('ft_radio','ft_checkbox'),
+			'exclude'               => true,
+			'eval'                  => array('mandatory' => true, 'multiple' => false, 'tl_class' => 'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
+    	),
 		'eval_extensions' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_extensions'],
 			'inputType'             => 'text',
-			'exclude'				        => true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr')
+			'exclude'		        => true,
+			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'eval_path' => array
 		(
-		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'],
-		  'default'               => '',
-		  'inputType'             => 'fileTree',
-		  'exclude'               => true,
-		  'eval'                  => array('mandatory' => false, 'multiple' => true,'fieldType' => 'radio','files'=>false, 'tl_class' => 'clr')
-    ),
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'],
+			'default'               => '',
+			'inputType'             => 'fileTree',
+			'exclude'               => true,
+			'eval'                  => array('mandatory' => false, 'multiple' => true,'fieldType' => 'radio','files'=>false, 'tl_class' => 'clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
+    	),
 		'exclude' => array
 		(
-		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['exclude'],
-		  'inputType'             => 'checkbox',
-		  'exclude'               => true,
-		  'eval'                  => array('tl_class' => 'w50 clr')
-    ),
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['exclude'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class' => 'w50 clr'),
+			'sql'					=> "char(1) NOT NULL default ''"
+    	),
 		'eval_allow_html' => array
 		(
-		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_allow_html'],
-		  'inputType'             => 'checkbox',
-		  'exclude'               => true,
-		  'eval'                  => array('tl_class' => 'w50')
-    ),
-        'eval_blank_option' => array(
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_allow_html'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+		 	'eval'                  => array('tl_class' => 'w50'),
+			'sql'					=> "char(1) NOT NULL default ''"
+    	),
+        'eval_blank_option' => array
+		(
             'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_blank_option'],
             'inputType'             => 'checkbox',
         	'exclude'               => true,
-        	'eval'                  => array('tl_class' => 'w50')
+        	'eval'                  => array('tl_class' => 'w50'),
+			'sql'					=> "char(1) NOT NULL default ''"
         ),
-        'eval_chosen' => array(
+        'eval_chosen' => array
+		(
             'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_chosen'],
             'inputType'             => 'checkbox',
         	'exclude'               => true,
-        	'eval'                  => array('tl_class' => 'w50')
+        	'eval'                  => array('tl_class' => 'w50'),
+			'sql'					=> "char(1) NOT NULL default ''"
         ),
 		'eval_unique' => array
 		(
-		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_unique'],
-		  'inputType'             => 'checkbox',
-		  'exclude'               => true,
-		  'eval'                  => array('tl_class' => 'w50 clr')
-    ),
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_unique'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class' => 'w50 clr'),
+			'sql'					=> "char(1) NOT NULL default ''"
+    	),
 		'eval_do_not_copy' => array
 		(
-		  'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_do_not_copy'],
-		  'inputType'             => 'checkbox',
-		  'exclude'               => true,
-		  'eval'                  => array('tl_class' => 'w50')
-    ),
-    'eval_sortable' => array
-    (
-    	'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable'],
-		  'inputType'             => 'checkbox',
-		  'exclude'               => true,
-		  'eval'                  => array('tl_class' => 'w50')
-    ),
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_do_not_copy'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class' => 'w50'),
+			'sql'					=> "char(1) NOT NULL default ''"
+    	),
+    	'eval_sortable' => array
+    	(
+    		'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class' => 'w50'),
+			'sql'					=> "char(1) NOT NULL default ''"
+    	),
 		'class' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'],
 			'inputType'             => 'text',
-			'exclude'				        => true,
-			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr', 'rgxp' => 'extnd')
+			'exclude'				=> true,
+			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr', 'rgxp' => 'extnd'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),   
 		'template' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
-			'default'                 => 'dma_egfield_default',
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options_callback'        => array('tl_dma_eg_fields','getElementTemplates'),
-			'eval'                    => array('tl_class'=>'w50')
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
+			'default'               => 'dma_egfield_default',
+			'exclude'               => true,
+			'inputType'             => 'select',
+			'options_callback'      => array('tl_dma_eg_fields','getElementTemplates'),
+			'eval'                  => array('tl_class'=>'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'hyperlink_data' => array
 		(
-			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['hyperlink_data'],
-			'exclude' 								=> true,
-			'inputType'               => 'checkbox',
-			'options'                 => array('url','target','linkTitle','rel','embed'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'],
-			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
+			'label' 				=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['hyperlink_data'],
+			'exclude' 				=> true,
+			'inputType'             => 'checkbox',
+			'options'               => array('url','target','linkTitle','rel','embed'),
+			'reference'             => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'],
+			'eval'                  => array('multiple'=>true, 'tl_class'=>'clr'),
+			'sql'					=> "blob NULL"
 		),
 		'image_data' => array
 		(
-			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'],
-			'exclude' 								=> true,
-			'inputType'               => 'checkbox',
-			'options'                 => array('singleSRC','alt','title','size','imagemargin','imageUrl','fullsize','caption','floating'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'],
-			'eval'                    => array('multiple'=>true, 'tl_class'=>'clr')
+			'label' 				=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'],
+			'exclude' 				=> true,
+			'inputType'             => 'checkbox',
+			'options'               => array('singleSRC','alt','title','size','imagemargin','imageUrl','fullsize','caption','floating'),
+			'reference'             => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'],
+			'eval'                  => array('multiple'=>true, 'tl_class'=>'clr'),
+			'sql'					=> "blob NULL"
 		),
 		'useCheckboxCondition' => array
 		(
-			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['useCheckboxCondition'],
-			'exclude' 								=> true,
-			'inputType'               => 'checkbox',
-			'eval'                  => array('tl_class' => 'w50','submitOnChange' => true)
+			'label' 				=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['useCheckboxCondition'],
+			'exclude' 				=> true,
+			'inputType'             => 'checkbox',
+			'eval'                  => array('tl_class' => 'w50','submitOnChange' => true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
 		'subpaletteSelector' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['subpaletteSelector'],
-			'default'                 => '',
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options_callback'        => array('tl_dma_eg_fields','getCheckboxelements'),
-			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50')
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['subpaletteSelector'],
+			'default'               => 0,
+			'exclude'               => true,
+			'inputType'             => 'select',
+			'options_callback'      => array('tl_dma_eg_fields','getCheckboxelements'),
+			'eval'                  => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
 		),
         'optionsType' => array
         (
-           'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'],
-            'default' => 'manual',
-            'exclude' => true,
-            'inputType' => 'select',
-            'options' => array('manual','database'),
-            'eval' => array('mandatory'=>true,'submitOnChange' => true,'tl_class'=>'w50 clr')
+        	'label' 				=> &$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'],
+            'default'				=> 'manual',
+            'exclude'				=> true,
+            'inputType'				=> 'select',
+            'options'				=> array('manual','database'),
+            'eval'					=> array('mandatory'=>true,'submitOnChange' => true,'tl_class'=>'w50 clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
         ),
-        'optDbTable' => array(
-            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'],
-            'default' => '',
-            'exclude' => true,
-            'inputType' => 'select',
-            'options_callback' => array('tl_dma_eg_fields','getDatabaseTables'),
-            'eval' => array('includeBlankOption'=>true,'mandatory'=> true, 'submitOnChange' => true, 'tl_class'=>'w50 clr')
+        'optDbTable' => array
+		(
+            'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'],
+            'default'				=> '',
+            'exclude'				=> true,
+            'inputType'				=> 'select',
+            'options_callback'		=> array('tl_dma_eg_fields','getDatabaseTables'),
+            'eval'					=> array('includeBlankOption'=>true,'mandatory'=> true, 'submitOnChange' => true, 'tl_class'=>'w50 clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
         ),
-        'optDbQuery' => array(
-            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'],
-            'exclude' => true,
-            'inputType' => 'textarea',
-            'eval'      => array('preserveTags'=>true, 'style'=>'height:60px', 'tl_class'=>'clr'),
+        'optDbQuery' => array
+		(
+            'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'],
+            'exclude'				=> true,
+            'inputType'				=> 'textarea',
+            'eval'					=> array('preserveTags'=>true, 'style'=>'height:60px', 'tl_class'=>'clr'),
+			'sql'					=> "mediumtext NULL"
         ),
-        'optDbTitle' => array(
-            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'],
-            'default' => '',
-            'exclude' => true,
-            'inputType' => 'select',
-            'options_callback' => array('tl_dma_eg_fields','getDatabaseTableRows'),
-            'eval' => array('includeBlankOption'=>true,'tl_class'=>'w50')
+        'optDbTitle' => array
+		(
+            'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'],
+            'default'				=> '',
+            'exclude'				=> true,
+            'inputType'				=> 'select',
+            'options_callback'		=> array('tl_dma_eg_fields','getDatabaseTableRows'),
+            'eval' 					=> array('includeBlankOption'=>true,'tl_class'=>'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
         )
 	)
 );
@@ -544,8 +595,7 @@ class tl_dma_eg_fields extends Backend
 			}
 			
 			// found other theme-templates
-			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
-									   ->execute('');
+			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")->execute('');
 
 			if ($objTheme->numRows > 0)
 			{
@@ -580,6 +630,4 @@ class tl_dma_eg_fields extends Backend
 			return $this->getTemplateGroup('dma_egfield_');
 		}	
 	}
-	
 }
-?>
