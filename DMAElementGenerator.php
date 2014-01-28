@@ -329,6 +329,18 @@ class DMAElementGenerator extends Frontend
 							$objFile = new \File($objFiles->path, true);
 						}
 
+                        elseif (strlen($file)==36)
+                                            {
+                                                $objFiles = \FilesModel::findByUuid($file);
+                                                if ($objFiles)
+                                                {
+                                                    $arrImage = array(
+                                                        'singleSRC' => $objFiles->path
+                                                    );
+                                                    $objFile = new \File($objFiles->path, true);
+                                                }
+                                            }
+
 						elseif (is_file(TL_ROOT . '/' . $file))
 						{
 							$objFile = new File($file);

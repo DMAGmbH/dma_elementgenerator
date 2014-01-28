@@ -570,16 +570,29 @@ class DMAElementGeneratorCallbacks extends Backend
 	public function save_field($strName,$varValue)
 	{
 
-        // file-handling for contao 3.1.x
-        if (strlen($varValue) == 16)
+        $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
+        $this->getDcaInfos($intDMAEGpid,$strName);
+
+        if (($this->elementDca['type'] == 'fileTree' || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
         {
-
-            $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
-            $this->getDcaInfos($intDMAEGpid,$strName);
-
-            if ($this->elementDca['type'] == 'fileTree' || strpos($strName,"singleSRC")!==false)
+            if (strlen($varValue) == 16)
             {
                 $varValue = \String::binToUuid($varValue);
+            }
+            if ($this->elementDca['eval_field_type']=="ft_checkbox")
+            {
+                // ToDo check ob mehrere
+                $intForCount = strlen($varValue) % 16;
+                $arrValues = array();
+                $tempValue = $varValue;
+                for ($i=0; $i<=$intForCount; $i++)
+                {
+                    $arrValues[] = \String::binToUuid(substr($tempValue,0,16));
+                    $tempValue = substr($tempValue,17);
+                }
+
+                $varValue = implode(",",$arrValues);
+
             }
         }
 
