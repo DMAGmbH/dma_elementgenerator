@@ -188,12 +188,56 @@ class DMAElementGenerator extends Frontend
             if ($objField->type=='listWizard' && is_array(trimsplit(',',$arrData[$objField->title])))
             {
                 $arrTemplateData[$objField->title]['value'] = deserialize($arrData[$objField->title]);
+
             }
 
             // Handling von Tabellen
             if ($objField->type=='tableWizard' && is_array(trimsplit(',',$arrData[$objField->title])))
             {
                 $arrTemplateData[$objField->title]['value'] = deserialize($arrData[$objField->title]);
+
+                $arrTemplateData[$objField->title]['data'] = array();
+                $limit = count($arrTemplateData[$objField->title]['value']);
+                for ($j=0; $j<$limit; $j++)
+                {
+
+                    $class_tr = '';
+
+                 	if ($j == 0)
+                 	{
+                 		$class_tr .= ' row_first';
+                 	}
+
+                 	if ($j == ($limit - 1))
+                 	{
+                 		$class_tr .= ' row_last';
+                 	}
+
+                 	$class_eo = (($j % 2) == 0) ? ' even' : ' odd';
+
+                 	foreach ($arrTemplateData[$objField->title]['value'][$j] as $i=>$v)
+                 	{
+                 		$class_td = '';
+
+                 		if ($i == 0)
+                 		{
+                 			$class_td .= ' col_first';
+                 		}
+
+                 		if ($i == (count($arrTemplateData[$objField->title]['value'][$j]) - 1))
+                 		{
+                 			$class_td .= ' col_last';
+                 		}
+
+                        $arrTemplateData[$objField->title]['data']['row_' . $j . $class_tr . $class_eo][] = array
+                 		(
+                 			'class' => 'col_'.$i . $class_td,
+                 			'content' => (($v != '') ? ($v) : '&nbsp;')
+                 		);
+                 	}
+                }
+
+
             }
 
             // Handling von Selectmenüs mit Datenbankstruktur
@@ -275,7 +319,7 @@ class DMAElementGenerator extends Frontend
 					$arrTemplateData[$objField->title]['value'] = array();
 					foreach ($tempArrFiles as $file)
 					{
-					
+
 						if (is_numeric($file))
 						{
 							$objFiles = \FilesModel::findByPk($file);
@@ -319,9 +363,10 @@ class DMAElementGenerator extends Frontend
 									'filename' => $objFile->filename
 								)
 							);
+                            //$arrElementData[] = $objFile->path;
 						}
 					}
-					
+                    //$arrElements[$objField->title] = implode(",",$arrElementData);
 					//print_r($arrData);
 					if ($arrData['orderSRC'] != '')
 					{

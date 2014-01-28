@@ -39,5 +39,6 @@ TemplateLoader::addFiles(array
     'dma_egfield_h3' => 'system/modules/dma_elementgenerator/templates',
     'dma_egfield_downloads' => 'system/modules/dma_elementgenerator/templates',
     'dma_egfield_gallery' => 'system/modules/dma_elementgenerator/templates',
+    'dma_egfield_table' => 'system/modules/dma_elementgenerator/templates',
     'mod_dma_eg' => 'system/modules/dma_elementgenerator/templates',
 ));
