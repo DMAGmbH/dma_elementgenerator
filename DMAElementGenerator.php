@@ -112,6 +112,20 @@ class DMAElementGenerator extends Frontend
 		while ($objField->next())
 		{
 
+            if ($objField->useCheckboxCondition)
+            {
+                if ($objField->subpaletteSelector)
+                {
+                    $objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
+                	    ->limit(1)
+                		->execute($objField->subpaletteSelector);
+                    if ($arrData[$objSubSelector->title] == "")
+                    {
+                        continue;
+                    }
+                }
+            }
+
             $strFieldTemplate = "dma_egfield_default";
             if (TL_MODE == "FE")
             {
