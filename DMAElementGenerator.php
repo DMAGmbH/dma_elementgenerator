@@ -112,8 +112,12 @@ class DMAElementGenerator extends Frontend
 		while ($objField->next())
 		{
 
-			$objFieldTemplate = new FrontendTemplate($objField->template ? $objField->template : 'dma_egfield_default');
-
+            $strFieldTemplate = "dma_egfield_default";
+            if (TL_MODE == "FE")
+            {
+                $strFieldTemplate = $objField->template ? $objField->template : 'dma_egfield_default';
+            }
+            $objFieldTemplate = new FrontendTemplate($strFieldTemplate);
 
 			//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
 			if ($this->displayInDivs)
