@@ -45,7 +45,14 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			array('DMAElementGeneratorCallbacks','element_ondelete')
 		),
 		'ctable' => array('tl_dma_eg_fields'),
-		'switchToEdit' => true
+		'switchToEdit' => true,
+		'sql' => array
+		(
+			'keys' => array
+			(
+				'id' => 'primary'
+			)
+		)
 	),
 
 	// List
@@ -124,7 +131,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array(),
-		'default'                     => '{title_legend},title,category;{settings_legend},template,be_template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
+		'default'                     => '{title_legend},title,category;{settings_legend},template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
 	),
 
 	// Subpalettes
@@ -135,13 +142,30 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 	// Fields
 	'fields' => array
 	(
+		'id' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL auto_increment"
+		),
+		'pid' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
+		),
+		'tstamp' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
+		),
+		'sorting' => array
+		(
+			'sql'					=> "int(10) unsigned NOT NULL default '0'"
+		),
 		'title' => array
 		(
-			'label'						=> &$GLOBALS['TL_LANG']['tl_dma_eg']['title'],
-			'inputType'					=> 'text',
-			'exclude'					=> true,
-			'filter'						=> true,
-			'eval'						=> array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50')
+			'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg']['title'],
+			'inputType'				=> 'text',
+			'exclude'				=> true,
+			'filter'				=> true,
+			'eval'					=> array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'category' => array
 		(
@@ -149,56 +173,68 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'inputType'             => 'text',
 			'exclude'				=> true,
 			'filter'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50')
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'template' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
-			'default'                 => 'dma_eg_default',
-			'exclude'                 => true,
-			'inputType'               => 'select',
-			'options_callback'        => array('tl_dma_eg','getElementTemplates'),
-			'eval'                    => array('tl_class'=>'w50', 'chosen'=>true)
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
+			'default'               => 'dma_eg_default',
+			'exclude'               => true,
+			'inputType'             => 'select',
+			'options_callback'      => array('tl_dma_eg','getElementTemplates'),
+			'eval'                  => array('tl_class'=>'w50'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
-        'be_template' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['be_template'],
-            'exclude'                 => true,
-            'inputType'               => 'select',
-            'options_callback'        => array('tl_dma_eg','getElementTemplates'),
-            'eval'                    => array('tl_class'=>'w50', 'includeBlankOption'=>true, 'chosen'=>true)
-        ),
+		'be_template' => array
+		(
+			'label'					=> &$GLOBALS['TL_LANG']['tl_dma_eg']['be_template'],
+			'exclude'				=> true,
+			'inputType'				=> 'select',
+			'options_callback'		=> array('tl_dma_eg','getElementTemplates'),
+			'eval'					=> array('tl_class'=>'w50', 'includeBlankOption'=>true, 'chosen'=>true),
+			'sql'					=> "varchar(255) NOT NULL default ''"
+		),
 		'module' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['module'],
-			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['module'],
+			'inputType'             => 'checkbox',
+			'eval'                  => array('tl_class'=>'w50','isBoolean'=> true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
 		'content' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['content'],
-			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'clr w50','isBoolean'=> true)
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['content'],
+			'inputType'             => 'checkbox',
+			'eval'                  => array('tl_class'=>'clr w50','isBoolean'=> true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
 		'class' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['class'],
 			'inputType'             => 'text',
-			'exclude'					=> true,
-			'filter'						=> true,
-			'eval'                  => array('tl_class'=>'w50','maxlength'=>255, 'tl_class'=>'clr')
+			'exclude'				=> true,
+			'filter'				=> true,
+			'eval'                  => array('tl_class'=>'w50','maxlength'=>255, 'tl_class'=>'clr'),
+			'sql'					=> "varchar(255) NOT NULL default ''"
 		),
 		'without_label' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['without_label'],
-			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['without_label'],
+			'inputType'             => 'checkbox',
+			'eval'                  => array('tl_class'=>'w50','isBoolean'=> true),
+			'sql'					=> "char(1) NOT NULL default ''"
 		),
   		'display_in_divs' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'],
-			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'],
+			'inputType'             => 'checkbox',
+			'eval'                  => array('tl_class'=>'w50','isBoolean'=> true),
+			'sql'					=> "char(1) NOT NULL default ''"
+		),
+		'invisible' => array
+		(
+			'sql' => "char(1) NOT NULL default ''"
 		)
 	)
 );
@@ -343,8 +379,7 @@ class tl_dma_eg extends Backend
 			}
 			
 			// found other theme-templates
-			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
-									   ->execute('');
+			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")->execute('');
 
 			if ($objTheme->numRows > 0)
 			{
@@ -372,14 +407,11 @@ class tl_dma_eg extends Backend
 					}
 				}
 			}
-	   	return $arrTemplates;
+		   	return $arrTemplates;
 		}
 		else 
 		{
 			return $this->getTemplateGroup('dma_eg_');
 		}	
 	}
-	
 }
-
-?>
