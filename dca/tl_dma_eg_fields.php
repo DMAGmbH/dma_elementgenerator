@@ -126,7 +126,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	// Subpalettes
 	'subpalettes' => array
 	(		
-		'useCheckboxCondition' => 'subpaletteSelector',
+		'useCheckboxCondition' => 'subpaletteSelector,renderHiddenData',
         'optionsType_manual' => 'options',
         'optionsType_database' => 'optDbTable,optDbTitle,optDbQuery'
 	),
@@ -374,20 +374,27 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		),
 		'useCheckboxCondition' => array
 		(
-			'label' 									=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['useCheckboxCondition'],
-			'exclude' 								=> true,
-			'inputType'               => 'checkbox',
-			'eval'                  => array('tl_class' => 'w50','submitOnChange' => true)
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['useCheckboxCondition'],
+			'exclude'               => true,
+			'inputType'             => 'checkbox',
+			'eval'                  => array('tl_class' => 'w50 m12','submitOnChange' => true)
 		),
 		'subpaletteSelector' => array
 		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['subpaletteSelector'],
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['subpaletteSelector'],
 			'default'                 => '',
 			'exclude'                 => true,
 			'inputType'               => 'select',
 			'options_callback'        => array('tl_dma_eg_fields','getCheckboxelements'),
 			'eval'                    => array('includeBlankOption'=>true, 'tl_class'=>'w50')
 		),
+        'renderHiddenData' => array
+        (
+            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['renderHiddenData'],
+            'exclude'               => true,
+            'inputType'             => 'checkbox',
+            'eval'                  => array('tl_class' => 'w50 m12')
+        ),
         'optionsType' => array
         (
            'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'],

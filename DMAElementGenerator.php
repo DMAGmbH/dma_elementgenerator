@@ -112,7 +112,7 @@ class DMAElementGenerator extends Frontend
 		while ($objField->next())
 		{
 
-            if ($objField->useCheckboxCondition)
+            if ($objField->useCheckboxCondition && !$objField->renderHiddenData)
             {
                 if ($objField->subpaletteSelector)
                 {

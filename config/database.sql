@@ -64,6 +64,7 @@ CREATE TABLE `tl_dma_eg_fields` (
   `hyperlink_data` blob NULL,
   `image_data` blob NULL,
   `useCheckboxCondition` char(1) NOT NULL default '',
+  `renderHiddenData` char(1) NOT NULL default '',
   `subpaletteSelector` int(10) unsigned NOT NULL default '0',
   `optionsType` varchar(255) NOT NULL default '',
   `optDbTable` varchar(255) NOT NULL default '',
