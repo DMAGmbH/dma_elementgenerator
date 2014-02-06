@@ -341,23 +341,27 @@ class DMAElementGenerator extends Frontend
 						if (is_numeric($file))
 						{
 							$objFiles = \FilesModel::findByPk($file);
-							$arrImage = array(
-									'singleSRC' => $objFiles->path
-							);
-							$objFile = new \File($objFiles->path, true);
+                            if ($objFiles)
+                            {
+								$arrImage = array
+                                (
+                                    'singleSRC' => $objFiles->path
+                                );
+                                $objFile = new \File($objFiles->path, true);
+                            }
 						}
 
                         elseif (strlen($file)==36)
-                                            {
-                                                $objFiles = \FilesModel::findByUuid($file);
-                                                if ($objFiles)
-                                                {
-                                                    $arrImage = array(
-                                                        'singleSRC' => $objFiles->path
-                                                    );
-                                                    $objFile = new \File($objFiles->path, true);
-                                                }
-                                            }
+                        {
+                            $objFiles = \FilesModel::findByUuid($file);
+                            if ($objFiles)
+                            {
+                                $arrImage = array(
+                                    'singleSRC' => $objFiles->path
+                                );
+                                $objFile = new \File($objFiles->path, true);
+                            }
+                        }
 
 						elseif (is_file(TL_ROOT . '/' . $file))
 						{
@@ -461,7 +465,7 @@ class DMAElementGenerator extends Frontend
 					}
 					
 					if ($objFile) {
-						
+
 
 						$arrTemplateData[$objField->title]['value'] = array(
 							'raw' => $arrData[$objField->title],
@@ -552,9 +556,8 @@ class DMAElementGenerator extends Frontend
                         $arrImagePrecompiled['singleSRC'] = $objFile->path;
                     }
                 }
-				//$arrTemplateData[$objField->title]['raw'] = $arrImage['singleSRC'];
 
-				//print_r($arrImage);
+                //$objFieldTemplate->class = $objFieldTemplate->class ? ($objFieldTemplate->class . " " . $arrImage['floating']) : $arrImage['floating'];
 
 				$this->addImageToTemplate($objFieldTemplate, $arrImagePrecompiled);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
 				//$objFieldTemplate->value = $objHyperlink->generate();
