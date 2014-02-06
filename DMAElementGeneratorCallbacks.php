@@ -582,13 +582,18 @@ class DMAElementGeneratorCallbacks extends Backend
             elseif ($this->elementDca['eval_field_type']=="ft_checkbox")
             {
                 // ToDo check ob mehrere
-                $intForCount = strlen($varValue) % 16;
                 $arrValues = array();
                 $tempValue = $varValue;
-                for ($i=0; $i<=$intForCount; $i++)
+                $intDoWhile = true;
+
+                while ($intDoWhile)
                 {
                     $arrValues[] = \String::binToUuid(substr($tempValue,0,16));
                     $tempValue = substr($tempValue,17);
+                    if (strlen($tempValue) < 16)
+                    {
+                        $intDoWhile = false;
+                    }
                 }
 
                 $varValue = implode(",",$arrValues);
