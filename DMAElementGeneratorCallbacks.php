@@ -579,7 +579,7 @@ class DMAElementGeneratorCallbacks extends Backend
             {
                 $varValue = \String::binToUuid($varValue);
             }
-            if ($this->elementDca['eval_field_type']=="ft_checkbox")
+            elseif ($this->elementDca['eval_field_type']=="ft_checkbox")
             {
                 // ToDo check ob mehrere
                 $intForCount = strlen($varValue) % 16;
