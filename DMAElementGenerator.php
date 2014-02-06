@@ -279,10 +279,13 @@ class DMAElementGenerator extends Frontend
 						if (is_numeric($file))
 						{
 							$objFiles = \FilesModel::findByPk($file);
-							$arrImage = array(
-									'singleSRC' => $objFiles->path
-							);
-							$objFile = new \File($objFiles->path, true);
+							if ($objFiles)
+							{
+								$arrImage = array(
+						    			'singleSRC' => $objFiles->path
+								);
+								$objFile = new \File($objFiles->path, true);
+							}
 						}
 
 						elseif (is_file(TL_ROOT . '/' . $file))
