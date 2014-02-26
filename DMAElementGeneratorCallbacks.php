@@ -374,10 +374,16 @@ class DMAElementGeneratorCallbacks extends Backend
 							if (is_array(deserialize($objField->eval_path)))
 							{
                                 $intPathIds = deserialize($objField->eval_path);
-                                $objPath = \FilesModel::findByPk($intPathIds[0]);
+                                if (\Validator::isUuid($intPathIds[0]))
+                                {
+                                    $objPath = \FilesModel::findByUuid($intPathIds[0]);
+                                }
+                                else{
+                                    $objPath = \FilesModel::findByPk($intPathIds[0]);
+                                }
 								$objField->eval_path = $objPath->path;
 							}
-							
+
 							// backward-compatibility
 							if ($objField->eval_path=='tl_files')
 							{

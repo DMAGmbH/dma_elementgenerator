@@ -45,7 +45,7 @@ CREATE TABLE `tl_dma_eg_fields` (
   `override_label_setting` char(1) NOT NULL default '',
   `without_label` char(1) NOT NULL default '',
   `eval_field_type` varchar(255) NOT NULL default '',
-  `eval_path` varchar(255) NOT NULL default '',
+  `eval_path` blob NULL,
   `eval_mandatory` char(1) NOT NULL default '',
   `eval_blank_option` char(1) NOT NULL default '',
   `eval_chosen` char(1) NOT NULL default '',
