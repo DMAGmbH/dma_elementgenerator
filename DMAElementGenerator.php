@@ -341,6 +341,7 @@ class DMAElementGenerator extends Frontend
 						if (is_numeric($file))
 						{
 							$objFiles = \FilesModel::findByPk($file);
+
                             if ($objFiles)
                             {
 								$arrImage = array
@@ -349,6 +350,8 @@ class DMAElementGenerator extends Frontend
                                 );
                                 $objFile = new \File($objFiles->path, true);
                             }
+
+
 						}
 
                         elseif (strlen($file)==36)
