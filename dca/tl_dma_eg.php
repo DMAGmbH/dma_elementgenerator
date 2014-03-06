@@ -146,10 +146,12 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		'category' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['category'],
-			'inputType'             => 'text',
+			'inputType'             => 'select',
 			'exclude'				=> true,
 			'filter'				=> true,
-			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50')
+			'options'      			=> array('labelContentelement'=>array_keys($GLOBALS['TL_CTE']),'labelFrontendmodule'=>array_keys($GLOBALS['FE_MOD'])),
+			'reference'             => array_merge($GLOBALS['TL_LANG']['MSC'],$GLOBALS['TL_LANG']['CTE'],$GLOBALS['TL_LANG']['FMD'],$GLOBALS['TL_LANG']['tl_dma_eg']),
+			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50','chosen'=>true)
 		),
 		'template' => array
 		(
@@ -202,8 +204,6 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		)
 	)
 );
-
-
 
 /**
  * Class tl_dma_eg

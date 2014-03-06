@@ -11,3 +11,4 @@ Class.refactor(Request.Contao, {
 			this.parent(options);
 		}
 });
+
