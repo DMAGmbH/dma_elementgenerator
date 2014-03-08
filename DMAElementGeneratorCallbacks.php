@@ -633,7 +633,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	protected function store_configuration_without($without)
 	{
 		$objElement = $this->Database->prepare("SELECT id,category,module,content FROM tl_dma_eg WHERE invisible!=1 ORDER BY title")
-		->execute();
+																 ->execute();
 		$arrModuleConfig = array();
 		$arrContentConfig = array();
 		while ($objElement->next())
@@ -683,10 +683,10 @@ class DMAElementGeneratorCallbacks extends Backend
 
 		// Delete from Contentelements
 		$this->Database->prepare("DELETE FROM tl_content WHERE type=?")
-		->execute(DMA_EG_PREFIX.$dc->id);
+									 ->execute(DMA_EG_PREFIX.$dc->id);
 		// Delete from Modules
 		$this->Database->prepare("DELETE FROM tl_module WHERE type=?")
-		->execute(DMA_EG_PREFIX.$dc->id);
+									 ->execute(DMA_EG_PREFIX.$dc->id);
 
 		// Delete from Configuration
 		$this->store_configuration_without($dc->id);

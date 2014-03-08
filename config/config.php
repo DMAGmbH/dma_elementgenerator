@@ -38,7 +38,6 @@ array_insert($GLOBALS['BE_MOD']['design'], 1, array
 		(
 			'tables' => array('tl_dma_eg','tl_dma_eg_fields'),
 			'icon'       => 'system/modules/dma_elementgenerator/html/icon.png',
-			'stylesheet' => 'system/modules/dma_elementgenerator/html/tl_dma_eg-uncompressed.css',
 			'javascript' => 'system/modules/dma_elementgenerator/html/tl_dma_eg-uncompressed.js'
 		)
 	));
