@@ -560,6 +560,12 @@ class DMAElementGenerator extends Frontend
                     }
                 }
 
+                if ($arrImage['size'])
+                {
+                    $arrSize = deserialize($arrImage['size']);
+                    $arrTemplateData[$objField->title]['value'] = \Image::get($objFile->path, $arrSize[0], $arrSize[1], $arrSize[2]);
+                }
+
                 //$objFieldTemplate->class = $objFieldTemplate->class ? ($objFieldTemplate->class . " " . $arrImage['floating']) : $arrImage['floating'];
 
 				$this->addImageToTemplate($objFieldTemplate, $arrImagePrecompiled);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
