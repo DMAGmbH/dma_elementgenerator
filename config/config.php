@@ -81,6 +81,7 @@ foreach ($arrContent as $strCategory => $arrElements)
 
 // Define dummy data widget
 $GLOBALS['BE_FFL']['dma_eg_hidden'] = 'DMAElementGeneratorHiddenWidget';
+$GLOBALS['BE_FFL']['dma_eg_combobox'] = 'DMAElementGeneratorComboBox';
 $GLOBALS['DMA_EG']['EL_COUNT'] = array();
 
 

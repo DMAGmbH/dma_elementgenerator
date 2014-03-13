@@ -19,6 +19,7 @@ ClassLoader::addClasses(array
     'DMAElementGeneratorCallbacks' => 'system/modules/dma_elementgenerator/DMAElementGeneratorCallbacks.php',
     'DMAElementGeneratorContent' => 'system/modules/dma_elementgenerator/DMAElementGeneratorContent.php',
     'DMAElementGeneratorHiddenWidget' => 'system/modules/dma_elementgenerator/DMAElementGeneratorHiddenWidget.php',
+    'DMAElementGeneratorComboBox' => 'system/modules/dma_elementgenerator/DMAElementGeneratorComboBox.php',
     'DMAElementGeneratorModule' => 'system/modules/dma_elementgenerator/DMAElementGeneratorModule.php',
 ));
 
