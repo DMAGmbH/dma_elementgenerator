@@ -594,7 +594,8 @@ class DMAElementGeneratorCallbacks extends Backend
 
                 while ($intDoWhile)
                 {
-                    $arrValues[] = \String::binToUuid(substr($tempValue,0,16));
+                    //$arrValues[] = \String::binToUuid(substr($tempValue,0,16));
+                    $arrValues[] = $tempValue ? \String::binToUuid(substr($tempValue,0,16)) : '';
                     $tempValue = substr($tempValue,17);
                     if (strlen($tempValue) < 16)
                     {
