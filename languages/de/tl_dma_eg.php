@@ -56,7 +56,7 @@ $GLOBALS['TL_LANG']['tl_dma_eg']['be_template'] = array('Backend-Template','Manc
   $GLOBALS['TL_LANG']['tl_dma_eg']['settings_legend'] = 'Einstellungen';
 
   // LABEL
-  $GLOBALS['TL_LANG']['tl_dma_eg']['labelContentelement'] = 'Inhaltselement';
-  $GLOBALS['TL_LANG']['tl_dma_eg']['labelFrontendmodule'] = 'Frontendmodul';
+  $GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories']['labelContentelement'] = 'Inhaltselement';
+  $GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories']['labelFrontendmodule'] = 'Frontendmodul';
   
 ?>

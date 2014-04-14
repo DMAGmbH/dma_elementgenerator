@@ -149,8 +149,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 			'inputType'             => 'dma_eg_combobox',
 			'exclude'				=> true,
 			'filter'				=> true,
-			'options'      			=> array('labelContentelement'=>array_keys($GLOBALS['TL_CTE']),'labelFrontendmodule'=>array_keys($GLOBALS['FE_MOD'])),
-			'reference'             => array_merge($GLOBALS['TL_LANG']['MSC'],$GLOBALS['TL_LANG']['CTE'],$GLOBALS['TL_LANG']['FMD'],$GLOBALS['TL_LANG']['tl_dma_eg']),
+			'options_callback'      => array('tl_dma_eg','getCategories'),
+            'reference'             => &$GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories'],
 			'eval'                  => array('mandatory'=>true, 'maxlength'=>255, 'tl_class'=>'w50')
 		),
 		'template' => array
@@ -212,6 +212,25 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 class tl_dma_eg extends Backend
 {
 
+    public function getCategories()
+    {
+        $arrReturn = array(
+            'labelContentelement' => array(),
+            'labelFrontendmodule' => array()
+        );
+
+        foreach ($GLOBALS['TL_CTE'] as $contentElementKey=>$contentElement)
+        {
+            $arrReturn['labelContentelement'][$contentElementKey] = $GLOBALS['TL_LANG']['CTE'][$contentElementKey];
+        }
+
+        foreach ($GLOBALS['FE_MOD'] as $frontendModuleKey=>$frontendModule)
+        {
+            $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $GLOBALS['TL_LANG']['FMD'][$frontendModuleKey];
+        }
+
+        return $arrReturn;
+    }
 
     /**
      * returns the list output
