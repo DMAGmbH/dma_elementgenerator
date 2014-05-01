@@ -222,11 +222,19 @@ class tl_dma_eg extends Backend
         foreach ($GLOBALS['TL_CTE'] as $contentElementKey=>$contentElement)
         {
             $arrReturn['labelContentelement'][$contentElementKey] = $GLOBALS['TL_LANG']['CTE'][$contentElementKey];
+            if (!$GLOBALS['TL_LANG']['CTE'][$contentElementKey])
+            {
+                $arrReturn['labelContentelement'][$contentElementKey] = $contentElementKey;
+            }
         }
 
         foreach ($GLOBALS['FE_MOD'] as $frontendModuleKey=>$frontendModule)
         {
             $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $GLOBALS['TL_LANG']['FMD'][$frontendModuleKey];
+            if (!$GLOBALS['TL_LANG']['FMD'][$frontendModuleKey])
+            {
+                $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $frontendModuleKey;
+            }
         }
 
         return $arrReturn;
