@@ -221,8 +221,15 @@ class tl_dma_eg extends Backend
 
         foreach ($GLOBALS['TL_CTE'] as $contentElementKey=>$contentElement)
         {
-            $arrReturn['labelContentelement'][$contentElementKey] = $GLOBALS['TL_LANG']['CTE'][$contentElementKey];
-            if (!$GLOBALS['TL_LANG']['CTE'][$contentElementKey])
+            if (gettype($GLOBALS['TL_LANG']['CTE'][$contentElementKey]) == "string")
+            {
+                $arrReturn['labelContentelement'][$contentElementKey] = $GLOBALS['TL_LANG']['CTE'][$contentElementKey];
+            }
+            elseif (gettype($GLOBALS['TL_LANG']['CTE'][$contentElementKey]) == "array")
+            {
+                $arrReturn['labelContentelement'][$contentElementKey] = $GLOBALS['TL_LANG']['CTE'][$contentElementKey][0];
+            }
+            else
             {
                 $arrReturn['labelContentelement'][$contentElementKey] = $contentElementKey;
             }
@@ -230,8 +237,15 @@ class tl_dma_eg extends Backend
 
         foreach ($GLOBALS['FE_MOD'] as $frontendModuleKey=>$frontendModule)
         {
-            $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $GLOBALS['TL_LANG']['FMD'][$frontendModuleKey];
-            if (!$GLOBALS['TL_LANG']['FMD'][$frontendModuleKey])
+            if (gettype($GLOBALS['TL_LANG']['FMD'][$frontendModuleKey]) == "string")
+            {
+                $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $GLOBALS['TL_LANG']['FMD'][$frontendModuleKey];
+            }
+            elseif (gettype($GLOBALS['TL_LANG']['FMD'][$contentElementKey]) == "array")
+            {
+                $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $GLOBALS['TL_LANG']['FMD'][$frontendModuleKey][0];
+            }
+            else
             {
                 $arrReturn['labelFrontendmodule'][$frontendModuleKey] = $frontendModuleKey;
             }
