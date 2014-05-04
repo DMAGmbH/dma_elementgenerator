@@ -537,6 +537,20 @@ class DMAElementGenerator extends Frontend
 						$arrImage['singleSRC'] = '';
 					}*/
 					$arrTemplateData[$objField->title]['raw'] = $arrImage;//['singleSRC'];
+
+                    if (is_file(TL_ROOT . '/' . $objFile->path))
+                    {
+                        $objFileData = new \File($objFile->path, true);
+                        $arrTemplateData[$objField->title]['attributes'] = array(
+                            'width'   => $objFileData->width,
+                            'height'  => $objFileData->height,
+                            'extension' => $objFileData->extension,
+                            'icon'   => $objFileData->icon,
+                            'size'  => $this->getReadableSize($objFileData->filesize, 1),
+                            'filename' => $objFileData->filename
+                        );
+                    }
+
                     if ($objFile->meta)
                     {
                         $arrTemplateData[$objField->title]['meta'] = deserialize($objFile->meta);
@@ -550,7 +564,22 @@ class DMAElementGenerator extends Frontend
                     $objFile = \FilesModel::findByUuid($arrImage['singleSRC']);
                     if ($objFile)
                     {
+
                         $arrTemplateData[$objField->title]['raw'] = $arrImage;//['singleSRC'];
+
+                        if (is_file(TL_ROOT . '/' . $objFile->path))
+                        {
+                            $objFileData = new \File($objFile->path, true);
+                            $arrTemplateData[$objField->title]['attributes'] = array(
+                                'width'   => $objFileData->width,
+                                'height'  => $objFileData->height,
+                                'extension' => $objFileData->extension,
+                                'icon'   => $objFileData->icon,
+                                'size'  => $this->getReadableSize($objFileData->filesize, 1),
+                                'filename' => $objFileData->filename
+                            );
+                        }
+
                         if ($objFile->meta)
                         {
                             $arrTemplateData[$objField->title]['meta'] = deserialize($objFile->meta);
