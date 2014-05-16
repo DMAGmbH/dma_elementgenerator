@@ -18,6 +18,7 @@ CREATE TABLE `tl_dma_eg` (
   `be_template` varchar(255) NOT NULL default '',
   `module` char(1) NOT NULL default '',
   `content` char(1) NOT NULL default '',
+  `wrappingtype` varchar(255) NOT NULL default '',
   `category` varchar(255) NOT NULL default '',
   `class` varchar(255) NOT NULL default '',
   `without_label` char(1) NOT NULL default '',
