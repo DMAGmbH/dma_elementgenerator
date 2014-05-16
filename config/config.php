@@ -81,17 +81,19 @@ foreach ($arrContent as $strCategory => $arrElements)
 			$strElement = $strElement[0];
 		}
 		$GLOBALS['TL_CTE'][$strCategory][DMA_EG_PREFIX.$strElement]= 'DMAElementGeneratorContent';
-		switch ($wrapping) {
-			case 'wrapstart': 
-				$GLOBALS['TL_WRAPPERS']['start'][] = DMA_EG_PREFIX.$strElement;
-				break;
-			case 'wrapdivide': 
-				$GLOBALS['TL_WRAPPERS']['separator'][] = DMA_EG_PREFIX.$strElement;
-				break;
-			case 'wrapend': 
-				$GLOBALS['TL_WRAPPERS']['stop'][] = DMA_EG_PREFIX.$strElement;
-				break;
-			default:
+		if (is_array($GLOBALS['TL_WRAPPERS'])) {
+			switch ($wrapping) {
+				case 'wrapstart': 
+					$GLOBALS['TL_WRAPPERS']['start'][] = DMA_EG_PREFIX.$strElement;
+					break;
+				case 'wrapdivide': 
+					$GLOBALS['TL_WRAPPERS']['separator'][] = DMA_EG_PREFIX.$strElement;
+					break;
+				case 'wrapend': 
+					$GLOBALS['TL_WRAPPERS']['stop'][] = DMA_EG_PREFIX.$strElement;
+					break;
+				default:
+			}
 		}
 	}
 }
