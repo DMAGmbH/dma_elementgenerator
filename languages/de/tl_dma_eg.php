@@ -34,10 +34,16 @@ $GLOBALS['TL_LANG']['tl_dma_eg']['be_template'] = array('Backend-Template','Manc
   $GLOBALS['TL_LANG']['tl_dma_eg']['module'] = array('Als Modul bereitstellen','Soll das Element als Modul zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['content'] = array('Als Inhaltselement bereitstellen','Soll das Element als Inhaltselement zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['class'] = array('zusätzliche Klasse für dieses Element','mit dieser Klasse kann die standardmäßig gesetetzte überschrieben werden');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['wrappingtype'] = array('Darstellung als Wrapper?','Hier kann die Backenddarstellung beeinflusst werden, um Elemente verschachtelt anzuzeigen');
 
   $GLOBALS['TL_LANG']['tl_dma_eg']['without_label'] = array('Feldausgabe ohne Label','Sollen die Felder ohne Label ausgegeben werden?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'] = array('Felder in divs ausgeben','Standardmäßig werden die Inhalte als ul ausgegeben. Alternativ ist auch eine Ausgabe in divs möglich.');
-  
+  $GLOBALS['TL_LANG']['tl_dma_eg']['wrappingtype_select'] = array(
+  	'none' => 'Normales Element',
+  	'wrapstart' => 'Startelement',
+  	'wrapdivide' => 'Trennerelement',
+  	'wrapend' => 'Endelement'
+  );
   
   $GLOBALS['TL_LANG']['tl_dma_eg']['new'] = array('Neues Element','Ein neues Element anlegen');
     

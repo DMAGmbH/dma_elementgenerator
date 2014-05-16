@@ -123,13 +123,14 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array(),
+		'__selector__'                => array('content'),
 		'default'                     => '{title_legend},title,category;{settings_legend},template,be_template,content,module;{expert_legend:hide},without_label,display_in_divs,class',
 	),
 
 	// Subpalettes
 	'subpalettes' => array
-	(		
+	(
+		'content' => 'wrappingtype'
 	),
 
 	// Fields
@@ -174,13 +175,21 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['module'],
 			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'w50','isBoolean'=> true)
+			'eval'                    => array('tl_class'=>'clr w50','isBoolean'=> true)
 		),
 		'content' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['content'],
 			'inputType'               => 'checkbox',
-			'eval'                    => array('tl_class'=>'clr w50','isBoolean'=> true)
+			'eval'                    => array('tl_class' => 'w50 m12','submitOnChange' => true,'isBoolean'=> true)
+		),
+		'wrappingtype' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_dma_eg']['wrappingtype'],
+			'reference'               => &$GLOBALS['TL_LANG']['tl_dma_eg']['wrappingtype_select'],
+			'inputType'               => 'select',
+			'options'                 => array('none','wrapstart','wrapdivide','wrapend'),
+			'eval'                    => array('tl_class'=>'clr w50')
 		),
 		'class' => array
 		(
