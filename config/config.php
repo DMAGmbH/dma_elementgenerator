@@ -75,9 +75,28 @@ foreach ($arrModules as $strCategory => $arrElements)
 foreach ($arrContent as $strCategory => $arrElements)
 {
 	foreach ($arrElements as $strElement) {
+		$wrapping = 'none';
+		if (is_array($strElement)) {
+			$wrapping = count($strElement) > 1 ? $strElement[1] : 'none';
+			$strElement = $strElement[0];
+		}
 		$GLOBALS['TL_CTE'][$strCategory][DMA_EG_PREFIX.$strElement]= 'DMAElementGeneratorContent';
+		switch ($wrapping) {
+			case 'wrapstart': 
+				$GLOBALS['TL_WRAPPERS']['start'][] = DMA_EG_PREFIX.$strElement;
+				break;
+			case 'wrapdivide': 
+				$GLOBALS['TL_WRAPPERS']['separator'][] = DMA_EG_PREFIX.$strElement;
+				break;
+			case 'wrapend': 
+				$GLOBALS['TL_WRAPPERS']['stop'][] = DMA_EG_PREFIX.$strElement;
+				break;
+			default:
+		}
 	}
 }
+
+// var_dump($GLOBALS['TL_WRAPPERS']);
 
 // Define dummy data widget
 $GLOBALS['BE_FFL']['dma_eg_hidden'] = 'DMAElementGeneratorHiddenWidget';

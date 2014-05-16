@@ -633,7 +633,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	 */
 	protected function store_configuration_without($without)
 	{
-		$objElement = $this->Database->prepare("SELECT id,category,module,content FROM tl_dma_eg WHERE invisible!=1 ORDER BY title")
+		$objElement = $this->Database->prepare("SELECT id,category,module,content,wrappingtype FROM tl_dma_eg WHERE invisible!=1 ORDER BY title")
 																 ->execute();
 		$arrModuleConfig = array();
 		$arrContentConfig = array();
@@ -647,7 +647,11 @@ class DMAElementGeneratorCallbacks extends Backend
 				}
 				if ($objElement->content)
 				{
-					$arrContentConfig[$objElement->category][] = $objElement->id;
+					if ($objElement->wrappingtype != 'none') {
+						$arrContentConfig[$objElement->category][] = array($objElement->id,$objElement->wrappingtype);
+					} else {
+						$arrContentConfig[$objElement->category][] = $objElement->id;
+					}
 				}
 			}
 		}

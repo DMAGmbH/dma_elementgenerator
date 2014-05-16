@@ -32,6 +32,13 @@
   $GLOBALS['TL_LANG']['tl_dma_eg']['template'] = array('Template','Output template');
   $GLOBALS['TL_LANG']['tl_dma_eg']['module'] = array('Use as module','This element will be listed as frontend module');
   $GLOBALS['TL_LANG']['tl_dma_eg']['content'] = array('Use as contentelement','This element will be listed as contentelement');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['wrappingtype'] = array('Display as wrapper','Affects the display in the backend to allow nested elements');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['wrappingtype_select'] = array(
+  	'none' => 'Normal Element',
+  	'wrapstart' => 'Start wrapper',
+  	'wrapdivide' => 'Separator',
+  	'wrapend' => 'End wrapper'
+  );
 
   $GLOBALS['TL_LANG']['tl_dma_eg']['new'] = array('New element','Create newe element');
     
