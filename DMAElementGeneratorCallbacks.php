@@ -351,7 +351,6 @@ class DMAElementGeneratorCallbacks extends Backend
 								'tl_class' => $objField->eval_tl_class,
 								'rgxp' => $objField->eval_rgxp,
 								'allowHtml' => $objField->eval_allow_html || $objField->eval_rte,
-								'rte' => $objField->eval_rte ? ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE') : '',
 								'unique' => $objField->eval_unique,
 								'doNotCopy' => $objField->eval_do_not_copy,
 								'files' => true,
@@ -368,6 +367,10 @@ class DMAElementGeneratorCallbacks extends Backend
 							'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
 							'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
 						);
+            if ($objField->eval_rte)
+            {
+            	$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['rte'] =  ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE');
+            }
 						if ($objField->eval_path)
 						{
 							// path is array for Contao 3
