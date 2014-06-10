@@ -338,6 +338,8 @@ class DMAElementGenerator extends Frontend
 					foreach ($tempArrFiles as $file)
 					{
 
+                        $objFile = null;
+
 						if (is_numeric($file))
 						{
 							$objFiles = \FilesModel::findByPk($file);
@@ -418,6 +420,9 @@ class DMAElementGenerator extends Frontend
 				{
 					//eine Datei
 					// file-handling for Contao 3
+
+                    $objFile = null;
+
 					if (is_numeric($arrData[$objField->title]))
 					{
 						$objFiles = \FilesModel::findByPk($arrData[$objField->title]);
