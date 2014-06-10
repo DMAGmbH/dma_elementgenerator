@@ -1,7 +1,4 @@
 <?php echo ($this->divs) ? '<div class="' . $this->class . '">':'<li class="' . $this->class .'">'; ?>
-<?php
-    //$this->showTemplateVars();
-?>
 
 <?php if (!$this->nolabels): ?>
   <span class="label"><?php echo $this->label ?></span>

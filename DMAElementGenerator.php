@@ -466,11 +466,11 @@ class DMAElementGenerator extends Frontend
 							$this->sendFileToBrowser($file);
 						}
 					}
-					
+
 					if ($objFile) {
 
-
-						$arrTemplateData[$objField->title]['value'] = array(
+                        $arrTemplateData[$objField->title]['value'] = array();
+						$arrTemplateData[$objField->title]['value'][] = array(
 							'raw' => $arrData[$objField->title],
                             'meta' => $objFiles ? deserialize($objFiles->meta) : '',
 							'src' => $objFile->value,
