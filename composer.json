@@ -24,6 +24,9 @@
     "source": "https://github.com/DMAGmbH/dma_elementgenerator",
     "forum": "https://community.contao.org/de/forumdisplay.php?134-dma_elementgenerator"
   },
+  "replace": {
+    "contao-legacy/dma_elementgenerator": "*"
+  },
   "require": {
     "php": ">=5.3.4",
     "contao/core": ">=3.0,<3.3"
