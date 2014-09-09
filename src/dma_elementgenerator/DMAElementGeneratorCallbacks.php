@@ -515,7 +515,7 @@ class DMAElementGeneratorCallbacks extends Backend
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
                 $this->paletteReplace .= ',' . $title;
-
+                
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$imageData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
