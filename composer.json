@@ -1,37 +1,37 @@
 {
-  name: "dma/dma_elementgenerator",
-  description: "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
-  keywords: ["elements","contentelement","modules","layout","content","contao"],
-  type: "contao-module",
-  license: "LGPL",
-  authors: [
+  "name" "dma/dma_elementgenerator",
+  "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
+  "keywords": ["elements","contentelement","modules","layout","content","contao"],
+  "type": "contao-module",
+  "license": "LGPL",
+  "authors": [
     {
-      name: "Janosch Oltmanns",
-      email: "oltmanns@dma.do",
-      homepage: "http://www.dma.do",
-      role: "Project Leader"
+      "name": "Janosch Oltmanns",
+      "email": "oltmanns@dma.do",
+      "homepage": "http://www.dma.do",
+      "role": "Project Leader"
     },
     {
-      name: "Carsten Kollmeier",
-      email: "carsten@ckollmeier.de",
-      homepage: "",
-      role: "Contributor"
+      "name": "Carsten Kollmeier",
+      "email" "carsten@ckollmeier.de",
+      "homepage": "",
+      "role" "Contributor"
     }
   ],
-  support: {
-    email: "contao@dma.do",
-    issues: "https://github.com/DMAGmbH/dma_elementgenerator/issues",
-    source: "https://github.com/DMAGmbH/dma_elementgenerator",
-    forum: "https://community.contao.org/de/forumdisplay.php?134-dma_elementgenerator"
+  "support": {
+    "email": "contao@dma.do",
+    "issues": "https://github.com/DMAGmbH/dma_elementgenerator/issues",
+    "source": "https://github.com/DMAGmbH/dma_elementgenerator",
+    "forum" "https://community.contao.org/de/forumdisplay.php?134-dma_elementgenerator"
   },
-  require: {
-    php: ">=5.3.4",
-    contao/core: ">=3.0,<3.3"
+  "require": {
+    "php": ">=5.3.4",
+    "contao/core": ">=3.0,<3.3"
   },
-  extra: {
-    contao: {
-      sources: {
-        src/dma_elementgenerator: "system/modules/dma_elementgenerator"
+  "extra": {
+    "contao": {
+      "sources": {
+        "src/dma_elementgenerator": "system/modules/dma_elementgenerator"
       }
     }
   }
