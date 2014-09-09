@@ -1,5 +1,5 @@
 {
-  "name" "dma/dma_elementgenerator",
+  "name": "dma/dma_elementgenerator",
   "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
   "keywords": ["elements","contentelement","modules","layout","content","contao"],
   "type": "contao-module",
@@ -13,16 +13,16 @@
     },
     {
       "name": "Carsten Kollmeier",
-      "email" "carsten@ckollmeier.de",
+      "email": "carsten@ckollmeier.de",
       "homepage": "",
-      "role" "Contributor"
+      "role": "Contributor"
     }
   ],
   "support": {
     "email": "contao@dma.do",
     "issues": "https://github.com/DMAGmbH/dma_elementgenerator/issues",
     "source": "https://github.com/DMAGmbH/dma_elementgenerator",
-    "forum" "https://community.contao.org/de/forumdisplay.php?134-dma_elementgenerator"
+    "forum": "https://community.contao.org/de/forumdisplay.php?134-dma_elementgenerator"
   },
   "require": {
     "php": ">=5.3.4",
