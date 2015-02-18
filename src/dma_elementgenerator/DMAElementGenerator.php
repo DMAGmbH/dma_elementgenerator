@@ -49,6 +49,22 @@ class DMAElementGenerator extends Frontend
 	}
 
 
+    public function dmaEgLoadLanguageFile($strName, $strLanguage)
+    {
+        // Support für ce-access etc.
+        if ($strName == "default")
+        {
+            $objContentElements = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE content=?")
+                                                 ->execute(1);
+            if ($objContentElements->numRows > 0)
+            {
+                while($objContentElements->next())
+                {
+                    $GLOBALS['TL_LANG']['CTE'][DMA_EG_PREFIX.$objContentElements->id]  = array($objContentElements->title,$objContentElements->title);
+                }
+            }
+        }
+    }
 
 	protected function compile($data)
 	{

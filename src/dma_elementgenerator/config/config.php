@@ -90,4 +90,7 @@ if(version_compare(VERSION.BUILD, '3.10','>=') && version_compare(VERSION.BUILD,
 	$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
 }
 
+$GLOBALS['TL_HOOKS']['loadLanguageFile'][] = array('DMAElementGenerator','dmaEgLoadLanguageFile');
+
+
 ?>
