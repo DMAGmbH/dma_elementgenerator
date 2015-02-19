@@ -617,14 +617,13 @@ class DMAElementGenerator extends Frontend
                 }
 
                 //$objFieldTemplate->class = $objFieldTemplate->class ? ($objFieldTemplate->class . " " . $arrImage['floating']) : $arrImage['floating'];
-
-				$this->addImageToTemplate($objFieldTemplate, $arrImagePrecompiled);//7$objHyperlink = new dmaHyperlinkHelper($linkData);
-				//$objFieldTemplate->value = $objHyperlink->generate();
-				$arrImage['type'] = 'image';
-				$objImage = new dmaContentImageHelper($arrImage);
-
-				$arrElements[$objField->title] = $objImage->generate();
-
+                if ($arrImagePrecompiled['singleSRC'])
+                {
+                    $this->addImageToTemplate($objFieldTemplate, $arrImagePrecompiled);
+                    $arrImage['type'] = 'image';
+                    $objImage = new dmaContentImageHelper($arrImage);
+                    $arrElements[$objField->title] = $objImage->generate();
+                }
 
 			}
 
