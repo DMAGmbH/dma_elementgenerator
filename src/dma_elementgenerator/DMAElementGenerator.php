@@ -51,6 +51,13 @@ class DMAElementGenerator extends Frontend
 
     public function dmaEgLoadLanguageFile($strName, $strLanguage)
     {
+        
+        // wird für die Installations-Routine benötigt
+        if (!$this->Database->tableExists("tl_dma_eg"))
+        {
+            return;
+        }
+      
         // Support für ce-access etc.
         if ($strName == "default")
         {
