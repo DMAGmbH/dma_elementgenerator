@@ -528,10 +528,14 @@ class DMAElementGenerator extends Frontend
 			{
 				$linkData = array();
 				$arrHyperlinkData = deserialize($objField->hyperlink_data);
-				foreach ($arrHyperlinkData as $hyperlinkData)
-				{
-					$linkData[$hyperlinkData] =  $arrData[$objField->title . '--' . $hyperlinkData];
-				}
+
+                if (is_array($arrHyperlinkData) && sizeof($arrHyperlinkData)>0)
+                {
+                    foreach ($arrHyperlinkData as $hyperlinkData)
+                    {
+                        $linkData[$hyperlinkData] =  $arrData[$objField->title . '--' . $hyperlinkData];
+                    }
+                }
 
 				if ($linkData['url'])
 				{
