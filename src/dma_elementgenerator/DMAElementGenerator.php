@@ -553,10 +553,13 @@ class DMAElementGenerator extends Frontend
 				$arrImage = array();
 				$arrImageData = deserialize($objField->image_data);
 
-				foreach ($arrImageData as $imageData)
-				{
-					$arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData];
-				}
+                if (is_array($arrImageData) && sizeof($arrImageData)>0)
+                {
+                    foreach ($arrImageData as $imageData)
+                    {
+                        $arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData];
+                    }
+                }
 
 				$arrImagePrecompiled = $arrImage;
 				// file-handling for Contao 3
