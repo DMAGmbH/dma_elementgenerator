@@ -67,7 +67,7 @@ class DMAElementGenerator extends Frontend
             {
                 while($objContentElements->next())
                 {
-                    $GLOBALS['TL_LANG']['CTE'][DMA_EG_PREFIX.$objContentElements->id]  = array($objContentElements->title,$objContentElements->title);
+                    $GLOBALS['TL_LANG']['CTE'][DMA_EG_PREFIX.$objContentElements->id]  = array($objContentElements->title, $objContentElements->description ? $objContentElements->description : $objContentElements->title);
                 }
             }
         }
