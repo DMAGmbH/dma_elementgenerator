@@ -490,17 +490,20 @@ class DMAElementGeneratorCallbacks extends Backend
 
         $this->paletteReplace .= ';{' . $objField->label . '}';
 
-		foreach ($arrHyperlinkData as $hyperlinkData)
-		{
-			$title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
-			$this->paletteReplace .= ',' . $title;
-			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$hyperlinkData];
-			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
-			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
-			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
-            $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
-			$GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
-		}
+        if (is_array($arrHyperlinkData) && sizeof($arrHyperlinkData)>0)
+        {
+            foreach ($arrHyperlinkData as $hyperlinkData)
+            {
+                $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
+                $this->paletteReplace .= ',' . $title;
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$hyperlinkData];
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
+            }
+        }
         $this->paletteReplace .= ';';
 	}
 
