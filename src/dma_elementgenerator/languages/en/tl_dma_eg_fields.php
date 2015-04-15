@@ -59,6 +59,7 @@
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['explanation'] = array('Description','Description as shown under the field');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['default_value'] = array('Default value','Default value of the field');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_mandatory'] = array('Mandatory','This field has to be filled');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_multiple'] = array('Multiple selection','Allow selection of more than one option.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rte'] = array('Richtexteditor','Make use of the Richtexteditor');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rgxp'] = array('Input validation','Validate the input against a regular expression.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rgxp_select'] = array(
@@ -83,6 +84,8 @@
                                                                         'long' => 'Field spans two columns',
                                                                         'm12' => 'Additional margin (for checkboxes)'
                                                                       );
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'] = array('Use Checkbox Wizard','Use the checkbox wizard to allow sortable checkboxes.');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_datepicker'] = array('Use datepicker','If true the current field has a date picker.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rows'] = array('Rows','Number of rows of the field');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_cols'] = array('Columns','Number of columns of the field');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['options'] = array('Options','Label and value');

@@ -67,6 +67,7 @@
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['explanation'] = array('Beschreibung','Beschreibung, erscheint unter dem Feld');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['default_value'] = array('Vorgabe','Vorgabewert des Feldes');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_mandatory'] = array('Pflichtfeld','Das Feld muss ausgefüllt werden');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_multiple'] = array('Mehrfachauswahl','Erlaubt die Auswahl mehrerer Optionen');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rte'] = array('Richtexteditor verwenden','Erlaubt die Nutzung des Richtexteditors');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rgxp'] = array('Eingabeprüfung','Die Eingaben anhand eines regulären Ausdrucks prüfen.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rgxp_select'] = array(
@@ -91,6 +92,8 @@
                                                                         'long' => 'Lange Darstellung',
                                                                         'm12' => 'Zusätzlicher Rand (für Checkboxen)'
                                                                       );
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'] = array('Checkbox-Assistenten verwenden','Den Checkbox-Assistenten verwenden um das Umsortieren der Optionen zu erlauben');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_datepicker'] = array('Datumswähler verwenden','Aktiviert das Popup zur Auswahl eines Datums.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_rows'] = array('Zeilen','Anzahl Zeilen des Eingabefeldes');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_cols'] = array('Spalten','Anzahl Spalten des Eingabefeldes');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['options'] = array('Auswahlmöglichkeiten','Bitte Bezeichnung und den Wert der Auswahl eingeben');
