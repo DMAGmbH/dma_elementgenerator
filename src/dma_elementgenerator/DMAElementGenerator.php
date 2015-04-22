@@ -294,6 +294,22 @@ class DMAElementGenerator extends Frontend
 
             }
 
+            // Handling von Selectmenüs und eigener Key-Struktur
+            if ($objField->type == 'select' && $objField->optionsType == 'manual')
+            {
+                $arrOptions = deserialize($objField->options);
+                if (is_array($arrOptions))
+                {
+                    foreach ($arrOptions as $index => $arrOptionData)
+                    {
+                        if ($arrOptionData['value'] == $arrData[$objField->title])
+                        {
+                            $arrElements[$objField->title] = $arrTemplateData[$objField->title]['value'] = $objFieldTemplate->value = $arrOptionData['label'];
+                        }
+                    }
+                }
+            }
+
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{
