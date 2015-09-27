@@ -350,6 +350,7 @@ class DMAElementGeneratorCallbacks extends Backend
 								'mandatory' => $objField->eval_mandatory,
 								'tl_class' => $objField->eval_tl_class,
 								'rgxp' => $objField->eval_rgxp,
+								'datepicker' => $objField->eval_rgxp == 'date' || $objField->eval_rgxp == 'datim',
 								'allowHtml' => $objField->eval_allow_html || $objField->eval_rte,
 								'unique' => $objField->eval_unique,
 								'doNotCopy' => $objField->eval_do_not_copy,
