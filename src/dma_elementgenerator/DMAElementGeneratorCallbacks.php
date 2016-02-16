@@ -196,16 +196,46 @@ class DMAElementGeneratorCallbacks extends Backend
 				// A legend just needs an entry in the palette
 				if ($objField->type == 'legend')
 				{
+
+					$blnAddLegendToPalette = false;
+					if ($objField->useCheckboxCondition)
+					{
+						if ($objField->subpaletteSelector)
+						{
+							$objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
+								->limit(1)
+								->execute($objField->subpaletteSelector);
+							// funktioniert nur mit Contao >= 3.1 fehlerfrei
+							if(version_compare(VERSION.BUILD, '3.10','>='))
+							{
+								$GLOBALS['TL_DCA'][$strTable]['fields'][DMA_EG_PREFIX . $objSubSelector->id . '_' . $objSubSelector->title]['eval']['submitOnChange'] = true;
+							}
+							if ($objSubSelector->numRows == 1)
+							{
+								if ($fields[$objSubSelector->title])
+								{
+									$blnAddLegendToPalette = true;
+								}
+							}
+						}
+					}
+					else {
+						$blnAddLegendToPalette = true;
+					}
+
 					$title = DMA_EG_PREFIX . $objField->id . '_legend_' . $objField->id;
 
-                    if (substr($this->paletteReplace,-1) == ';')
-                    {
-                        $this->paletteReplace .= '{' . $title . ($objField->hidden ? ':hide' : '') . '}';
-                    }
-                    else
-                    {
-                        $this->paletteReplace .= ';{' . $title . ($objField->hidden ? ':hide' : '') . '}';
-                    }
+					if ($blnAddLegendToPalette)
+					{
+						if (substr($this->paletteReplace, -1) == ';')
+						{
+							$this->paletteReplace .= '{' . $title . ($objField->hidden ? ':hide' : '') . '}';
+						}
+						else
+						{
+							$this->paletteReplace .= ';{' . $title . ($objField->hidden ? ':hide' : '') . '}';
+						}
+					}
 
 					$GLOBALS['TL_LANG'][$strTable][$title]  = $objField->label;
 					// Otherwise fill all options
