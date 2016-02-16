@@ -103,6 +103,12 @@ class DMAElementGenerator extends Frontend
             $objElement->template = $objElement->be_template;
         }
 
+		if (TL_MODE == 'FE' && $data->dmaElementTpl)
+		{
+			$objElement->template = $data->dmaElementTpl;
+		}
+
+
 
 		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
 		if ($objElement->display_in_divs)

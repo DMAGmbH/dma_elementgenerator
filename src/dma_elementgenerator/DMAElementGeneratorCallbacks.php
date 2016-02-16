@@ -52,10 +52,11 @@ class DMAElementGeneratorCallbacks extends Backend
 	 * The palettes to generate according to the type of element
 	 * @var array
 	 */
+
 	protected $dma_palettes = array
 	(
-		'content' => '{type_legend},type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
-		'module' => '{type_legend},name,type;dma_eg_data;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space'
+		'content' => '{type_legend},type;dma_eg_data;{template_legend:hide},dmaElementTpl,customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop',
+		'module' => '{type_legend},name,type;dma_eg_data;{template_legend:hide},customTpl;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space'
 	);
 
 	/**
