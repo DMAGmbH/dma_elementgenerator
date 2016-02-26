@@ -1,7 +1,7 @@
-<?php echo ($this->divs) ? '<div class="' . $this->class . '">':'<li class="' . $this->class .'">'; ?>
+<?= $this->divs ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
 
 <?php if (!$this->nolabels): ?>
-  <span class="label"><?php echo $this->label ?></span>
+  <span class="label"><?= $this->label ?></span>
   <span class="value">
 <?php endif; ?>
 
@@ -9,9 +9,9 @@
 <?php foreach ($this->addData['value'] as $entry): ?>
 <li>
     <figure class="image_container">
-        <img src="<?php echo $entry['src']; ?>" alt="<?php echo $entry['meta']['de']['title']; ?>">
+        <img src="<?= $entry['src']; ?>" alt="<?= $entry['meta']['de']['title']; ?>">
         <?php if ($entry['meta']['de']['caption']): ?>
-            <figcaption class="caption" style="width:<?php echo $entry['attributes']['width']; ?>px"><?php echo $entry['meta']['de']['caption']; ?></figcaption>
+            <figcaption class="caption" style="width:<?= $entry['attributes']['width']; ?>px"><?= $entry['meta']['de']['caption']; ?></figcaption>
         <?php endif; ?>
     </figure>
 </li>
@@ -22,4 +22,4 @@
   </span>
 <?php endif; ?>
 
-<?php echo ($this->divs) ? '</div>' : '</li>'; ?>
+<?= $this->divs ? '</div>' : '</li>'; ?>

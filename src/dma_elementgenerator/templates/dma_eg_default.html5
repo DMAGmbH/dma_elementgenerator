@@ -1,3 +1,3 @@
-<?php echo ($this->divs) ? '' : '<ul>'; ?>
-  <?php echo $this->fields; ?>
-<?php echo ($this->divs) ? '' : '</ul>'; ?>
+<?= $this->divs ? '' : '<ul>'; ?>
+  <?= $this->fields; ?>
+<?= $this->divs ? '' : '</ul>'; ?>
