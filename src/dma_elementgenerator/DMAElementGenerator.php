@@ -557,6 +557,7 @@ class DMAElementGenerator extends Frontend
 			if ($objField->type=='image' && $objField->image_data)
 			{
 				$arrImage = array();
+				$arrImage['id'] = $data->id;
 				$arrImageData = deserialize($objField->image_data);
 
                 if (is_array($arrImageData) && sizeof($arrImageData)>0)
@@ -843,6 +844,7 @@ class dmaContentImageHelper extends ContentImage
 	{
 		$this->type = 'image';
 		$this->singleSRC = $arrData['singleSRC'];
+		$this->id = $arrData['id'];
 		$this->arrData = $arrData;
 	}
 }
