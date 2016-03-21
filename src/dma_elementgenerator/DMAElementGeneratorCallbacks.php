@@ -236,7 +236,11 @@ class DMAElementGeneratorCallbacks extends \Backend
 					//multiple checkbox-menue
 					if ($objField->type=='checkbox' && sizeof($this->prepareOptions($objField))>1)
 					{
-						$objField->type='checkboxWizard';
+						if ($objField->eval_checkboxWizard)
+						{
+							$objField->type='checkboxWizard';
+						}
+						$objField->eval_multiple=true;
 					}
 
 					$objField->eval_tl_class = $objField->eval_tl_class ? implode(' ',deserialize($objField->eval_tl_class)) : '';
@@ -381,7 +385,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 								'fieldType' => substr($objField->eval_field_type,3),
 								'alwaysSave' => true,
 								'doNotSaveEmpty' => true,
-								'multiple' => ($objField->type=='checkboxWizard' || substr($objField->eval_field_type,3)=='checkbox') ? true : false,
+								'multiple' => ($objField->type=='checkboxWizard' || substr($objField->eval_field_type,3)=='checkbox') || $objField->eval_multiple ? true : false,
 								'decodeEntities' => $objField->eval_decodeEntities ? true : false,
 								'csv' => ','
 							),

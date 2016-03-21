@@ -106,6 +106,9 @@ $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_chosen'] = array('Select durchsuch
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_allow_html'] = array('HTML erlauben','HTML-Ausdrücke nicht aus der Eingabe filtern');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_unique'] = array('Einmaliger Wert','Der Wert dieses Feldes darf nur einmal vergeben werden');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_do_not_copy'] = array('Nicht kopieren','Werte dieses Feldes werden beim Kopieren des Elements ignoriert');
+
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'] = array('Checkbox-Assistenten verwenden','Den Checkbox-Assistenten verwenden um das Umsortieren der Optionen zu erlauben');
+
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'] = array('CSS-Klasse','Geben Sie eine oder mehrere durch Leerzeichen getrennte Klassen an');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['useCheckboxCondition'] = array('Checkbox-abhängig einblenden','Die Anzeige dieses Elements kann von einer Checkbox abhängig gemacht werden.');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['subpaletteSelector'] = array('Abhängige Checkbox','Checkbox, von der die Anzeige dieses Elements abhängt.');

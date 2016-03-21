@@ -120,7 +120,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'text'          => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength,eval_colorpicker;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
 		'textarea'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
 		'select'        => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,optionsType;{style_legend},eval_blank_option,eval_chosen,eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
-		'checkbox'      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'checkbox'      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_checkboxWizard,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'radio'         => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'fileTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'pageTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
@@ -384,6 +384,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
             'eval'                  => array('tl_class'=>'w50'),
             'sql'                   => "char(1) NOT NULL default ''"
         ),
+		'eval_checkboxWizard' => array(
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class'=>'w50 m12'),
+			'sql'                   => "char(1) NOT NULL default ''"
+		),
 		'class' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'],
