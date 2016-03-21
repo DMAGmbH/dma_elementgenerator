@@ -81,6 +81,13 @@ class DMAElementGeneratorCallbacks extends \Backend
                 }
             }
         }
+		elseif ($objField->optionsType == 'array')
+		{
+			if (is_array($GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey]))
+			{
+				$arrReturn = $GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey];
+			}
+		}
         else
         {
             $arrOptions = deserialize($objField->options, true);
@@ -364,6 +371,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 								'mandatory' => $objField->eval_mandatory,
 								'tl_class' => $objField->eval_tl_class,
 								'rgxp' => $objField->eval_rgxp,
+								'datepicker' => $objField->eval_rgxp == 'date' || $objField->eval_rgxp == 'datim',
 								'allowHtml' => $objField->eval_allow_html || $objField->eval_rte,
 								'unique' => $objField->eval_unique,
 								'doNotCopy' => $objField->eval_do_not_copy,
@@ -603,7 +611,7 @@ class DMAElementGeneratorCallbacks extends \Backend
         {
             if (strlen($varValue) == 16)
             {
-                $varValue = \String::binToUuid($varValue);
+                $varValue = \StringUtil::binToUuid($varValue);
             }
             elseif ($this->elementDca['eval_field_type']=="ft_checkbox")
             {
@@ -615,7 +623,7 @@ class DMAElementGeneratorCallbacks extends \Backend
                 while ($intDoWhile)
                 {
                     //$arrValues[] = \String::binToUuid(substr($tempValue,0,16));
-                    $arrValues[] = $tempValue ? \String::binToUuid(substr($tempValue,0,16)) : '';
+                    $arrValues[] = $tempValue ? \StringUtil::binToUuid(substr($tempValue,0,16)) : '';
                     $tempValue = substr($tempValue,17);
                     if (strlen($tempValue) < 16)
                     {

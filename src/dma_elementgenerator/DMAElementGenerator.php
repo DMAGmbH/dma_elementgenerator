@@ -293,6 +293,18 @@ class DMAElementGenerator extends \Frontend
 
             }
 
+			// Handling von Selectmenüs auf Array-Basis
+			if ($objField->type == 'select' && $objField->optionsType == 'array')
+			{
+				if (is_array($GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey]))
+				{
+					if ($GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey][$arrData[$objField->title]])
+					{
+						$arrTemplateData[$objField->title]['value'] = $GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey][$arrData[$objField->title]];
+					}
+				}
+			}
+
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{

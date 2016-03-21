@@ -136,7 +136,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	(		
 		'useCheckboxCondition'  => 'subpaletteSelector,renderHiddenData',
         'optionsType_manual'    => 'options',
-        'optionsType_database'  => 'optDbTable,optDbTitle,optDbQuery'
+        'optionsType_database'  => 'optDbTable,optDbTitle,optDbQuery',
+		'optionsType_array'		=> 'optArrayKey'
 	),
 
 	// Fields
@@ -441,16 +442,17 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
         ),
         'optionsType' => array
         (
-            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'],
+            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optionsType'],
             'default'               => 'manual',
             'exclude'               => true,
             'inputType'             => 'select',
-            'options'               => array('manual', 'database'),
+            'options'               => array('manual', 'database', 'array'),
+			'reference'             => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optionsType_options'],
             'eval'                  => array('mandatory'=>true, 'submitOnChange' => true, 'tl_class'=>'w50 clr'),
             'sql'                   => "varchar(255) NOT NULL default ''"
         ),
         'optDbTable' => array(
-            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'],
+            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbTable'],
             'default'               => '',
             'exclude'               => true,
             'inputType'             => 'select',
@@ -459,14 +461,14 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
             'sql'                   => "varchar(255) NOT NULL default ''"
         ),
         'optDbQuery' => array(
-            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'],
+            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbQuery'],
             'exclude'               => true,
             'inputType'             => 'textarea',
             'eval'                  => array('preserveTags'=>true, 'style'=>'height:60px', 'tl_class'=>'clr'),
             'sql'                   => "mediumtext NULL"
         ),
         'optDbTitle' => array(
-            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'],
+            'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbTitle'],
             'default'               => '',
             'exclude'               => true,
             'inputType'             => 'select',
@@ -474,6 +476,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
             'eval'                  => array('includeBlankOption'=>true, 'tl_class'=>'w50'),
             'sql'                   => "varchar(255) NOT NULL default ''"
         ),
+		'optArrayKey' => array(
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optArrayKey'],
+			'inputType'             => 'text',
+			'exclude'				=> true,
+			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr', 'rgxp'=>'extnd'),
+			'sql'                   => "varchar(255) NOT NULL default ''"
+		),
         'override_label_setting' => array
         (
             'sql'                   => "char(1) NOT NULL default ''"
