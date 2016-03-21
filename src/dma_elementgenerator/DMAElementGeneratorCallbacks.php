@@ -466,6 +466,11 @@ class DMAElementGeneratorCallbacks extends \Backend
 							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['tl_class'] .= " wizard";
 						}
 
+						if ($objField->eval_rgxp == 'date' || $objField->eval_rgxp == 'datim')
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['tl_class'] .= " wizard";
+						}
+
 						if ($create)
 						{
 							$fields[$objField->title] = $objField->default_value;
