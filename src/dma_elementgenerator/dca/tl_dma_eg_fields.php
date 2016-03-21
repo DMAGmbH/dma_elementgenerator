@@ -117,7 +117,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'__selector__'  => array('type','useCheckboxCondition','optionsType'),
 		'default'       => '{type_legend},type',
 		'legend'        => '{type_legend},type,label,hidden;{subpalette_legend:hide},useCheckboxCondition',
-		'text'          => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
+		'text'          => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rgxp,eval_minlength,eval_maxlength,eval_colorpicker;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
 		'textarea'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_rows,eval_cols,eval_rte,eval_maxlength;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_allow_html,class,template',
 		'select'        => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,optionsType;{style_legend},eval_blank_option,eval_chosen,eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'checkbox'      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
@@ -321,7 +321,15 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
             'exclude'               => true,
             'eval'                  => array('mandatory'=>false, 'multiple'=>true, 'fieldType'=>'radio','files'=>false, 'tl_class'=>'clr'),
             'sql'                   => "blob NULL"
-    ),
+    	),
+		'eval_colorpicker' => array
+		(
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_colorpicker'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class'=>'w50 clr'),
+			'sql'                   => "char(1) NOT NULL default ''"
+		),
 		'exclude' => array
 		(
             'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['exclude'],

@@ -84,6 +84,9 @@
                                                                 );
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_minlength'] = array('Mindestlänge','Die Eingabe muss mindestens so viele Zeichen haben');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'] = array('Höchstlänge','Die Eingabe darf maximal so viele Zeichen haben');
+
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_colorpicker'] = array('Farbpicker verwenden', 'Farbpicker verwenden');
+
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'] = array('Darstellungsoptionen','Diese Zuweisungen beinflussen die Darstellung des Feldes im Formular');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class_options'] = array(
                                                                         'w50' => 'Zweispaltige Darstellung',

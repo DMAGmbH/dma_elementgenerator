@@ -457,6 +457,15 @@ class DMAElementGeneratorCallbacks extends \Backend
                             $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['style'] = 'width:142px;height:66px';
                         }
 
+						if ($objField->eval_colorpicker)
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['maxlength'] = 6;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['colorpicker'] = true;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['isHexColor'] = true;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['decodeEntities'] = true;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['tl_class'] .= " wizard";
+						}
+
 						if ($create)
 						{
 							$fields[$objField->title] = $objField->default_value;
