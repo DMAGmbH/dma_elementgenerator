@@ -122,7 +122,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'select'        => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,optionsType;{style_legend},eval_blank_option,eval_chosen,eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'checkbox'      => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_checkboxWizard,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'radio'         => '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,options;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
-		'fileTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
+		'fileTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_extensions,eval_field_type,eval_path,eval_sortable,eval_isGallery;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'pageTree'      => '{type_legend},type,label,title,explanation;{input_legend},default_value,eval_mandatory,eval_field_type;style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
         'pagePicker'	=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,class,template',
 		'listWizard'	=> '{type_legend},type,label,title,explanation;{input_legend},eval_mandatory,eval_allow_html;{style_legend},eval_tl_class;{subpalette_legend:hide},useCheckboxCondition;{expert_legend:hide},exclude,eval_unique,eval_do_not_copy,class,template',
@@ -382,8 +382,20 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
             'inputType'             => 'checkbox',
             'exclude'               => true,
             'eval'                  => array('tl_class'=>'w50'),
-            'sql'                   => "char(1) NOT NULL default ''"
+            'sql'                   => "char(1) NOT NULL default ''",
+			'load_callback' => array
+			(
+				array('tl_dma_eg_fields', 'checkSortableOption')
+			)
         ),
+		'eval_isGallery' => array
+		(
+			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_isGallery'],
+			'inputType'             => 'checkbox',
+			'exclude'               => true,
+			'eval'                  => array('tl_class'=>'w50'),
+			'sql'                   => "char(1) NOT NULL default ''"
+		),
 		'eval_checkboxWizard' => array(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'],
 			'inputType'             => 'checkbox',
@@ -527,6 +539,25 @@ class tl_dma_eg_fields extends Backend
         }
         return $varValue;
     }
+
+	public function checkSortableOption($varValue, DataContainer $dc)
+	{
+		if ($dc->activeRecord)
+		{
+			$intElementId = $dc->activeRecord->pid;
+
+			$objSortableCheck = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE pid=? AND eval_sortable=1")
+												->execute($intElementId);
+
+			if (($objSortableCheck->numRows==1 && $objSortableCheck->id != $dc->activeRecord->id) || $objSortableCheck->numRows>1)
+			{
+				$GLOBALS['TL_DCA']['tl_dma_eg_fields']['fields']['eval_sortable']['eval']['disabled'] = true;
+				$GLOBALS['TL_DCA']['tl_dma_eg_fields']['fields']['eval_sortable']['label'] = $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable_disabled'];
+			}
+		}
+
+		return $varValue;
+	}
 
 	public function generateTitle($varValue, DataContainer $dc)
 	{

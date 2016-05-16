@@ -1,3 +1,5 @@
-<div class="<?= $this->class; ?> block"<?= $this->cssID; ?><?php if ($this->style): ?> style="<?= $this->style; ?>"<?php endif; ?>>
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
     <?= $this->content; ?>
-</div>
+<?php $this->endblock(); ?>

@@ -109,6 +109,12 @@ $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_chosen'] = array('Select durchsuch
 
     $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'] = array('Checkbox-Assistenten verwenden','Den Checkbox-Assistenten verwenden um das Umsortieren der Optionen zu erlauben');
 
+
+
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable'] = array('Sortierbar', 'Soll diese Auswahl sortierbar sein?');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable_disabled'] = array('Sortierbar', 'Pro Element kann leider nur ein Feld sortierbar sein.');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_isGallery'] = array('Darstellung als Galerie (nebeneinander)', 'Darstellung als Galerie (nebeneinander)');
+
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'] = array('CSS-Klasse','Geben Sie eine oder mehrere durch Leerzeichen getrennte Klassen an');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['useCheckboxCondition'] = array('Checkbox-abhängig einblenden','Die Anzeige dieses Elements kann von einer Checkbox abhängig gemacht werden.');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['subpaletteSelector'] = array('Abhängige Checkbox','Checkbox, von der die Anzeige dieses Elements abhängt.');

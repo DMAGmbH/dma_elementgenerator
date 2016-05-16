@@ -393,10 +393,10 @@ class DMAElementGeneratorCallbacks extends \Backend
 							'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
 							'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
 						);
-            if ($objField->eval_rte)
-            {
-            	$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['rte'] =  ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE');
-            }
+						if ($objField->eval_rte)
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['rte'] =  ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE');
+						}
 						if ($objField->eval_path)
 						{
 							// path is array for Contao 3
@@ -448,12 +448,12 @@ class DMAElementGeneratorCallbacks extends \Backend
 						
 						if ($objField->eval_sortable)
 						{
-							//$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['orderField'] = DMA_EG_PREFIX . $objField->id . '_' . 'orderSRC';
-							//$GLOBALS['TL_DCA'][$strTable]['fields'][DMA_EG_PREFIX . $objField->id . '_' . 'orderSRC'] = array
-							//(
-							//	'label' => &$GLOBALS['TL_LANG']['tl_content']['orderSRC']
-							//);
-							
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['orderField'] = 'orderSRC';
+						}
+
+						if ($objField->eval_isGallery)
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['isGallery'] = true;
 						}
 
                         if ($objField->type == 'tableWizard')

@@ -368,6 +368,41 @@ class DMAElementGenerator extends \Frontend
 				{
 					//mehrere Dateien
 					$tempArrFiles = deserialize($arrData[$objField->title]);
+
+					if ($objField->eval_sortable)
+					{
+
+						$tmp = deserialize($data->orderSRC);
+
+						if (!empty($tmp) && is_array($tmp))
+						{
+							// Remove all values
+							$arrOrder = array_map(function(){}, array_flip($tmp));
+
+							// Move the matching elements to their position in $arrOrder
+							foreach ($tempArrFiles as $k=>$v)
+							{
+								$vBin = \StringUtil::uuidToBin($v);
+								if (array_key_exists($vBin, $arrOrder))
+								{
+									$arrOrder[$vBin] = $v;
+									unset($tempArrFiles[$k]);
+								}
+							}
+
+							// Append the left-over images at the end
+							if (!empty($tempArrFiles))
+							{
+								$arrOrder = array_merge($arrOrder, array_values($tempArrFiles));
+							}
+
+							// Remove empty (unreplaced) entries
+							$tempArrFiles = array_values(array_filter($arrOrder));
+							unset($arrOrder);
+						}
+
+					}
+
 					$arrTemplateData[$objField->title]['value'] = array();
 					foreach ($tempArrFiles as $file)
 					{
@@ -439,15 +474,6 @@ class DMAElementGenerator extends \Frontend
                             //$arrElementData[] = $objFile->path;
 						}
 					}
-                    //$arrElements[$objField->title] = implode(",",$arrElementData);
-					//print_r($arrData);
-					if ($arrData['orderSRC'] != '')
-					{
-						//echo "order";
-					}
-					//echo "<pre>";
-					//print_r($arrTemplateData[$objField->title]);
-					//echo "</pre>";
 					
 				}
 				else
@@ -555,6 +581,16 @@ class DMAElementGenerator extends \Frontend
 					$arrElements[$objField->title] = $objHyperlink->generate();
 					$arrTemplateData[$objField->title]['raw'] = $linkData;//deserialize($objField->hyperlink_data);
 					$arrTemplateData[$objField->title]['value'] = $linkData['url'];
+
+					if (strpos($linkData['url'], "{{link_url::")!==false)
+					{
+						$intLinkId = str_replace(array('{{link_url::', '}}'), '', $linkData['url']);
+						$objPageModel = \PageModel::findPublishedById($intLinkId);
+						if ($objPageModel !== null)
+						{
+							$arrTemplateData[$objField->title]['raw']['page'] = $objPageModel->row();
+						}
+					}
 				}
 			}
 
