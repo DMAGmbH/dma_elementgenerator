@@ -29,7 +29,7 @@
   },
   "require": {
     "php": ">=5.3.4",
-    "contao/core-bundle":"^3.2 || ^4.1",
+    "contao/core-bundle": "^3.2 || ^4.1"
   },
   "extra": {
     "contao": {
