@@ -33,13 +33,6 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array
 );
 
 
-// Compatibility
-if (TL_MODE == 'BE' && version_compare(VERSION.BUILD, '3.10','>=') && version_compare(VERSION.BUILD, '3.20','<'))
-{
-    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dma_elementgenerator/html/DMA-uncompressed.js';
-}
-
-
 
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
