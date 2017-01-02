@@ -72,7 +72,7 @@ class DMAElementGenerator extends \Frontend
 
 		if ($objElement === null)
 		{
-			return;
+			return '';
 		}
 
 
@@ -101,7 +101,7 @@ class DMAElementGenerator extends \Frontend
 
 
 
-		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
+		//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
 		if ($objElement->display_in_divs)
 		{
 			$this->blnDisplayInDivs = true;
