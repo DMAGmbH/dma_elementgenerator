@@ -620,7 +620,7 @@ class DMAElementGeneratorCallbacks extends Backend
         {
             if (strlen($varValue) == 16)
             {
-                $varValue = \String::binToUuid($varValue);
+                $varValue = \StringUtil::binToUuid($varValue);
             }
             elseif ($this->elementDca['eval_field_type']=="ft_checkbox")
             {
@@ -632,7 +632,7 @@ class DMAElementGeneratorCallbacks extends Backend
                 while ($intDoWhile)
                 {
                     //$arrValues[] = \String::binToUuid(substr($tempValue,0,16));
-                    $arrValues[] = $tempValue ? \String::binToUuid(substr($tempValue,0,16)) : '';
+                    $arrValues[] = $tempValue ? \StringUtil::binToUuid(substr($tempValue,0,16)) : '';
                     $tempValue = substr($tempValue,17);
                     if (strlen($tempValue) < 16)
                     {
