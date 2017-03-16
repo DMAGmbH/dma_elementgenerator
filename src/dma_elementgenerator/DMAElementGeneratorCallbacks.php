@@ -92,9 +92,15 @@ class DMAElementGeneratorCallbacks extends Backend
                     $strValue = $objField->optDbTitle;
                 }
 
+				$strKey = 'id';
+				if ($objField->optDbValue && $this->Database->fieldExists($objField->optDbValue, $objField->optDbTable))
+				{
+					$strKey = $objField->optDbValue;
+				}
+
                 while ($objDatabaseOptions->next())
                 {
-                    $arrReturn[$objDatabaseOptions->id] = $objDatabaseOptions->$strValue;
+                    $arrReturn[$objDatabaseOptions->$strKey] = $objDatabaseOptions->$strValue;
                 }
             }
         }

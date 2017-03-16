@@ -70,6 +70,7 @@ CREATE TABLE `tl_dma_eg_fields` (
   `optDbTable` varchar(255) NOT NULL default '',
   `optDbQuery` mediumtext NULL,
   `optDbTitle` varchar(255) NOT NULL default '',
+  `optDbValue` varchar(255) NOT NULL default '',
   `showLabelInFrontend` char(1) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `pid` (`pid`)

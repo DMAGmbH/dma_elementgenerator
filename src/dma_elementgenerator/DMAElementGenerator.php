@@ -290,7 +290,14 @@ class DMAElementGenerator extends Frontend
             // Handling von Selectmenüs mit Datenbankstruktur
             if ($objField->type == 'select' && $objField->optionsType == 'database')
             {
-                $objDatabaseData = $this->Database->prepare("SELECT * FROM " . $objField->optDbTable . " WHERE id=?")
+
+				$strKey = 'id';
+				if ($objField->optDbValue && $this->Database->fieldExists($objField->optDbValue, $objField->optDbTable))
+				{
+					$strKey = $objField->optDbValue;
+				}
+
+                $objDatabaseData = $this->Database->prepare("SELECT * FROM " . $objField->optDbTable . " WHERE " . $strKey . "=?")
                                                   ->limit(1)
                                                   ->execute($arrData[$objField->title]);
                 if ($objDatabaseData->numRows == 1)

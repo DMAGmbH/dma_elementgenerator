@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	(		
 		'useCheckboxCondition' => 'subpaletteSelector,renderHiddenData',
         'optionsType_manual' => 'options,showLabelInFrontend',
-        'optionsType_database' => 'optDbTable,optDbTitle,optDbQuery'
+        'optionsType_database' => 'optDbTable,optDbValue,optDbTitle,optDbQuery'
 	),
 
 	// Fields
@@ -426,6 +426,14 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
             'options_callback' => array('tl_dma_eg_fields','getDatabaseTableRows'),
             'eval' => array('includeBlankOption'=>true,'tl_class'=>'w50')
         ),
+		'optDbValue' => array(
+			'label' => &$GLOBALS['TL_LANG']['tl_dma_eg']['optDbValue'],
+			'default' => 'id',
+			'exclude' => true,
+			'inputType' => 'select',
+			'options_callback' => array('tl_dma_eg_fields','getDatabaseTableRows'),
+			'eval' => array('mandatory'=>true, 'tl_class'=>'w50 clr')
+		),
         'showLabelInFrontend' => array(
 	        'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['showLabelInFrontend'],
             'exclude'               => true,
