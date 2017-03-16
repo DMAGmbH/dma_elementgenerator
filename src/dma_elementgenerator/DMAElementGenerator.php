@@ -301,7 +301,7 @@ class DMAElementGenerator extends Frontend
             }
 
             // Handling von Selectmenüs und eigener Key-Struktur
-            if ($objField->type == 'select' && $objField->optionsType == 'manual')
+            if ($objField->type == 'select' && $objField->optionsType == 'manual' && $objField->showLabelInFrontend)
             {
                 $arrOptions = deserialize($objField->options);
                 if (is_array($arrOptions))
