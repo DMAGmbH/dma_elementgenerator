@@ -143,11 +143,28 @@ class DMAElementGeneratorCallbacks extends Backend
 
 		// Get field values
 		$fields = &self::$_dma_fields;
-		
 
 		// Database table is prefixed
 		$strTable = 'tl_'.$strTableName;
 		$this->strTable = $strTable;
+
+		// HOOK: set custom fields
+        if (isset($GLOBALS['TL_HOOKS']['rewriteDmaFields']) && is_array($GLOBALS['TL_HOOKS']['rewriteDmaFields']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['rewriteDmaFields'] as $callback)
+            {
+
+                if (is_array($callback))
+                {
+                    $this->import($callback[0]);
+                    $fields = $this->{$callback[0]}->{$callback[1]}($this->strTable, $dc);
+                }
+                elseif (is_callable($callback))
+                {
+                    $fields = $callback($this->strTable, $dc);
+                }
+            }
+        }
 
 		// If field values are empty get them from Database
 		if (!is_array($fields))
