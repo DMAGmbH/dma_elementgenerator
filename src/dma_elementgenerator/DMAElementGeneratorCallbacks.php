@@ -53,6 +53,10 @@ class DMAElementGeneratorCallbacks extends \Backend
 	);
 
 
+    /**
+     * @param $objField
+     * @return array|null
+     */
 	protected function prepareOptions($objField)
 	{
         $arrReturn = array();
@@ -133,7 +137,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 
 		// Get field values
 		$fields = &self::$_dma_fields;
-		
+
 
 		// Database table is prefixed
 		$strTable = 'tl_'.$strTableName;
@@ -234,7 +238,8 @@ class DMAElementGeneratorCallbacks extends \Backend
 				else
 				{
 					//multiple checkbox-menue
-					if ($objField->type=='checkbox' && sizeof($this->prepareOptions($objField))>1)
+                    $options = $this->prepareOptions($objField);
+					if ($objField->type=='checkbox' && null!==$options && sizeof($options)>1)
 					{
 						if ($objField->eval_checkboxWizard)
 						{
@@ -311,7 +316,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 								}
 							}
 						}
-						else 
+						else
 						{
 							$this->addImageToPalette($objField);
 						}
@@ -319,8 +324,8 @@ class DMAElementGeneratorCallbacks extends \Backend
 
 					if ($GLOBALS['BE_FFL'][$objField->type])
 					{
-						
-						
+
+
 						if ($objField->useCheckboxCondition)
 						{
 							if ($objField->subpaletteSelector)
@@ -350,7 +355,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 									}
 								}
 							}
-						} 
+						}
 						else
 						{
                             if (substr($this->paletteReplace,-1) == ';')
@@ -363,7 +368,7 @@ class DMAElementGeneratorCallbacks extends \Backend
                             }
 						}
 						//$dma_subpalettes
-						
+
 						$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array
 						(
 							'label' => array($objField->label,$objField->explanation),
@@ -445,7 +450,7 @@ class DMAElementGeneratorCallbacks extends \Backend
                         {
                             $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['chosen'] = $objField->eval_chosen;
                         }
-						
+
 						if ($objField->eval_sortable)
 						{
 							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['orderField'] = 'orderSRC';
@@ -479,7 +484,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 						{
 							$fields[$objField->title] = $objField->default_value;
 						}
-						else 
+						else
 						{
 							if ($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['multiple'] && isset($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv']))
 							{
@@ -521,7 +526,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 
 	protected function addFieldToPalette($objField)
 	{
-		
+
 	}
 
 	protected function addHyperlinkToPalette($objField)
@@ -558,7 +563,7 @@ class DMAElementGeneratorCallbacks extends \Backend
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
                 $this->paletteReplace .= ',' . $title;
-                
+
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$imageData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
