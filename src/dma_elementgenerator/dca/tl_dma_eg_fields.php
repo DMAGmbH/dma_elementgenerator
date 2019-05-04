@@ -436,7 +436,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'label' 				=> &$GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'],
 			'exclude' 				=> true,
 			'inputType'             => 'checkbox',
-			'options'               => array('singleSRC', 'alt', 'title', 'size', 'imagemargin', 'imageUrl', 'fullsize', 'caption', 'floating'),
+			'options_callback'      => array('DMA\DMAElementGeneratorCallbacks', 'getImageDataOptions'),
 			'reference'             => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'],
 			'eval'                  => array('multiple'=>true, 'tl_class'=>'clr'),
             'sql'                   => "blob NULL"

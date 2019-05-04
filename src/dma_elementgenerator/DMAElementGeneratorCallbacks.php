@@ -744,6 +744,70 @@ class DMAElementGeneratorCallbacks extends \Backend
 		$this->store_configuration_without($dc->id);
 	}
 
+	/**
+	 * Retrieve options for tl_dma_eg_fields image_data
+	 */
+	public static function getImageDataOptions() {
+		\Contao\Controller::loadDataContainer('tl_content');
+		$addImage = array_map(
+			'trim',
+			explode(',', $GLOBALS['TL_DCA']['tl_content']['subpalettes']['addImage'])
+		);
+		$addImageWithSubs = static::mergeSubpalettes('tl_content', $addImage);
+
+		return $addImageWithSubs;
+	}
+
+	/**
+	 * Merge a subpalette's subpalettes into the first-mentioned subpalette
+	 * @param string     $dca
+	 * @param array      $subpalette     The subpalette fields
+	 * @param array|null $subpaletteSubs
+	 * @param array      $merged         Subpalettes that are already merged
+	 *
+	 * @return array The merged subpalette
+	 */
+	protected static function mergeSubpalettes($dca, $subpalette, $subpaletteSubs = null, &$merged = array()) {
+		if ($subpaletteSubs === null) {
+			$subpaletteSubs = static::getSubpaletteSubs($dca, $subpalette);
+		}
+		$subpaletteWithSubs = $subpalette;
+		foreach ($subpaletteSubs as $subName => $strSubpaletteSub) {
+			$subpaletteSub = array_map('trim', explode(',', $strSubpaletteSub));
+			$subpaletteSubKey = array_search($subName, $subpaletteWithSubs);
+			$subpaletteWithSubs = array_merge($subpaletteWithSubs, $subpaletteSub);
+		}
+
+		// Merge further subpalettes recursively
+		$merged = array_merge($subpaletteSubs, $merged);
+		$newSubpaletteSubs = static::getSubpaletteSubs($dca, $subpaletteWithSubs, $merged);
+		if (!empty($newSubpaletteSubs)) {
+			$subpaletteWithSubs = static::mergeSubpalettes($dca, $subpaletteWithSubs, $newSubpaletteSubs, $merged);
+		}
+
+		return $subpaletteWithSubs;
+	}
+
+	/**
+	 * Get a subpalette's subpalettes
+	 * @param string $dca
+	 * @param array  $subpalette The subpalette fields
+	 * @param array  $exclude    Fields to exclude, by keys
+	 *
+	 * @return array
+	 */
+	protected static function getSubpaletteSubs($dca, $subpalette, $exclude = array()) {
+		$subs = array_intersect_key(
+			$GLOBALS['TL_DCA'][$dca]['subpalettes'],
+			array_flip($subpalette)
+		);
+
+		return array_diff_key(
+			$subs,
+			$exclude
+		);
+	}
+
 }
 
 

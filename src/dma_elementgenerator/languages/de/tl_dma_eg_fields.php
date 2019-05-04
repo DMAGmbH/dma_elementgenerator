@@ -130,17 +130,11 @@ $GLOBALS['TL_LANG']['tl_dma_eg_fields']['renderHiddenData'] = array('Inhalte imm
 	);
 
   $GLOBALS['TL_LANG']['tl_dma_eg_fiels']['image_data'] = array('Bild-Daten','Welche Daten sollen für das Bild abgefragt werden?');
-	$GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'] = array(
-		'singleSRC' => 'Quelldatei',
-		'alt' => 'Alternativer Text',
-		'title' => 'Titel',
-		'size' => 'Bildbreite und Bildhöhe',
-		'imagemargin' => 'Bildabstand',
-		'imageUrl' => 'Bildlink-Adresse',
-		'fullsize' => 'Großansicht/Neues Fenster',
-		'caption' => 'Bildunterschrift',
-		'floating' => 'Bildausrichtung' 
-	);
+
+  foreach (DMA\DMAElementGeneratorCallbacks::getImageDataOptions() as $option) {
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['image_data_options'][$option] = &$GLOBALS['TL_LANG']['tl_content'][$option];
+  }
+  unset($option);
 
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['optionsType'] = array('Optionen-Art','Optionen können manuell eingegeben werden, oder aus Datanbank generiert werden.');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbTable'] = array('Datenbank-Tabelle','Welche Tabelle innerhalb der Datenbank soll für die Generierung der Optionen genutzt werden?');
