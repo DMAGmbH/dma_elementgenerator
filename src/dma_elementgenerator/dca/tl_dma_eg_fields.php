@@ -8,12 +8,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at http://www.gnu.org/licenses/.
@@ -133,7 +133,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 
 	// Subpalettes
 	'subpalettes' => array
-	(		
+	(
 		'useCheckboxCondition'  => 'subpaletteSelector,renderHiddenData',
         'optionsType_manual'    => 'options',
         'optionsType_database'  => 'optDbTable,optDbTitle,optDbQuery',
@@ -289,7 +289,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'eval_maxlength' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'],
-			'default'               => '',
+			'default'               => 0,
 			'inputType'             => 'text',
 			'exclude'				=> true,
 			'eval'                  => array('maxlength'=>3, 'tl_class'=>'w50', 'rgxp'=>'digit'),
@@ -410,7 +410,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 			'exclude'				=> true,
 			'eval'                  => array('maxlength'=>255, 'tl_class'=>'w50 clr', 'rgxp'=>'extnd'),
             'sql'                   => "varchar(255) NOT NULL default ''"
-		),   
+		),
 		'template' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg']['template'],
@@ -452,7 +452,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 		'subpaletteSelector' => array
 		(
 			'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['subpaletteSelector'],
-			'default'               => '',
+			'default'               => 0,
 			'exclude'               => true,
 			'inputType'             => 'select',
 			'options_callback'      => array('tl_dma_eg_fields', 'getCheckboxelements'),
@@ -601,12 +601,12 @@ class tl_dma_eg_fields extends Backend
             . '<strong>' . ($arrRow['type']=='legend' ? '<i>' : '') . $arrRow['label'] . ($arrRow['type']=='legend' ? '</i>' : '') . '</strong>' . ($arrRow['title'] ? (' [' . $arrRow['title'] . ']') : '') ."\n"
             .'</div>' . "\n";
 	}
-	
-	public function getCheckboxelements(DataContainer $dc) 
+
+	public function getCheckboxelements(DataContainer $dc)
 	{
 		$objCheckboxes = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE pid=? AND type=?")
 																		->execute($dc->activeRecord->pid,'checkbox');
-		
+
 		if ($objCheckboxes->numRows > 0)
 		{
 			$arrCheckboxes = array();
@@ -640,7 +640,7 @@ class tl_dma_eg_fields extends Backend
             return false;
         }
     }
-	
+
 	public function getElementTemplates(DataContainer $dc)
 	{
 
@@ -653,14 +653,14 @@ class tl_dma_eg_fields extends Backend
 		{
 			$arrTemplates = array();
 			$strPrefix = 'dma_egfield_';
-			
+
 			// get the standard-template routine
 			$arrControllerTemplates = $this->getTemplateGroup($strPrefix);
 			foreach ($arrControllerTemplates as $value)
 			{
 				$arrTemplates[$value] = $value;
 			}
-			
+
 			// found other theme-templates
 			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
 									   ->execute('');
@@ -671,7 +671,7 @@ class tl_dma_eg_fields extends Backend
 				{
 
 					$strFolder = TL_ROOT .'/'. $objTheme->templates;
-					
+
 					// Find all matching templates
 					$arrFiles = preg_grep('/^' . preg_quote($strPrefix, '/') . '/i',  scan($strFolder));
 					$arrThemeTemplates = array();
@@ -680,7 +680,7 @@ class tl_dma_eg_fields extends Backend
 						$strName = basename($strTemplate);
 						$arrThemeTemplates[] = substr($strName, 0, strrpos($strName, '.'));
 					}
-					
+
 
 					natcasesort($arrThemeTemplates);
 					$arrThemeTemplates = array_unique($arrThemeTemplates);
@@ -693,11 +693,11 @@ class tl_dma_eg_fields extends Backend
 			}
 	   		return $arrTemplates;
 		}
-		else 
+		else
 		{
 			return $this->getTemplateGroup('dma_egfield_');
-		}	
+		}
 	}
-	
+
 }
 ?>
