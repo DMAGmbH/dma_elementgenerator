@@ -33,7 +33,7 @@
 $GLOBALS['TL_LANG']['tl_dma_eg']['be_template'] = array('Backend-Template','Manchmal kann es sinnvoll sein im Backend ein anderes Template zu verwenden. Dieses muss im html5-Format vorliegen und muss im Templates-Ordner liegen.');
   $GLOBALS['TL_LANG']['tl_dma_eg']['module'] = array('Als Modul bereitstellen','Soll das Element als Modul zur Verfügung stehen?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['content'] = array('Als Inhaltselement bereitstellen','Soll das Element als Inhaltselement zur Verfügung stehen?');
-  $GLOBALS['TL_LANG']['tl_dma_eg']['class'] = array('zusätzliche Klasse für dieses Element','mit dieser Klasse kann die standardmäßig gesetetzte überschrieben werden');
+  $GLOBALS['TL_LANG']['tl_dma_eg']['class'] = array('Zusätzliche Klasse für dieses Element','Mit dieser Klasse kann die standardmäßig gesetzte überschrieben werden');
 
   $GLOBALS['TL_LANG']['tl_dma_eg']['without_label'] = array('Feldausgabe ohne Label','Sollen die Felder ohne Label ausgegeben werden?');
   $GLOBALS['TL_LANG']['tl_dma_eg']['display_in_divs'] = array('Felder in divs ausgeben','Standardmäßig werden die Inhalte als ul ausgegeben. Alternativ ist auch eine Ausgabe in divs möglich.');
