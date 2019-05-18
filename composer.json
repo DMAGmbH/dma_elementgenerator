@@ -36,11 +36,11 @@
         "contao/manager-bundle": "4.*"
     },
     "replace": {
-        "contao-legacy/dma_elementgenerator": "*"
+        "contao-legacy/Elementgenerator": "*"
     },
     "autoload": {
         "psr-4": {
-            "Dma\\Dma_elementgenerator\\": "src"
+            "Dma\\Elementgenerator\\": "src"
         },
         "classmap": [
             "src/Resources/contao/"
@@ -53,6 +53,6 @@
         ]
     },
     "extra": {
-        "contao-manager-plugin": "Dma\\Dma_elementgenerator\\ContaoManager\\Plugin"
+        "contao-manager-plugin": "Dma\\Elementgenerator\\ContaoManager\\Plugin"
     }
 }

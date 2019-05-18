@@ -1,11 +1,12 @@
 <?php
-namespace Dma\Dma_elementgenerator;
+namespace Dma\Elementgenerator;
+
 /**
  * Created By Conversoft Generator
  * https://conversoft.rocks
  * https://github.com/conversoft
  * @author Thomas Lonnemann <thomas@conversoft.rocks>
-**/
+ **/
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -13,6 +14,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @author Leo Feyer <https://github.com/leofeyer>
  */
-class ContaoDmaDma_elementgeneratorBundle extends Bundle
-{
-}
+class ContaoDmaelementgeneratorBundle extends Bundle
+{ }
