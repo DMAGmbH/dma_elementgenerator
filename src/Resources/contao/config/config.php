@@ -5,8 +5,7 @@ define('DMA_EG_PREFIX', 'dma_eg_');
 // Backend module definition
 array_insert($GLOBALS['BE_MOD']['design'], 1, array(
 	'dma_eg' => array(
-		'tables' => array('tl_dma_eg', 'tl_dma_eg_fields'),
-		'javascript' => 'system/modules/dma_elementgenerator/html/tl_dma_eg-uncompressed.js'
+		'tables' => array('tl_dma_eg', 'tl_dma_eg_fields')
 	)
 ));
 
