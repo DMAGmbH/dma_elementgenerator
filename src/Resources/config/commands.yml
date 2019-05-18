@@ -1,8 +1,0 @@
-services:
-    dma.command.dma_elementgeneratorbundle:
-        class: Dma\Dma_elementgenerator\Command\ContaoDmaDma_elementgeneratorBundleCommand
-        calls:
-            - ["setFramework", ["@contao.framework"]]
-        tags:
-            -  { name: console.command }
-
