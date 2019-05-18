@@ -8,4 +8,4 @@ Dazu wird unter "Elementgenerator" ein neues Element angelegt. Danach können di
 
 Für jedes Element kann dabei auswählt werden, ob es als Contenelement und/oder als Frontendmodul zur Verfügung gestellt werden soll.
 
-Kurze Anleitung (ergänzungsfähig): http://de.contaowiki.org/Elementgenerator
+Kurze Anleitung (ergänzungsfähig): http://de.contaowiki.org/dma_elementgenerator

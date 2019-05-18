@@ -15,7 +15,7 @@ use Contao\CoreBundle\ContaoCoreBundle;
 
 // use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 // use Symfony\Component\Config\Loader\LoaderResolverInterface;
-// use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class Plugin implements BundlePluginInterface
 {

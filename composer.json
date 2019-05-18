@@ -15,7 +15,6 @@
         {
             "name": "Carsten Kollmeier",
             "email": "carsten@ckollmeier.de",
-            "homepage": "ckollmeier.de",
             "role": "Contributor"
         },
         {
@@ -36,7 +35,7 @@
         "contao/manager-bundle": "4.*"
     },
     "replace": {
-        "contao-legacy/Elementgenerator": "*"
+        "contao-legacy/dma_elementgenerator": "*"
     },
     "autoload": {
         "psr-4": {
