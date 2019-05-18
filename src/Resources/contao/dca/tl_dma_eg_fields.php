@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array(
 
