@@ -10,23 +10,23 @@
             "name": "Janosch Oltmanns",
             "email": "oltmanns@dma.do",
             "homepage": "https://www.dma.do",
-            "role": "Project Leader"
-        },
-        {
-            "name": "Carsten Kollmeier",
-            "email": "carsten@ckollmeier.de",
-            "role": "Contributor"
+            "role": "Developer"
         },
         {
             "name": "Thomas Lonnemann ",
-            "email": "thomas@conversoft.rocks",
+            "email": "lonnemann@dma.do",
             "homepage": "https://www.dma.do",
-            "role": "Contributor"
+            "role": "Developer"
         },
         {
             "name": "Alexander Döll ",
             "email": "doell@dma.do",
             "homepage": "https://www.dma.do",
+            "role": "Developer"
+        },
+        {
+            "name": "Carsten Kollmeier",
+            "email": "carsten@ckollmeier.de",
             "role": "Contributor"
         }
     ],
