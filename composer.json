@@ -1,36 +1,35 @@
 {
     "name": "dma/dma_elementgenerator",
     "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
-    "keywords": ["elements","contentelement","modules","layout","content","contao"],
+    "keywords": ["elements", "contentelement", "modules", "layout", "content", "contao"],
     "type": "contao-bundle",
-    "description": "dma",
     "license": "LGPL-3.0+",
     "authors": [
 
-    {
-        "name": "Janosch Oltmanns",
-        "email": "oltmanns@dma.do",
-        "homepage": "https://www.dma.do",
-        "role": "Project Leader"
-      },
-      {
-        "name": "Carsten Kollmeier",
-        "email": "carsten@ckollmeier.de",
-        "homepage": "",
-        "role": "Contributor"
-      },
-      {
-          "name": "Thomas Lonnemann ",
-          "email": "thomas@conversoft.rocks",
-          "homepage": "https://www.dma.do",
-          "role": "Contributor"
-      },
-      {
-          "name": "Alexander Döll ",
-          "email": "doell@dma.do",
-          "homepage": "https://www.dma.do",
-          "role": "Contributor"
-      }
+        {
+            "name": "Janosch Oltmanns",
+            "email": "oltmanns@dma.do",
+            "homepage": "https://www.dma.do",
+            "role": "Project Leader"
+        },
+        {
+            "name": "Carsten Kollmeier",
+            "email": "carsten@ckollmeier.de",
+            "homepage": "ckollmeier.de",
+            "role": "Contributor"
+        },
+        {
+            "name": "Thomas Lonnemann ",
+            "email": "thomas@conversoft.rocks",
+            "homepage": "https://www.dma.do",
+            "role": "Contributor"
+        },
+        {
+            "name": "Alexander Döll ",
+            "email": "doell@dma.do",
+            "homepage": "https://www.dma.do",
+            "role": "Contributor"
+        }
     ],
     "require": {
         "php": ">7.1",
@@ -38,9 +37,9 @@
     },
     "replace": {
         "contao-legacy/dma_elementgenerator": "*"
-      },
+    },
     "autoload": {
-        "psr-4":             {
+        "psr-4": {
             "Dma\\Dma_elementgenerator\\": "src"
         },
         "classmap": [
