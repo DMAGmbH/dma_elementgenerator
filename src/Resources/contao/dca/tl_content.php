@@ -3,10 +3,7 @@
 // Define callbacks	
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('DMAElementGeneratorCallbacks', 'content_onload');
 
-
 // Fields
-
-
 $GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array(
     'label' => &$GLOBALS['TL_LANG']['tl_content']['dmaElementTpl'],
     'exclude' => true,

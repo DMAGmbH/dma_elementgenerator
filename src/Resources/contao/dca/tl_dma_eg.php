@@ -16,7 +16,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array(
         'switchToEdit' => true,
         'sql' => [
             'keys' => [
-                'id' => 'primary'
+                'id' => 'primary',
+                'pid' => 'index'
             ]
         ],
     ),

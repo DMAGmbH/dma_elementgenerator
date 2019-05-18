@@ -9,7 +9,8 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array(
 		'ptable' => 'tl_dma_eg',
 		'sql' => [
 			'keys' => [
-				'id' => 'primary'
+				'id' => 'primary',
+				'pid' => 'index'
 			]
 		],
 	),
