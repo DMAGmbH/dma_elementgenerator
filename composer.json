@@ -1,59 +1,64 @@
 {
-    "name": "dma/dma_elementgenerator",
-    "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
-    "keywords": ["elements","contentelement","modules","layout","content","contao"],
-    "type": "contao-bundle",
-    "description": "dma",
-    "license": "LGPL-3.0+",
-    "authors": [
-
+  "name": "dma/dma_elementgenerator",
+  "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
+  "keywords": [
+    "elements",
+    "contentelement",
+    "modules",
+    "layout",
+    "content",
+    "contao"
+  ],
+  "type": "contao-bundle",
+  "license": "LGPL-3.0+",
+  "authors": [
     {
-        "name": "Janosch Oltmanns",
-        "email": "oltmanns@dma.do",
-        "homepage": "https://www.dma.do",
-        "role": "Project Leader"
-      },
-      {
-        "name": "Carsten Kollmeier",
-        "email": "carsten@ckollmeier.de",
-        "homepage": "",
-        "role": "Contributor"
-      },
-      {
-          "name": "Thomas Lonnemann ",
-          "email": "thomas@conversoft.rocks",
-          "homepage": "https://www.dma.do",
-          "role": "Contributor"
-      },
-      {
-          "name": "Alexander Döll ",
-          "email": "doell@dma.do",
-          "homepage": "https://www.dma.do",
-          "role": "Contributor"
-      }
-    ],
-    "require": {
-        "php": ">7.1",
-        "contao/manager-bundle": "4.*"
+      "name": "Janosch Oltmanns",
+      "email": "oltmanns@dma.do",
+      "homepage": "https://www.dma.do",
+      "role": "Project Leader"
     },
-    "replace": {
-        "contao-legacy/dma_elementgenerator": "*"
-      },
-    "autoload": {
-        "psr-4":             {
-            "Dma\\Dma_elementgenerator\\": "src"
-        },
-        "classmap": [
-            "src/Resources/contao/"
-        ],
-        "exclude-from-classmap": [
-            "src/Resources/contao/config/",
-            "src/Resources/contao/dca/",
-            "src/Resources/contao/languages/",
-            "src/Resources/contao/templates/"
-        ]
+    {
+      "name": "Carsten Kollmeier",
+      "email": "carsten@ckollmeier.de",
+      "homepage": "",
+      "role": "Contributor"
     },
-    "extra": {
-        "contao-manager-plugin": "Dma\\Dma_elementgenerator\\ContaoManager\\Plugin"
+    {
+      "name": "Thomas Lonnemann ",
+      "email": "thomas@conversoft.rocks",
+      "homepage": "https://www.dma.do",
+      "role": "Contributor"
+    },
+    {
+      "name": "Alexander Döll ",
+      "email": "doell@dma.do",
+      "homepage": "https://www.dma.do",
+      "role": "Contributor"
     }
+  ],
+  "require": {
+    "php": ">7.1",
+    "contao/manager-bundle": "4.*"
+  },
+  "replace": {
+    "contao-legacy/dma_elementgenerator": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Dma\\Dma_elementgenerator\\": "src"
+    },
+    "classmap": [
+      "src/Resources/contao/"
+    ],
+    "exclude-from-classmap": [
+      "src/Resources/contao/config/",
+      "src/Resources/contao/dca/",
+      "src/Resources/contao/languages/",
+      "src/Resources/contao/templates/"
+    ]
+  },
+  "extra": {
+    "contao-manager-plugin": "Dma\\Dma_elementgenerator\\ContaoManager\\Plugin"
+  }
 }
