@@ -16,6 +16,10 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array(
     'sql' => "varchar(64) NOT NULL default ''"
 );
 
+$GLOBALS['TL_DCA']['tl_content']['fields']['dma_eg_data'] = array(
+    'sql' => "longtext NULL"
+);
+
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
  *
