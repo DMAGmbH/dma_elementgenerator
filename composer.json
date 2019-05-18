@@ -1,42 +1,59 @@
 {
-  "name": "dma/dma_elementgenerator",
-  "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
-  "keywords": ["elements","contentelement","modules","layout","content","contao"],
-  "type": "contao-module",
-  "license": "LGPL-3.0+",
-  "authors": [
+    "name": "dma/dma_elementgenerator",
+    "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
+    "keywords": ["elements","contentelement","modules","layout","content","contao"],
+    "type": "contao-bundle",
+    "description": "dma",
+    "license": "LGPL-3.0+",
+    "authors": [
+
     {
-      "name": "Janosch Oltmanns",
-      "email": "oltmanns@dma.do",
-      "homepage": "http://www.dma.do",
-      "role": "Project Leader"
-    },
-    {
-      "name": "Carsten Kollmeier",
-      "email": "carsten@ckollmeier.de",
-      "homepage": "",
-      "role": "Contributor"
-    }
-  ],
-  "support": {
-    "email": "contao@dma.do",
-    "issues": "https://github.com/DMAGmbH/dma_elementgenerator/issues",
-    "source": "https://github.com/DMAGmbH/dma_elementgenerator",
-    "forum": "https://community.contao.org/de/forumdisplay.php?134-dma_elementgenerator"
-  },
-  "replace": {
-    "contao-legacy/dma_elementgenerator": "*"
-  },
-  "require": {
-    "php": ">=5.3.4",
-    "contao/core-bundle": "^3.2 || ^4.1",
-    "contao-community-alliance/composer-plugin": "^2.4.0 || 3.*"
-  },
-  "extra": {
-    "contao": {
-      "sources": {
-        "src/dma_elementgenerator": "system/modules/dma_elementgenerator"
+        "name": "Janosch Oltmanns",
+        "email": "oltmanns@dma.do",
+        "homepage": "https://www.dma.do",
+        "role": "Project Leader"
+      },
+      {
+        "name": "Carsten Kollmeier",
+        "email": "carsten@ckollmeier.de",
+        "homepage": "",
+        "role": "Contributor"
+      },
+      {
+          "name": "Thomas Lonnemann ",
+          "email": "thomas@conversoft.rocks",
+          "homepage": "https://www.dma.do",
+          "role": "Contributor"
+      },
+      {
+          "name": "Alexander Döll ",
+          "email": "doell@dma.do",
+          "homepage": "https://www.dma.do",
+          "role": "Contributor"
       }
+    ],
+    "require": {
+        "php": ">7.1",
+        "contao/manager-bundle": "4.*"
+    },
+    "replace": {
+        "contao-legacy/dma_elementgenerator": "*"
+      },
+    "autoload": {
+        "psr-4":             {
+            "Dma\\Dma_elementgenerator\\": "src"
+        },
+        "classmap": [
+            "src/Resources/contao/"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
+    },
+    "extra": {
+        "contao-manager-plugin": "Dma\\Dma_elementgenerator\\ContaoManager\\Plugin"
     }
-  }
 }

@@ -1,0 +1,24 @@
+<?php echo ($this->divs) ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
+<?php if (!$this->nolabels): ?>
+    <span class="label"><?php echo $this->label ?></span>
+    <span class="value">
+<?php endif; ?>
+
+<?php if ($this->addData['raw']): ?>
+    <table>
+        <tbody>
+            <?php foreach ($this->addData['data'] as $class=>$row): ?>
+                <tr class="<?php echo $class; ?>">
+                    <?php foreach ($row as $i=>$col): ?>
+                        <td class="<?php echo $col['class']; ?>"><?php echo $col['content']; ?></td>
+                    <?php endforeach; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+<?php if (!$this->nolabels): ?>
+  </span>
+<?php endif; ?>
+<?php echo ($this->divs) ? '</div>' : '</li>'; ?>

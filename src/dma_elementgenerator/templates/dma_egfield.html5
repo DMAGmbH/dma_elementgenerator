@@ -1,5 +1,0 @@
-<li class="<?= $this->class; ?>">
-  <span class="label"><?= $this->label ?></span>
-  <span class="value"><?= $this->value ?></span>
-</li>
-  

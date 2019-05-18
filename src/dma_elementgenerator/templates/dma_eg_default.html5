@@ -1,3 +1,0 @@
-<?= $this->divs ? '' : '<ul>'; ?>
-  <?= $this->fields; ?>
-<?= $this->divs ? '' : '</ul>'; ?>
