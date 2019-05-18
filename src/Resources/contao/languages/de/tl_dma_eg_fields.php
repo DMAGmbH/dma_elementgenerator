@@ -96,8 +96,8 @@
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['options'] = array('Auswahlmöglichkeiten','Bitte Bezeichnung und den Wert der Auswahl eingeben');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_extensions'] = array('Dateiendungen','Kommagetrennte Liste der auswählbaren Dateiendungen');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_field_type'] = array('Art der Auswahl','Soll nur eine Einzelne oder mehrere Dateien zur Auswahl stehen?');
-  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'] = array('Pfad','Dateien aus diesem Ordner können ausgewählt werden');
-$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_blank_option'] = array('leere Option integrieren','Soll für dieses Selectmenü eine leere Option angeboten werden?');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'] = array('Erlaubter Pfad','Dateien aus diesem Ordner können ausgewählt werden');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_blank_option'] = array('Leere Option integrieren','Soll für dieses Selectmenü eine leere Option angeboten werden?');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_chosen'] = array('Select durchsuchbar machen','Das Selectmenü kann mit Hilfe von Chosen durchsuchbar gemacht werden.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['exclude'] = array('Ausgabe unterdrücken','Feld nur Administratoren anzeigen');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_allow_html'] = array('HTML erlauben','HTML-Ausdrücke nicht aus der Eingabe filtern');
