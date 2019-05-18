@@ -6,7 +6,12 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array(
 	'config' => array(
 		'dataContainer' => 'Table',
 		'enableVersioning' => true,
-		'ptable' => 'tl_dma_eg'
+		'ptable' => 'tl_dma_eg',
+		'sql' => [
+			'keys' => [
+				'id' => 'primary'
+			]
+		],
 	),
 
 	// List
