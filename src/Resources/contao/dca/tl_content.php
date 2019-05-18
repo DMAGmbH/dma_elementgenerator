@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array(
     'label'                   => &$GLOBALS['TL_LANG']['tl_content']['dmaElementTpl'],
     'exclude'                 => true,
     'inputType'               => 'select',
-    'options_callback'        => array('tl_dma_elementgenerator_content', 'getDmaElementTemplates'),
+    'options_callback'        => array('tl_Elementgenerator_content', 'getDmaElementTemplates'),
     'eval'                    => array('includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'),
     'sql'                     => "varchar(64) NOT NULL default ''"
 );
@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array(
  *
  * @author Janosch Oltmanns
  */
-class tl_dma_elementgenerator_content extends Backend
+class tl_Elementgenerator_content extends Backend
 {
 
     /**

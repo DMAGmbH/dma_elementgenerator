@@ -1,5 +1,5 @@
 <?php
-namespace Dma\Dma_elementgenerator\ContaoManager;
+namespace Dma\Elementgenerator\ContaoManager;
 
 /**
  * Created By Conversoft Generator
@@ -10,7 +10,7 @@ namespace Dma\Dma_elementgenerator\ContaoManager;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
-use Dma\Dma_elementgenerator\ContaoDmaDma_elementgeneratorBundle;
+use Dma\Elementgenerator\ContaoDmaelementgeneratorBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 
 // use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
@@ -21,7 +21,7 @@ class Plugin implements BundlePluginInterface
 {
     public function getBundles(ParserInterface $parser)
     {
-        return [BundleConfig::create(ContaoDmaDma_elementgeneratorBundle::class)
+        return [BundleConfig::create(ContaoDmaelementgeneratorBundle::class)
             ->setLoadAfter([ContaoCoreBundle::class])];
     }
 }
