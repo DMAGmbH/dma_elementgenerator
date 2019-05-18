@@ -1,8 +1,0 @@
-dmadma_elementgenerator_route:
-    resource: "@ContaoDmaDma_elementgeneratorBundle/Controller"
-    type: annotation
-
-
-#   Add to root/app/config/routing.yml
-# dmadma_elementgenerator_route:
-#     resource: "@ContaoDmaDma_elementgeneratorBundle/Resources/config/routing.yml"

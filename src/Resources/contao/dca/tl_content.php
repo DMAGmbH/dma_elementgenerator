@@ -3,9 +3,6 @@
 // Define callbacks	
 $GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('DMAElementGeneratorCallbacks', 'content_onload');
 
-if (TL_MODE == 'BE' && version_compare(VERSION . BUILD, '3.10', '>=') && version_compare(VERSION . BUILD, '3.20', '<')) {
-    $GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/dma_elementgenerator/html/DMA-uncompressed.js';
-}
 
 // Fields
 
@@ -24,7 +21,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array(
  *
  * @author Janosch Oltmanns
  */
-class tl_dma_elementgenerator_content extends Backend
+class tl_Elementgenerator_content extends Backend
 {
 
     /**
