@@ -1,31 +1,37 @@
 <?php
 
-// Define callbacks	
-$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('DMAElementGeneratorCallbacks', 'content_onload');
+/*
+ * Callbacks
+ */
+$GLOBALS['TL_DCA']['tl_content']['config']['onload_callback'][] = array('DMA\\DMAElementGeneratorCallbacks','content_onload');
 
 
-// Fields
-
-
-$GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array(
-    'label' => &$GLOBALS['TL_LANG']['tl_content']['dmaElementTpl'],
-    'exclude' => true,
-    'inputType' => 'select',
-    'options_callback' => array('tl_dma_elementgenerator_content', 'getDmaElementTemplates'),
-    'eval' => array('includeBlankOption' => true, 'chosen' => true, 'tl_class' => 'w50'),
-    'sql' => "varchar(64) NOT NULL default ''"
+/*
+ * Fields
+ */
+$GLOBALS['TL_DCA']['tl_content']['fields']['dma_eg_data'] = array
+(
+    'sql'                     => "longtext NULL"
 );
 
-$GLOBALS['TL_DCA']['tl_content']['fields']['dma_eg_data'] = array(
-    'sql' => "longtext NULL"
+$GLOBALS['TL_DCA']['tl_content']['fields']['dmaElementTpl'] = array
+(
+    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['dmaElementTpl'],
+    'exclude'                 => true,
+    'inputType'               => 'select',
+    'options_callback'        => array('tl_dma_elementgenerator_content', 'getDmaElementTemplates'),
+    'eval'                    => array('includeBlankOption'=>true, 'chosen'=>true, 'tl_class'=>'w50'),
+    'sql'                     => "varchar(64) NOT NULL default ''"
 );
+
+
 
 /**
  * Provide miscellaneous methods that are used by the data configuration array.
  *
  * @author Janosch Oltmanns
  */
-class tl_Elementgenerator_content extends Backend
+class tl_dma_elementgenerator_content extends \Backend
 {
 
     /**

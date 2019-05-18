@@ -84,7 +84,10 @@
                                                                 );
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_minlength'] = array('Mindestlänge','Die Eingabe muss mindestens so viele Zeichen haben');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'] = array('Höchstlänge','Die Eingabe darf maximal so viele Zeichen haben');
-  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'] = array('Darstellungsoptionen','Diese Zuweisungen beeinflussen die Darstellung des Feldes im Formular');
+
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_colorpicker'] = array('Farbpicker verwenden', 'Farbpicker verwenden');
+
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'] = array('Darstellungsoptionen','Diese Zuweisungen beinflussen die Darstellung des Feldes im Formular');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class_options'] = array(
                                                                         'w50' => 'Zweispaltige Darstellung',
                                                                         'clr' => 'In neuer Zeile',
@@ -96,18 +99,26 @@
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['options'] = array('Auswahlmöglichkeiten','Bitte Bezeichnung und den Wert der Auswahl eingeben');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_extensions'] = array('Dateiendungen','Kommagetrennte Liste der auswählbaren Dateiendungen');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_field_type'] = array('Art der Auswahl','Soll nur eine Einzelne oder mehrere Dateien zur Auswahl stehen?');
-  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'] = array('Erlaubter Pfad','Dateien aus diesem Ordner können ausgewählt werden');
-$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_blank_option'] = array('Leere Option integrieren','Soll für dieses Selectmenü eine leere Option angeboten werden?');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_path'] = array('Pfad','Dateien aus diesem Ordner können ausgewählt werden');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_blank_option'] = array('leere Option integrieren','Soll für dieses Selectmenü eine leere Option angeboten werden?');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_chosen'] = array('Select durchsuchbar machen','Das Selectmenü kann mit Hilfe von Chosen durchsuchbar gemacht werden.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['exclude'] = array('Ausgabe unterdrücken','Feld nur Administratoren anzeigen');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_allow_html'] = array('HTML erlauben','HTML-Ausdrücke nicht aus der Eingabe filtern');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_unique'] = array('Einmaliger Wert','Der Wert dieses Feldes darf nur einmal vergeben werden');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_do_not_copy'] = array('Nicht kopieren','Werte dieses Feldes werden beim Kopieren des Elements ignoriert');
+
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_checkboxWizard'] = array('Checkbox-Assistenten verwenden','Den Checkbox-Assistenten verwenden um das Umsortieren der Optionen zu erlauben');
+
+
+
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable'] = array('Sortierbar', 'Soll diese Auswahl sortierbar sein?');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_sortable_disabled'] = array('Sortierbar', 'Pro Element kann leider nur ein Feld sortierbar sein.');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_isGallery'] = array('Darstellung als Galerie (nebeneinander)', 'Darstellung als Galerie (nebeneinander)');
+
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'] = array('CSS-Klasse','Geben Sie eine oder mehrere durch Leerzeichen getrennte Klassen an');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['useCheckboxCondition'] = array('Checkbox-abhängig einblenden','Die Anzeige dieses Elements kann von einer Checkbox abhängig gemacht werden.');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['subpaletteSelector'] = array('Abhängige Checkbox','Checkbox, von der die Anzeige dieses Elements abhängt.');
 $GLOBALS['TL_LANG']['tl_dma_eg_fields']['renderHiddenData'] = array('Inhalte immer rendern','Sollen die Inhalte dieses Feldes im Template zur Verfügung stehen, auch wenn das Feld im Backend ausgeblendet ist?');
-$GLOBALS['TL_LANG']['tl_dma_eg_fields']['showLabelInFrontend'] = array('Bezeichnung im Frontend nutzen', 'Soll die Bezeichnung des Eintrags anstelle des Wertes im Frontend genutzt werden?');
 
   $GLOBALS['TL_LANG']['tl_dma_eg_fiels']['hyperlink_data'] = array('Hyperlink-Daten','Welche Daten sollen für den Hyperlink abgefragt werden?');
 	$GLOBALS['TL_LANG']['tl_dma_eg_fields']['hyperlink_data_options'] = array(
@@ -131,11 +142,18 @@ $GLOBALS['TL_LANG']['tl_dma_eg_fields']['showLabelInFrontend'] = array('Bezeichn
 		'floating' => 'Bildausrichtung' 
 	);
 
-$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'] = array('Optionen-Art','Optionen können manuell eingegeben werden, oder aus Datenbank generiert werden.');
-$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'] = array('Datenbank-Tabelle','Welche Tabelle innerhalb der Datenbank soll für die Generierung der Optionen genutzt werden?');
-$GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'] = array('Optionale WHERE-Query','Mit einer optionalen WHERE-Query kann das Select-Menü eingeschränkt werden.');
-$GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'] = array('Anzuzeigender Name','Welches Feld soll dem Benutzer in der Auswahl angezeigt werden? Standardmäßig wird das ID-Feld verwendet.');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optionsType'] = array('Optionen-Art','Optionen können manuell eingegeben werden, oder aus Datanbank generiert werden.');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbTable'] = array('Datenbank-Tabelle','Welche Tabelle innerhalb der Datenbank soll für die Generierung der Optionen genutzt werden?');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbQuery'] = array('Optionale WHERE-Query','Mit einer optionalen WHERE-Query kann das Select-Menü eingeschränkt werden.');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optDbTitle'] = array('Anzuzeigender Name','Welches Feld soll dem Benutzer in der Auswahl angezeigt werden? Standardmäßig wird das ID-Feld verwendet.');
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optArrayKey'] = array('Array Key','Key, für das auszulesenede Array. Muss über $GLOBALS[\'TL_DMA_SELECT_OPTIONS\'][$key] aufzurufen sein.');
 
-  
+
+$GLOBALS['TL_LANG']['tl_dma_eg_fields']['optionsType_options'] = array
+(
+    'manual' => 'Manuelle Eingabe',
+    'database' => 'Datenbank Abfrage',
+    'array' => 'Array Verweis'
+);
 
 ?>

@@ -27,6 +27,8 @@
  * @filesource
  */
 
-
-$GLOBALS['TL_LANG']['MOD']['dma_eg'] = array('Elementgenerator', 'Generieren von eigenen Contentelementen und/oder Modulen');
+ 
+$GLOBALS['TL_LANG']['MOD']['dma_eg']= array('Elementgenerator','Generieren von eigenen Contentelementen und/oder Modulen');
 $GLOBALS['TL_LANG']['MOD']['dma_elementgenerator'] = array('Elementgenerator');
+ 
+?>

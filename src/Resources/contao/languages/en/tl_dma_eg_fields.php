@@ -95,6 +95,4 @@
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_do_not_copy'] = array('Do not copy','Ignore value of this field while copying element');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['class'] = array('CSS class','Geben Sie eine oder mehrere durch Leerzeichen getrennte Klassen an');
 
-$GLOBALS['TL_LANG']['tl_dma_eg_fields']['showLabelInFrontend'] = array('Show label in frontend', 'Show label instead of value in frontend');
-
 ?>
