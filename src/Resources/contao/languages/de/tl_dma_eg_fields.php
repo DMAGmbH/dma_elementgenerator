@@ -45,7 +45,7 @@
  
   
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type'] = array('Feldtyp','Feldtyp auswählen');
-    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_disabled'] = array('Feldtyp','Feldtyp können nachträglich leider nicht mehr geändert werden. Um den Feldtypen zu ändern löschen Sie bitte dieses Feld und fügen ein neues hinzu.');
+    $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_disabled'] = array('Feldtyp','Feldtyp können nachträglich leider nicht mehr geändert werden. Um den Feldtypen zu ändern, löschen Sie bitte dieses Feld und fügen ein neues hinzu.');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['type_select'] = array(
                                                               'legend' => 'Legende',
                                                               'text' => 'Textfeld',
@@ -84,7 +84,7 @@
                                                                 );
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_minlength'] = array('Mindestlänge','Die Eingabe muss mindestens so viele Zeichen haben');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_maxlength'] = array('Höchstlänge','Die Eingabe darf maximal so viele Zeichen haben');
-  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'] = array('Darstellungsoptionen','Diese Zuweisungen beinflussen die Darstellung des Feldes im Formular');
+  $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class'] = array('Darstellungsoptionen','Diese Zuweisungen beeinflussen die Darstellung des Feldes im Formular');
   $GLOBALS['TL_LANG']['tl_dma_eg_fields']['eval_tl_class_options'] = array(
                                                                         'w50' => 'Zweispaltige Darstellung',
                                                                         'clr' => 'In neuer Zeile',
@@ -131,7 +131,7 @@ $GLOBALS['TL_LANG']['tl_dma_eg_fields']['showLabelInFrontend'] = array('Bezeichn
 		'floating' => 'Bildausrichtung' 
 	);
 
-$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'] = array('Optionen-Art','Optionen können manuell eingegeben werden, oder aus Datanbank generiert werden.');
+$GLOBALS['TL_LANG']['tl_dma_eg']['optionsType'] = array('Optionen-Art','Optionen können manuell eingegeben werden, oder aus Datenbank generiert werden.');
 $GLOBALS['TL_LANG']['tl_dma_eg']['optDbTable'] = array('Datenbank-Tabelle','Welche Tabelle innerhalb der Datenbank soll für die Generierung der Optionen genutzt werden?');
 $GLOBALS['TL_LANG']['tl_dma_eg']['optDbQuery'] = array('Optionale WHERE-Query','Mit einer optionalen WHERE-Query kann das Select-Menü eingeschränkt werden.');
 $GLOBALS['TL_LANG']['tl_dma_eg']['optDbTitle'] = array('Anzuzeigender Name','Welches Feld soll dem Benutzer in der Auswahl angezeigt werden? Standardmäßig wird das ID-Feld verwendet.');
