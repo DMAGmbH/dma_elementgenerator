@@ -395,8 +395,8 @@ class DMAElementGeneratorCallbacks extends \Backend
 								'csv' => ','
 							),
 							'wizard' => $objField->wizard ? $objField->wizard : '',
-							'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
-							'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
+							'load_callback' => array(array('\\DMA\\DMAElementGeneratorCallbacks','load_'.$objField->title)),
+							'save_callback' => array(array('\\DMA\\DMAElementGeneratorCallbacks','save_'.$objField->title))
 						);
 						if ($objField->eval_rte)
 						{
@@ -511,7 +511,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 					'alwaysSave' => true,
 					'mandatory' => false
 				),
-				'save_callback' => array(array('DMAElementGeneratorCallbacks','save_data'))
+				'save_callback' => array(array('\\DMA\\DMAElementGeneratorCallbacks','save_data'))
 			);
 
 			// Include palette snippet
@@ -542,8 +542,8 @@ class DMAElementGeneratorCallbacks extends \Backend
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
                 $this->paletteReplace .= ',' . $title;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$hyperlinkData];
-                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
-                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('\\DMA\\DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('\\DMA\\DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;
@@ -565,8 +565,8 @@ class DMAElementGeneratorCallbacks extends \Backend
                 $this->paletteReplace .= ',' . $title;
 
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$imageData];
-                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
-                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('\\DMA\\DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('\\DMA\\DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['mandatory'] = false;
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['doNotSaveEmpty'] = true;

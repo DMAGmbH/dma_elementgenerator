@@ -48,7 +48,7 @@ if ($GLOBALS['TL_CONFIG']['dma_eg_content'])
 foreach ($arrModules as $strCategory => $arrElements)
 {
 	foreach ($arrElements as $strElement) {
-		$GLOBALS['FE_MOD'][$strCategory][DMA_EG_PREFIX.$strElement]= 'DMAElementGeneratorModule';
+		$GLOBALS['FE_MOD'][$strCategory][DMA_EG_PREFIX.$strElement]= '\\DMA\\DMAElementGeneratorModule';
 	}
 }
 
@@ -56,19 +56,23 @@ foreach ($arrModules as $strCategory => $arrElements)
 foreach ($arrContent as $strCategory => $arrElements)
 {
 	foreach ($arrElements as $strElement) {
-		$GLOBALS['TL_CTE'][$strCategory][DMA_EG_PREFIX.$strElement]= 'DMAElementGeneratorContent';
+		$GLOBALS['TL_CTE'][$strCategory][DMA_EG_PREFIX.$strElement]= '\\DMA\\DMAElementGeneratorContent';
 	}
 }
 
 // Define dummy data widget
-$GLOBALS['BE_FFL']['dma_eg_hidden'] = 'DMAElementGeneratorHiddenWidget';
-$GLOBALS['BE_FFL']['dma_eg_combobox'] = 'DMAElementGeneratorComboBox';
+$GLOBALS['BE_FFL']['dma_eg_hidden'] = '\\DMA\\DMAElementGeneratorHiddenWidget';
+$GLOBALS['BE_FFL']['dma_eg_combobox'] = '\\DMA\\DMAElementGeneratorComboBox';
 $GLOBALS['DMA_EG']['EL_COUNT'] = array();
 
 
 // Hooks
 if(version_compare(VERSION.BUILD, '3.10','>=') && version_compare(VERSION.BUILD, '3.20','<')) {
-	$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
+	$GLOBALS['TL_HOOKS']['executePostActions'][] = array('\\DMA\\DMAElementGenerator','fixedAjaxRequest');
 }
 
-$GLOBALS['TL_HOOKS']['loadLanguageFile'][] = array('DMA\DMAElementGenerator','dmaEgLoadLanguageFile');
+$GLOBALS['TL_HOOKS']['loadLanguageFile'][] = array('\\DMA\DMAElementGenerator','dmaEgLoadLanguageFile');
+
+
+$GLOBALS['TL_MODELS']['tl_dma_eg'] = 'DMA\DmaEgModel';
+$GLOBALS['TL_MODELS']['tl_dma_eg_fields'] = 'DMA\DmaEgFieldsModel';

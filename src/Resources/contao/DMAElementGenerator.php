@@ -35,18 +35,18 @@ class DMAElementGenerator extends \Frontend
 
     public function dmaEgLoadLanguageFile($strName, $strLanguage)
     {
-        
+
         // wird für die Installations-Routine benötigt
         if (!$this->Database->tableExists("tl_dma_eg"))
         {
             return;
         }
-      
+
         // Support für ce-access etc.
         if ($strName == "default")
         {
 
-			$objContentElements = \DmaEgModel::findBy('content', 1);
+			$objContentElements = \DMA\DmaEgModel::findBy('content', 1);
 
 			if ($objContentElements !== null)
             {
@@ -68,7 +68,7 @@ class DMAElementGenerator extends \Frontend
 		$elementID = str_replace(DMA_EG_PREFIX, '', $data->type);
 
 
-		$objElement = \DmaEgModel::findOneBy('id', $elementID);
+		$objElement = \DMA\DmaEgModel::findOneBy('id', $elementID);
 
 		if ($objElement === null)
 		{
@@ -121,7 +121,7 @@ class DMAElementGenerator extends \Frontend
 		$arrData = deserialize($data->dma_eg_data);
 
 
-		$objField = \DmaEgFieldsModel::findAllNotLegendsByPid($elementID);
+		$objField = \DMA\DmaEgFieldsModel::findAllNotLegendsByPid($elementID);
 
 		if ($objField === null)
 		{
@@ -139,7 +139,7 @@ class DMAElementGenerator extends \Frontend
                 if ($objField->subpaletteSelector)
                 {
 
-					$objSubSelector = \DmaEgFieldsModel::findOneBy('id', $objField->subpaletteSelector);
+					$objSubSelector = \DMA\DmaEgFieldsModel::findOneBy('id', $objField->subpaletteSelector);
 
                     if ($objSubSelector !== null && $arrData[$objSubSelector->title] == "")
                     {
@@ -308,7 +308,7 @@ class DMAElementGenerator extends \Frontend
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{
-			
+
 				if (substr($objField->eval_field_type,3)=='checkbox')
 				{
 					$tempArray = trimsplit(',',$arrData[$objField->title]);
@@ -441,19 +441,19 @@ class DMAElementGenerator extends \Frontend
 						{
 							$objFile = new \File($file);
 						}
-						
+
 						// Send the file to the browser
 						if ($this->Input->get('file', true) && $this->Input->get('file', true) != '')
 						{
 							$file = $this->Input->get('file', true);
-	
+
 							if ($file == $objFile->value)
 							{
 								$this->sendFileToBrowser($file);
 							}
 						}
-						
-						if ($objFile) 
+
+						if ($objFile)
 						{
 
 							$arrTemplateData[$objField->title]['value'][] = array(
@@ -474,7 +474,7 @@ class DMAElementGenerator extends \Frontend
                             //$arrElementData[] = $objFile->path;
 						}
 					}
-					
+
 				}
 				else
 				{
@@ -520,7 +520,7 @@ class DMAElementGenerator extends \Frontend
 					}
 					//var_dump($objFile);
 					//$objFile = new file($arrData['singleSRC']);
-					
+
 					// Send the file to the browser
 					if ($this->Input->get('file', true) && $this->Input->get('file', true) != '')
 					{
@@ -611,7 +611,7 @@ class DMAElementGenerator extends \Frontend
 
 				$arrImagePrecompiled = $arrImage;
 				// file-handling for Contao 3
-				
+
 				if (is_numeric($arrImage['singleSRC']))
 				{
 					$objFile = \FilesModel::findByPk($arrImage['singleSRC']);
@@ -763,7 +763,7 @@ class DMAElementGenerator extends \Frontend
 		return $objTemplate->parse();
 
 	}
-	
+
 	// we need to use an own method for the executePostActions-function
 	// the table-fields are no real fields
 	public function fixedAjaxRequest($strAction, \DataContainer $dc) {
@@ -771,14 +771,14 @@ class DMAElementGenerator extends \Frontend
 		{
 			$intId = \Input::get('id');
 			$strField = $strFieldName = \Input::post('name');
-	
+
 			// Handle the keys in "edit multiple" mode
 			if (\Input::get('act') == 'editAll')
 			{
 				$intId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', $strField);
 				$strField = preg_replace('/(.*)_[0-9a-zA-Z]+$/', '$1', $strField);
 			}
-	
+
 			// Validate the request data
 			if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
 			{
@@ -799,10 +799,10 @@ class DMAElementGenerator extends \Frontend
 					//header('HTTP/1.1 400 Bad Request');
 					//die('Bad Request');
 				}
-	
+
 				$objRow = $this->Database->prepare("SELECT * FROM " . $dc->table . " WHERE id=?")
 										 ->execute($intId);
-	
+
 				// The record does not exist
 				if ($objRow->numRows < 1)
 				{
@@ -811,7 +811,7 @@ class DMAElementGenerator extends \Frontend
 					//die('Bad Request');
 				}
 			}
-	
+
 			$varValue = \Input::post('value');
 			$strKey = ($strAction == 'reloadPagetreeDMA') ? 'pageTree' : 'fileTree';
 
@@ -837,10 +837,10 @@ class DMAElementGenerator extends \Frontend
 						$varValue[$k] = \Dbafs::addResource($v)->id;
 					}
 				}
-	
+
 				$varValue = serialize($varValue);
 			}
-	
+
 			// Set the new value
 			if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
 			{
@@ -852,13 +852,13 @@ class DMAElementGenerator extends \Frontend
 				$objRow->$strField = $varValue;
 				$arrAttribs['activeRecord'] = $objRow;
 			}
-	
+
 			$arrAttribs['id'] = $strFieldName;
 			$arrAttribs['name'] = $strFieldName;
 			$arrAttribs['value'] = $varValue;
 			$arrAttribs['strTable'] = $dc->table;
 			$arrAttribs['strField'] = $strField;
-	
+
 			$objWidget = new $GLOBALS['BE_FFL'][$strKey]($arrAttribs);
 			echo $objWidget->generate();
 		}
