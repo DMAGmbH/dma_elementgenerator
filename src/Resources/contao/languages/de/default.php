@@ -1,4 +1,4 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 /**
  * TYPOlight webCMS
  * Extension DMA Elementgenerator
@@ -30,5 +30,3 @@
  
 $GLOBALS['TL_LANG']['MOD']['dma_eg']= array('Elementgenerator','Generieren von eigenen Contentelementen und/oder Modulen');
 $GLOBALS['TL_LANG']['MOD']['dma_elementgenerator'] = array('Elementgenerator');
- 
-?>
