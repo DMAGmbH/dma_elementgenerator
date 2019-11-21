@@ -1,10 +1,10 @@
-<?php echo ($this->divs) ? '<h1 class="' . $this->class . '">':'<li class="' . $this->class .'"><h1>'; ?>
+<?= $this->divs ? '<h1 class="' . $this->class . '">' : '<li class="' . $this->class .'"><h1>'; ?>
 <?php if (!$this->nolabels): ?>
-  <span class="label"><?php echo $this->label ?></span>
+  <span class="label"><?= $this->label ?></span>
   <span class="value">
 <?php endif; ?>
-<?php echo $this->value ?>
+<?= $this->value ?>
 <?php if (!$this->nolabels): ?> 
   </span>
 <?php endif; ?>
-<?php echo ($this->divs) ? '</h1>' : '</h1></li>'; ?>
+<?= $this->divs ? '</h1>' : '</h1></li>'; ?>

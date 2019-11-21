@@ -3,7 +3,5 @@
   Allow from all
 </IfModule>
 <IfModule mod_authz_core.c>
-  Order allow,deny
-  Allow from all
   Require all granted
 </IfModule>
