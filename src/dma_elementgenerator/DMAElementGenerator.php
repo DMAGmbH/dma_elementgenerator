@@ -700,6 +700,10 @@ class DMAElementGenerator extends \Frontend
 			}
 		}
 
+		if (is_array(unserialize($objElement->template))) {
+			return null;
+        	}
+		
 		$objTemplate = new \FrontendTemplate(($objElement->template ? $objElement->template : $this->strTemplate));
 
 		//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
