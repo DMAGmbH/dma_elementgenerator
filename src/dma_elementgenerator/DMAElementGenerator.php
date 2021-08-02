@@ -869,6 +869,7 @@ class dmaHyperlinkHelper extends \ContentHyperlink
 {
 	public function __construct($arrData)
 	{
+		$arrData['tstamp'] = time();
 		$this->type = 'hyperlink';
 		$this->url = $arrData['url'];
 		$this->target = $arrData['target'];
@@ -883,6 +884,7 @@ class dmaContentImageHelper extends \ContentImage
 {
 	public function __construct($arrData)
 	{
+		$arrData['tstamp'] = time();
 		$this->type = 'image';
 		$this->singleSRC = $arrData['singleSRC'];
 		$this->id = $arrData['id'];
