@@ -29,7 +29,7 @@
     "contao-legacy/dma_elementgenerator": "*"
   },
   "require": {
-    "php": ">=5.3.4",
+    "php": "^7.4 || ^8.0",
     "contao/core-bundle": "^3.2 || ^4.1",
     "contao-community-alliance/composer-plugin": "^2.4.0 || 3.*"
   },
