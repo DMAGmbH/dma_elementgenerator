@@ -2,6 +2,7 @@
   "name": "dma/dma_elementgenerator",
   "description": "Erlaubt das Erstellen von eigenen Contentelement und Modulen",
   "keywords": ["elements","contentelement","modules","layout","content","contao"],
+  "abandoned": true,
   "type": "contao-module",
   "license": "LGPL-3.0+",
   "authors": [
