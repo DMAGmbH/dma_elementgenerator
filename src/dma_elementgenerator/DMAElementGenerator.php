@@ -10,6 +10,8 @@
 
 namespace DMA;
 
+use Contao\ContentModel;
+
 /**
  * Class DMAElementGeneratorContent
  *
@@ -893,5 +895,6 @@ class dmaContentImageHelper extends \ContentImage
 		$this->singleSRC = $arrData['singleSRC'];
 		$this->id = $arrData['id'];
 		$this->arrData = $arrData;
+        $this->objModel = new ContentModel();
 	}
 }
