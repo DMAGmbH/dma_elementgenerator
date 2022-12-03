@@ -322,7 +322,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 						}
 					}
 
-					if ($GLOBALS['BE_FFL'][$objField->type])
+					if ($GLOBALS['BE_FFL'][$objField->type] ?? null)
 					{
 
 
@@ -621,7 +621,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 	 */
 	public function load_field($strName,$varValue)
 	{
-		return self::$_dma_fields[$strName];
+		return self::$_dma_fields[$strName] ?? '';
 	}
 
 	public function save_field($strName,$varValue)
@@ -630,7 +630,7 @@ class DMAElementGeneratorCallbacks extends \Backend
         $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
         $this->getDcaInfos($intDMAEGpid,$strName);
 
-        if (($this->elementDca['type'] == 'fileTree' || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
+        if (((isset($this->elementDca['type']) && $this->elementDca['type'] == 'fileTree') || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
         {
             if (strlen($varValue) == 16)
             {

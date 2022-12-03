@@ -293,8 +293,8 @@ class tl_dma_eg extends \Backend
     public function listFormFields($arrRow)
     {
         return '<div class="cte_type ' . ($arrRow['invisible'] ? 'unpublished' : 'published') . '">'
-            . ($arrRow['content'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelContentelement'] . ' [' . $arrRow['category'] . ']' : '')
-            . ($arrRow['module'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelFrontendmodule'] . ' [' . $arrRow['category'] . ']' : '')
+            . ($arrRow['content'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories']['labelContentelement'] . ' [' . $arrRow['category'] . ']' : '')
+            . ($arrRow['module'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories']['labelFrontendmodule'] . ' [' . $arrRow['category'] . ']' : '')
             . '</div>'."\n"
             . '<div class="block">'
             . '<strong>' . $arrRow['title'] . '</strong>' ."\n"
