@@ -1,31 +1,14 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
+
 /**
- * TYPOlight webCMS
- * Extension DMA Elementgenerator
- * Copyright Dialog- und Medienagentur der ACS mbH  (2010)
+ * Contao Open Source CMS
  *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 2.1 of the License, or (at your option) any later version.
+ * Copyright (c) 2005-2015 Leo Feyer
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at http://www.gnu.org/licenses/.
- *
- * PHP version 5
- * @copyright  Dialog- und Medienagentur der ACS mbH 2010
- * @author     Carsten Kollmeier <kollmeier@dialog-medien.com>
- * @author   Janosch Skuplik <skuplik@dma.do>
- * @package    DMAElementGenerator
- * @license    LGPL
- * @filesource
+ * @license LGPL-3.0+
  */
+
+namespace DMA;
 
 /**
  * Class DMAElementGeneratorCallbacks
@@ -36,7 +19,7 @@
  * @author   Janosch Skuplik <skuplik@dma.do>
  * @package    DMAElementGenerator
  */
-class DMAElementGeneratorCallbacks extends Backend
+class DMAElementGeneratorCallbacks extends \Backend
 {
 
 	/**
@@ -70,6 +53,10 @@ class DMAElementGeneratorCallbacks extends Backend
 	);
 
 
+    /**
+     * @param $objField
+     * @return array|null
+     */
 	protected function prepareOptions($objField)
 	{
         $arrReturn = array();
@@ -98,6 +85,13 @@ class DMAElementGeneratorCallbacks extends Backend
                 }
             }
         }
+		elseif ($objField->optionsType == 'array')
+		{
+			if (is_array($GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey]))
+			{
+				$arrReturn = $GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey];
+			}
+		}
         else
         {
             $arrOptions = deserialize($objField->options, true);
@@ -261,9 +255,14 @@ class DMAElementGeneratorCallbacks extends Backend
 				else
 				{
 					//multiple checkbox-menue
-					if ($objField->type=='checkbox' && sizeof($this->prepareOptions($objField))>1)
+                    $options = $this->prepareOptions($objField);
+					if ($objField->type=='checkbox' && null!==$options && sizeof($options)>1)
 					{
-						$objField->type='checkboxWizard';
+						if ($objField->eval_checkboxWizard)
+						{
+							$objField->type='checkboxWizard';
+						}
+						$objField->eval_multiple=true;
 					}
 
 					$objField->eval_tl_class = $objField->eval_tl_class ? implode(' ',deserialize($objField->eval_tl_class)) : '';
@@ -334,16 +333,16 @@ class DMAElementGeneratorCallbacks extends Backend
 								}
 							}
 						}
-						else 
+						else
 						{
 							$this->addImageToPalette($objField);
 						}
 					}
 
-					if ($GLOBALS['BE_FFL'][$objField->type])
+					if ($GLOBALS['BE_FFL'][$objField->type] ?? null)
 					{
-						
-						
+
+
 						if ($objField->useCheckboxCondition)
 						{
 							if ($objField->subpaletteSelector)
@@ -373,7 +372,7 @@ class DMAElementGeneratorCallbacks extends Backend
 									}
 								}
 							}
-						} 
+						}
 						else
 						{
                             if (substr($this->paletteReplace,-1) == ';')
@@ -386,7 +385,7 @@ class DMAElementGeneratorCallbacks extends Backend
                             }
 						}
 						//$dma_subpalettes
-						
+
 						$GLOBALS['TL_DCA'][$strTable]['fields'][$title] = array
 						(
 							'label' => array($objField->label,$objField->explanation),
@@ -398,6 +397,7 @@ class DMAElementGeneratorCallbacks extends Backend
 								'mandatory' => $objField->eval_mandatory,
 								'tl_class' => $objField->eval_tl_class,
 								'rgxp' => $objField->eval_rgxp,
+								'datepicker' => $objField->eval_rgxp == 'date' || $objField->eval_rgxp == 'datim',
 								'allowHtml' => $objField->eval_allow_html || $objField->eval_rte,
 								'unique' => $objField->eval_unique,
 								'doNotCopy' => $objField->eval_do_not_copy,
@@ -407,7 +407,7 @@ class DMAElementGeneratorCallbacks extends Backend
 								'fieldType' => substr($objField->eval_field_type,3),
 								'alwaysSave' => true,
 								'doNotSaveEmpty' => true,
-								'multiple' => ($objField->type=='checkboxWizard' || substr($objField->eval_field_type,3)=='checkbox') ? true : false,
+								'multiple' => ($objField->type=='checkboxWizard' || substr($objField->eval_field_type,3)=='checkbox') || $objField->eval_multiple ? true : false,
 								'decodeEntities' => $objField->eval_decodeEntities ? true : false,
 								'csv' => ','
 							),
@@ -415,10 +415,10 @@ class DMAElementGeneratorCallbacks extends Backend
 							'load_callback' => array(array('DMAElementGeneratorCallbacks','load_'.$objField->title)),
 							'save_callback' => array(array('DMAElementGeneratorCallbacks','save_'.$objField->title))
 						);
-            if ($objField->eval_rte)
-            {
-            	$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['rte'] =  ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE');
-            }
+						if ($objField->eval_rte)
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['rte'] =  ($strTableName=='content' ? $GLOBALS['TL_DCA']['tl_content']['fields']['text']['eval']['rte'] : 'tinyMCE');
+						}
 						if ($objField->eval_path)
 						{
 							// path is array for Contao 3
@@ -467,15 +467,15 @@ class DMAElementGeneratorCallbacks extends Backend
                         {
                             $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['chosen'] = $objField->eval_chosen;
                         }
-						
+
 						if ($objField->eval_sortable)
 						{
-							//$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['orderField'] = DMA_EG_PREFIX . $objField->id . '_' . 'orderSRC';
-							//$GLOBALS['TL_DCA'][$strTable]['fields'][DMA_EG_PREFIX . $objField->id . '_' . 'orderSRC'] = array
-							//(
-							//	'label' => &$GLOBALS['TL_LANG']['tl_content']['orderSRC']
-							//);
-							
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['orderField'] = 'orderSRC';
+						}
+
+						if ($objField->eval_isGallery)
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['isGallery'] = true;
 						}
 
                         if ($objField->type == 'tableWizard')
@@ -483,11 +483,25 @@ class DMAElementGeneratorCallbacks extends Backend
                             $GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['style'] = 'width:142px;height:66px';
                         }
 
+						if ($objField->eval_colorpicker)
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['maxlength'] = 6;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['colorpicker'] = true;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['isHexColor'] = true;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['decodeEntities'] = true;
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['tl_class'] .= " wizard";
+						}
+
+						if ($objField->eval_rgxp == 'date' || $objField->eval_rgxp == 'datim')
+						{
+							$GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['tl_class'] .= " wizard";
+						}
+
 						if ($create)
 						{
 							$fields[$objField->title] = $objField->default_value;
 						}
-						else 
+						else
 						{
 							if ($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['multiple'] && isset($GLOBALS['TL_DCA'][$strTable]['fields'][$title]['eval']['csv']))
 							{
@@ -529,7 +543,7 @@ class DMAElementGeneratorCallbacks extends Backend
 
 	protected function addFieldToPalette($objField)
 	{
-		
+
 	}
 
 	protected function addHyperlinkToPalette($objField)
@@ -544,6 +558,7 @@ class DMAElementGeneratorCallbacks extends Backend
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
                 $this->paletteReplace .= ',' . $title;
+
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA'][$this->strTable]['fields'][$hyperlinkData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
@@ -566,7 +581,7 @@ class DMAElementGeneratorCallbacks extends Backend
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
                 $this->paletteReplace .= ',' . $title;
-                
+
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA'][$this->strTable]['fields'][$imageData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
@@ -624,7 +639,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	 */
 	public function load_field($strName,$varValue)
 	{
-		return self::$_dma_fields[$strName];
+		return self::$_dma_fields[$strName] ?? '';
 	}
 
 	public function save_field($strName,$varValue)
@@ -633,7 +648,7 @@ class DMAElementGeneratorCallbacks extends Backend
         $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
         $this->getDcaInfos($intDMAEGpid,$strName);
 
-        if (($this->elementDca['type'] == 'fileTree' || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
+        if (((isset($this->elementDca['type']) && $this->elementDca['type'] == 'fileTree') || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
         {
             if (strlen($varValue) == 16)
             {
@@ -722,7 +737,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	/**
 	 * Stores the generated Elements in Configuration
 	 */
-	public function element_onsubmit(DataContainer $dc)
+	public function element_onsubmit(\DataContainer $dc)
 	{
 		$this->import("Database");
 		$this->store_configuration();
@@ -732,7 +747,7 @@ class DMAElementGeneratorCallbacks extends Backend
 	 * Deletes Elements from Configuration, Contentelements and Modules
 	 */
 
-	public function element_ondelete(DataContainer $dc)
+	public function element_ondelete(\DataContainer $dc)
 	{
 		$this->import("Database");
 

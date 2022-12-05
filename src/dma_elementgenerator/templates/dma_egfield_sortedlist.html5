@@ -1,14 +1,13 @@
-
-<?php echo ($this->divs) ? '<h3 class="' . $this->class . '">':'<li class="' . $this->class .'"><h3>'; ?>
+<?= $this->divs ? '<h3 class="' . $this->class . '">' : '<li class="' . $this->class .'"><h3>'; ?>
 <?php if (!$this->nolabels): ?>
-  <span class="label"><?php echo $this->label ?></span>
+  <span class="label"><?= $this->label ?></span>
   <span class="value">
 <?php endif; ?>
 
 <ol>
 <?php foreach($this->addData['value'] as $value): ?>
 
-<li><?php echo $value; ?></li>
+<li><?= $value; ?></li>
 
 <?php endforeach; ?>
 </ol>
@@ -16,4 +15,4 @@
 <?php if (!$this->nolabels): ?> 
   </span>
 <?php endif; ?>
-<?php echo ($this->divs) ? '</h3>' : '</h3></li>'; ?>
+<?= $this->divs ? '</h3>' : '</h3></li>'; ?>

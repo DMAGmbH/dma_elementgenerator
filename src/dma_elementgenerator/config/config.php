@@ -1,30 +1,11 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
+
 /**
- * TYPOlight webCMS
- * Extension DMA Elementgenerator
- * Copyright Dialog- und Medienagentur der ACS mbH  (2010)
+ * Contao Open Source CMS
  *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 2.1 of the License, or (at your option) any later version.
+ * Copyright (c) 2005-2015 Leo Feyer
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at http://www.gnu.org/licenses/.
- *
- * PHP version 5
- * @copyright  DMA GmbH
- * @author     Carsten Kollmeier
- * @author     Janosch Skuplik <skuplik@dma.do>
- * @package    DMAElementGenerator
- * @license    LGPL
- * @filesource
+ * @license LGPL-3.0+
  */
 
 
@@ -46,7 +27,7 @@ array_insert($GLOBALS['BE_MOD']['design'], 1, array
 include TL_ROOT . '/system/config/localconfig.php';
 
 // Get defined frontend modules from configuration
-if ($GLOBALS['TL_CONFIG']['dma_eg_modules'])
+if ($GLOBALS['TL_CONFIG']['dma_eg_modules'] ?? null)
 {
 	$arrModules = unserialize($GLOBALS['TL_CONFIG']['dma_eg_modules']);
 } else
@@ -55,7 +36,7 @@ if ($GLOBALS['TL_CONFIG']['dma_eg_modules'])
 }
 
 // Get defined Contentelements from configuration
-if ($GLOBALS['TL_CONFIG']['dma_eg_content'])
+if ($GLOBALS['TL_CONFIG']['dma_eg_content'] ?? null)
 {
 	$arrContent = unserialize($GLOBALS['TL_CONFIG']['dma_eg_content']);
 } else
@@ -90,7 +71,4 @@ if(version_compare(VERSION.BUILD, '3.10','>=') && version_compare(VERSION.BUILD,
 	$GLOBALS['TL_HOOKS']['executePostActions'][] = array('DMAElementGenerator','fixedAjaxRequest');
 }
 
-$GLOBALS['TL_HOOKS']['loadLanguageFile'][] = array('DMAElementGenerator','dmaEgLoadLanguageFile');
-
-
-?>
+$GLOBALS['TL_HOOKS']['loadLanguageFile'][] = array('DMA\DMAElementGenerator','dmaEgLoadLanguageFile');

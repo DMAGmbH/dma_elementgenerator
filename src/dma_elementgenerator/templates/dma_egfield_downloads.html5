@@ -1,13 +1,13 @@
-<?php echo ($this->divs) ? '<div class="' . $this->class . '">':'<li class="' . $this->class .'">'; ?>
+<?= $this->divs ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
 
 <?php if (!$this->nolabels): ?>
-  <span class="label"><?php echo $this->label ?></span>
+  <span class="label"><?= $this->label ?></span>
   <span class="value">
 <?php endif; ?>
 
 <ul>
 <?php foreach ($this->addData['value'] as $entry): ?>
-<li><img src="assets/contao/images/<?php echo $entry['attributes']['icon']; ?>" alt="<?php echo $entry['attributes']['extension']; ?>" class="mime_icon" height="18" width="18"> <a href="<?php echo $entry['dl']; ?>" title="<?php echo $entry['meta']['de']['title']; ?>"><?php echo $entry['meta']['de']['title'] ? $entry['meta']['de']['title'] : $entry['attributes']['filename']; ?> <span class="size">(<?php echo $entry['attributes']['size']; ?>)</span></a></li>
+<li><img src="assets/contao/images/<?= $entry['attributes']['icon']; ?>" alt="<?= $entry['attributes']['extension']; ?>" class="mime_icon" height="18" width="18"> <a href="<?= $entry['dl']; ?>" title="<?= $entry['meta']['de']['title']; ?>"><?= $entry['meta']['de']['title'] ? $entry['meta']['de']['title'] : $entry['attributes']['filename']; ?> <span class="size">(<?= $entry['attributes']['size']; ?>)</span></a></li>
 <?php endforeach; ?>
 </ul>
 
@@ -16,4 +16,4 @@
   </span>
 <?php endif; ?>
 
-<?php echo ($this->divs) ? '</div>' : '</li>'; ?>
+<?= $this->divs ? '</div>' : '</li>'; ?>

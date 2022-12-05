@@ -1,31 +1,16 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
+
 /**
- * TYPOlight webCMS
- * Extension DMA Elementgenerator
- * Copyright Dialog- und Medienagentur der ACS mbH  (2010)
+ * Contao Open Source CMS
  *
- * This program is free software: you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation, either
- * version 2.1 of the License, or (at your option) any later version.
+ * Copyright (c) 2005-2015 Leo Feyer
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this program. If not, please visit the Free
- * Software Foundation website at http://www.gnu.org/licenses/.
- *
- * PHP version 5
- * @copyright  DMA GmbH
- * @author     Carsten Kollmeier
- * @author     Janosch Skuplik <skuplik@dma.do>
- * @package    DMAElementGenerator
- * @license    LGPL
- * @filesource
+ * @license LGPL-3.0+
  */
+
+namespace DMA;
+
+use Contao\ContentModel;
 
 /**
  * Class DMAElementGeneratorContent
@@ -38,10 +23,11 @@
  * @package    DMAElementGenerator
  */
 
-class DMAElementGenerator extends Frontend
+class DMAElementGenerator extends \Frontend
 {
 	protected $strTemplate = 'dma_eg_default';
-	private $displayInDivs = false;
+
+	private $blnDisplayInDivs = false;
 
 	public function generate($data)
 	{
@@ -51,23 +37,28 @@ class DMAElementGenerator extends Frontend
 
     public function dmaEgLoadLanguageFile($strName, $strLanguage)
     {
-        
+
         // wird für die Installations-Routine benötigt
         if (!$this->Database->tableExists("tl_dma_eg"))
         {
             return;
         }
-      
+
         // Support für ce-access etc.
         if ($strName == "default")
         {
-            $objContentElements = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE content=?")
-                                                 ->execute(1);
-            if ($objContentElements->numRows > 0)
+
+			$objContentElements = \DmaEgModel::findBy('content', 1);
+
+			if ($objContentElements !== null)
             {
                 while($objContentElements->next())
                 {
-                    $GLOBALS['TL_LANG']['CTE'][DMA_EG_PREFIX.$objContentElements->id]  = array($objContentElements->title,$objContentElements->title);
+                    $GLOBALS['TL_LANG']['CTE'][DMA_EG_PREFIX . $objContentElements->id]  = array
+					(
+						$objContentElements->title,
+						$objContentElements->description ? $objContentElements->description : $objContentElements->title
+					);
                 }
             }
         }
@@ -76,23 +67,25 @@ class DMAElementGenerator extends Frontend
 	protected function compile($data)
 	{
 
+		$elementID = str_replace(DMA_EG_PREFIX, '', $data->type);
 
-		$elementID = str_replace(DMA_EG_PREFIX,'',$data->type);
 
-		$objElement = $this->Database->prepare("SELECT * FROM tl_dma_eg WHERE id=?")
-		->limit(1)
-		->execute($elementID);
+		$objElement = \DmaEgModel::findOneBy('id', $elementID);
 
+		if ($objElement === null)
+		{
+			return;
+		}
 
 
 		//Im Backend in jedem Fall ein html5-Template verwenden
-		if (TL_MODE == 'BE' && version_compare(VERSION.'.'.BUILD, '2.10.0', '>='))
+		if (TL_MODE == 'BE' && version_compare(VERSION . '.' . BUILD, '2.10.0', '>='))
 		{
 			try
 			{
 				$this->getTemplate($objElement->template);
 			}
-			catch (Exception $e)
+			catch (\Exception $e)
 			{
 				$objElement->template = $this->strTemplate;
 			}
@@ -113,8 +106,7 @@ class DMAElementGenerator extends Frontend
 		//Ausgabe in divs statt ul-li-Kontruktion ermöglichen
 		if ($objElement->display_in_divs)
 		{
-			$this->displayInDivs = true;
-			//$objTemplate->divs = true;
+			$this->blnDisplayInDivs = true;
 		}
 
 		//eigene Klasse für ce_ oder mod_ Überschreibt die standardmäßige dma_eg_?
@@ -130,10 +122,13 @@ class DMAElementGenerator extends Frontend
 
 		$arrData = deserialize($data->dma_eg_data);
 
-		$objField = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE pid=? AND type!=? ORDER BY sorting")
-		->execute($elementID,'legend');
 
-		//print_r($objField->row());
+		$objField = \DmaEgFieldsModel::findAllNotLegendsByPid($elementID);
+
+		if ($objField === null)
+		{
+			return "";
+		}
 
 		$strFields = '';
 
@@ -145,10 +140,10 @@ class DMAElementGenerator extends Frontend
             {
                 if ($objField->subpaletteSelector)
                 {
-                    $objSubSelector = $this->Database->prepare("SELECT * FROM tl_dma_eg_fields WHERE id=?")
-                	    ->limit(1)
-                		->execute($objField->subpaletteSelector);
-                    if ($arrData[$objSubSelector->title] == "")
+
+					$objSubSelector = \DmaEgFieldsModel::findOneBy('id', $objField->subpaletteSelector);
+
+                    if ($objSubSelector !== null && $arrData[$objSubSelector->title] == "")
                     {
                         continue;
                     }
@@ -160,10 +155,10 @@ class DMAElementGenerator extends Frontend
             {
                 $strFieldTemplate = $objField->template ? $objField->template : 'dma_egfield_default';
             }
-            $objFieldTemplate = new FrontendTemplate($strFieldTemplate);
+            $objFieldTemplate = new \FrontendTemplate($strFieldTemplate);
 
 			//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
-			if ($this->displayInDivs)
+			if ($this->blnDisplayInDivs)
 			{
 				$objFieldTemplate->divs = true;
 			}
@@ -177,15 +172,15 @@ class DMAElementGenerator extends Frontend
 			//echo $objField->title;
 			$objFieldTemplate->addImage = false;
 			$objFieldTemplate->title = $objField->title;
-			$objFieldTemplate->value = $arrElements[$objField->title] = $arrData[$objField->title];
+			$objFieldTemplate->value = $arrElements[$objField->title] = $arrData[$objField->title] ?? '';
 			$objFieldTemplate->label = $arrLabels[$objField->title] = $objField->label;
 			$objFieldTemplate->class = $arrClasses[$objField->title] = ($objField->class == '' ? '' : $objField->class.' ').$objField->type;
 
 			//intelligente Ausgabe ;-)
 			$arrTemplateData[$objField->title] = array();
 
-			$arrTemplateData[$objField->title]['raw'] = $arrData[$objField->title];
-			$arrTemplateData[$objField->title]['value'] = $arrData[$objField->title];
+			$arrTemplateData[$objField->title]['raw'] = $arrData[$objField->title] ?? '';
+			$arrTemplateData[$objField->title]['value'] = $arrData[$objField->title] ?? '';
 			$arrTemplateData[$objField->title]['type'] = $objField->type;
 			$arrTemplateData[$objField->title]['label'] = $objField->label;
 
@@ -300,6 +295,18 @@ class DMAElementGenerator extends Frontend
 
             }
 
+			// Handling von Selectmenüs auf Array-Basis
+			if ($objField->type == 'select' && $objField->optionsType == 'array')
+			{
+				if (is_array($GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey]))
+				{
+					if ($GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey][$arrData[$objField->title]])
+					{
+						$arrTemplateData[$objField->title]['value'] = $GLOBALS['TL_DMA_SELECT_OPTIONS'][$objField->optArrayKey][$arrData[$objField->title]];
+					}
+				}
+			}
+
             // Handling von Selectmenüs und eigener Key-Struktur
             if ($objField->type == 'select' && $objField->optionsType == 'manual' && $objField->showLabelInFrontend)
             {
@@ -319,7 +326,7 @@ class DMAElementGenerator extends Frontend
 			//Handling von Seiten
 			if ($objField->type=='pageTree')
 			{
-			
+
 				if (substr($objField->eval_field_type,3)=='checkbox')
 				{
 					$tempArray = trimsplit(',',$arrData[$objField->title]);
@@ -379,6 +386,41 @@ class DMAElementGenerator extends Frontend
 				{
 					//mehrere Dateien
 					$tempArrFiles = deserialize($arrData[$objField->title]);
+
+					if ($objField->eval_sortable)
+					{
+
+						$tmp = deserialize($data->orderSRC);
+
+						if (!empty($tmp) && is_array($tmp))
+						{
+							// Remove all values
+							$arrOrder = array_map(function(){}, array_flip($tmp));
+
+							// Move the matching elements to their position in $arrOrder
+							foreach ($tempArrFiles as $k=>$v)
+							{
+								$vBin = \StringUtil::uuidToBin($v);
+								if (array_key_exists($vBin, $arrOrder))
+								{
+									$arrOrder[$vBin] = $v;
+									unset($tempArrFiles[$k]);
+								}
+							}
+
+							// Append the left-over images at the end
+							if (!empty($tempArrFiles))
+							{
+								$arrOrder = array_merge($arrOrder, array_values($tempArrFiles));
+							}
+
+							// Remove empty (unreplaced) entries
+							$tempArrFiles = array_values(array_filter($arrOrder));
+							unset($arrOrder);
+						}
+
+					}
+
 					$arrTemplateData[$objField->title]['value'] = array();
 					foreach ($tempArrFiles as $file)
 					{
@@ -415,21 +457,21 @@ class DMAElementGenerator extends Frontend
 
 						elseif (is_file(TL_ROOT . '/' . $file))
 						{
-							$objFile = new File($file);
+							$objFile = new \File($file);
 						}
-						
+
 						// Send the file to the browser
 						if ($this->Input->get('file', true) && $this->Input->get('file', true) != '')
 						{
 							$file = $this->Input->get('file', true);
-	
+
 							if ($file == $objFile->value)
 							{
 								$this->sendFileToBrowser($file);
 							}
 						}
-						
-						if ($objFile) 
+
+						if ($objFile)
 						{
 
 							$arrTemplateData[$objField->title]['value'][] = array(
@@ -450,16 +492,7 @@ class DMAElementGenerator extends Frontend
                             //$arrElementData[] = $objFile->path;
 						}
 					}
-                    //$arrElements[$objField->title] = implode(",",$arrElementData);
-					//print_r($arrData);
-					if ($arrData['orderSRC'] != '')
-					{
-						//echo "order";
-					}
-					//echo "<pre>";
-					//print_r($arrTemplateData[$objField->title]);
-					//echo "</pre>";
-					
+
 				}
 				else
 				{
@@ -497,7 +530,7 @@ class DMAElementGenerator extends Frontend
 					{
 						if (is_file(TL_ROOT . '/' . $arrData[$objField->title]))
 						{
-							$objFile = new File($arrData[$objField->title]);
+							$objFile = new \File($arrData[$objField->title]);
 							$arrImage = array(
 								'singleSRC' => $arrData[$objField->title]
 							);
@@ -505,7 +538,7 @@ class DMAElementGenerator extends Frontend
 					}
 					//var_dump($objFile);
 					//$objFile = new file($arrData['singleSRC']);
-					
+
 					// Send the file to the browser
 					if ($this->Input->get('file', true) && $this->Input->get('file', true) != '')
 					{
@@ -566,6 +599,16 @@ class DMAElementGenerator extends Frontend
 					$arrElements[$objField->title] = $objHyperlink->generate();
 					$arrTemplateData[$objField->title]['raw'] = $linkData;//deserialize($objField->hyperlink_data);
 					$arrTemplateData[$objField->title]['value'] = $linkData['url'];
+
+					if (strpos($linkData['url'], "{{link_url::")!==false)
+					{
+						$intLinkId = str_replace(array('{{link_url::', '}}'), '', $linkData['url']);
+						$objPageModel = \PageModel::findPublishedById($intLinkId);
+						if ($objPageModel !== null)
+						{
+							$arrTemplateData[$objField->title]['raw']['page'] = $objPageModel->row();
+						}
+					}
 				}
 			}
 
@@ -580,13 +623,13 @@ class DMAElementGenerator extends Frontend
                 {
                     foreach ($arrImageData as $imageData)
                     {
-                        $arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData];
+                        $arrImage[$imageData] =  $arrData[$objField->title . '--' . $imageData] ?? '';
                     }
                 }
 
 				$arrImagePrecompiled = $arrImage;
 				// file-handling for Contao 3
-				
+
 				if (is_numeric($arrImage['singleSRC']))
 				{
 					$objFile = \FilesModel::findByPk($arrImage['singleSRC']);
@@ -647,14 +690,14 @@ class DMAElementGenerator extends Frontend
                     }
                 }
 
-                if ($arrImage['size'])
+                if ($arrImage['size'] ?? null)
                 {
                     $arrSize = deserialize($arrImage['size']);
                     $arrTemplateData[$objField->title]['value'] = \Image::get($objFile->path, $arrSize[0], $arrSize[1], $arrSize[2]);
                 }
 
                 //$objFieldTemplate->class = $objFieldTemplate->class ? ($objFieldTemplate->class . " " . $arrImage['floating']) : $arrImage['floating'];
-                if ($arrImagePrecompiled['singleSRC'])
+                if ($arrImagePrecompiled['singleSRC'] ?? null)
                 {
                     $this->addImageToTemplate($objFieldTemplate, $arrImagePrecompiled);
                     $arrImage['type'] = 'image';
@@ -675,10 +718,14 @@ class DMAElementGenerator extends Frontend
 			}
 		}
 
-		$objTemplate = new FrontendTemplate(($objElement->template ? $objElement->template : $this->strTemplate));
+		if (is_array(unserialize($objElement->template))) {
+			return null;
+        	}
+
+		$objTemplate = new \FrontendTemplate(($objElement->template ? $objElement->template : $this->strTemplate));
 
 		//Ausgabe in divs statt ul-li-Konstruktion ermöglichen
-		if ($this->displayInDivs)
+		if ($this->blnDisplayInDivs)
 		{
 			$objTemplate->divs = true;
 		}
@@ -721,12 +768,12 @@ class DMAElementGenerator extends Frontend
 
 		$arrStyle = array();
 
-		if ($data->space[0] != '')
+		if (isset($data->space[0]) && $data->space[0] != '')
 		{
 			$arrStyle[] = 'margin-top:'.$data->space[0].'px;';
 		}
 
-		if ($data->space[1] != '')
+		if (isset($data->space[1]) && $data->space[1] != '')
 		{
 			$arrStyle[] = 'margin-bottom:'.$data->space[1].'px;';
 		}
@@ -738,7 +785,7 @@ class DMAElementGenerator extends Frontend
 		return $objTemplate->parse();
 
 	}
-	
+
 	// we need to use an own method for the executePostActions-function
 	// the table-fields are no real fields
 	public function fixedAjaxRequest($strAction, \DataContainer $dc) {
@@ -746,14 +793,14 @@ class DMAElementGenerator extends Frontend
 		{
 			$intId = \Input::get('id');
 			$strField = $strFieldName = \Input::post('name');
-	
+
 			// Handle the keys in "edit multiple" mode
 			if (\Input::get('act') == 'editAll')
 			{
 				$intId = preg_replace('/.*_([0-9a-zA-Z]+)$/', '$1', $strField);
 				$strField = preg_replace('/(.*)_[0-9a-zA-Z]+$/', '$1', $strField);
 			}
-	
+
 			// Validate the request data
 			if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
 			{
@@ -774,10 +821,10 @@ class DMAElementGenerator extends Frontend
 					//header('HTTP/1.1 400 Bad Request');
 					//die('Bad Request');
 				}
-	
+
 				$objRow = $this->Database->prepare("SELECT * FROM " . $dc->table . " WHERE id=?")
 										 ->execute($intId);
-	
+
 				// The record does not exist
 				if ($objRow->numRows < 1)
 				{
@@ -786,7 +833,7 @@ class DMAElementGenerator extends Frontend
 					//die('Bad Request');
 				}
 			}
-	
+
 			$varValue = \Input::post('value');
 			$strKey = ($strAction == 'reloadPagetreeDMA') ? 'pageTree' : 'fileTree';
 
@@ -812,10 +859,10 @@ class DMAElementGenerator extends Frontend
 						$varValue[$k] = \Dbafs::addResource($v)->id;
 					}
 				}
-	
+
 				$varValue = serialize($varValue);
 			}
-	
+
 			// Set the new value
 			if ($GLOBALS['TL_DCA'][$dc->table]['config']['dataContainer'] == 'File')
 			{
@@ -827,42 +874,43 @@ class DMAElementGenerator extends Frontend
 				$objRow->$strField = $varValue;
 				$arrAttribs['activeRecord'] = $objRow;
 			}
-	
+
 			$arrAttribs['id'] = $strFieldName;
 			$arrAttribs['name'] = $strFieldName;
 			$arrAttribs['value'] = $varValue;
 			$arrAttribs['strTable'] = $dc->table;
 			$arrAttribs['strField'] = $strField;
-	
+
 			$objWidget = new $GLOBALS['BE_FFL'][$strKey]($arrAttribs);
 			echo $objWidget->generate();
 		}
 	}
 }
 
-class dmaHyperlinkHelper extends ContentHyperlink
+class dmaHyperlinkHelper extends \ContentHyperlink
 {
 	public function __construct($arrData)
 	{
+		$arrData['tstamp'] = time();
 		$this->type = 'hyperlink';
-		$this->url = $arrData['url'];
-		$this->target = $arrData['target'];
-		$this->linkTitle = $arrData['linkTitle'];
-		$this->rel = $arrData['rel'];
-		$this->embed = $arrData['embed'];
+		$this->url = $arrData['url'] ?? '';
+		$this->target = $arrData['target'] ?? '';
+		$this->linkTitle = $arrData['linkTitle'] ?? '';
+		$this->rel = $arrData['rel'] ?? '';
+		$this->embed = $arrData['embed'] ?? '';
 	}
 }
 
 
-class dmaContentImageHelper extends ContentImage
+class dmaContentImageHelper extends \ContentImage
 {
 	public function __construct($arrData)
 	{
+		$arrData['tstamp'] = time();
 		$this->type = 'image';
 		$this->singleSRC = $arrData['singleSRC'];
 		$this->id = $arrData['id'];
 		$this->arrData = $arrData;
+        $this->objModel = new ContentModel();
 	}
 }
-
-?>

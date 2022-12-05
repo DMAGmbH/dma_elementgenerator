@@ -1,6 +1,6 @@
-<?php echo ($this->divs) ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
+<?= $this->divs ? '<div class="' . $this->class . '">' : '<li class="' . $this->class .'">'; ?>
 <?php if (!$this->nolabels): ?>
-    <span class="label"><?php echo $this->label ?></span>
+    <span class="label"><?= $this->label ?></span>
     <span class="value">
 <?php endif; ?>
 
@@ -8,9 +8,9 @@
     <table>
         <tbody>
             <?php foreach ($this->addData['data'] as $class=>$row): ?>
-                <tr class="<?php echo $class; ?>">
+                <tr class="<?= $class; ?>">
                     <?php foreach ($row as $i=>$col): ?>
-                        <td class="<?php echo $col['class']; ?>"><?php echo $col['content']; ?></td>
+                        <td class="<?= $col['class']; ?>"><?= $col['content']; ?></td>
                     <?php endforeach; ?>
                 </tr>
             <?php endforeach; ?>
@@ -21,4 +21,4 @@
 <?php if (!$this->nolabels): ?>
   </span>
 <?php endif; ?>
-<?php echo ($this->divs) ? '</div>' : '</li>'; ?>
+<?= $this->divs ? '</div>' : '</li>'; ?>
