@@ -19,7 +19,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 		'dataContainer'     => 'Table',
 		'enableVersioning'  => false,
 		'onsubmit_callback'	=> array
-		(		
+		(
 			array('DMAElementGeneratorCallbacks','element_onsubmit')
 		),
 		'ondelete_callback'	=> array
@@ -80,7 +80,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'header.gif',
 				'attributes'          => 'class="edit-header"'
-			),			
+			),
 			'copy' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_dma_eg']['copy'],
@@ -92,7 +92,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_dma_eg']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['tl_dma_eg']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
+				'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['tl_dma_eg']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
 			),
             'toggle' => array
             (
@@ -119,7 +119,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg'] = array
 
 	// Subpalettes
 	'subpalettes' => array
-	(		
+	(
 	),
 
 	// Fields
@@ -293,8 +293,8 @@ class tl_dma_eg extends \Backend
     public function listFormFields($arrRow)
     {
         return '<div class="cte_type ' . ($arrRow['invisible'] ? 'unpublished' : 'published') . '">'
-            . ($arrRow['content'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelContentelement'] . ' [' . $arrRow['category'] . ']' : '')
-            . ($arrRow['module'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelFrontendmodule'] . ' [' . $arrRow['category'] . ']' : '')
+            . ($arrRow['content'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories']['labelContentelement'] . ' [' . $arrRow['category'] . ']' : '')
+            . ($arrRow['module'] ? ' ' . $GLOBALS['TL_LANG']['tl_dma_eg']['labelCategories']['labelFrontendmodule'] . ' [' . $arrRow['category'] . ']' : '')
             . '</div>'."\n"
             . '<div class="block">'
             . '<strong>' . $arrRow['title'] . '</strong>' ."\n"
@@ -406,14 +406,14 @@ class tl_dma_eg extends \Backend
 		{
 			$arrTemplates = array();
 			$strPrefix = 'dma_eg_';
-			
+
 			// get the standard-template routine
 			$arrControllerTemplates = $this->getTemplateGroup($strPrefix);
 			foreach ($arrControllerTemplates as $value)
 			{
 				$arrTemplates[$value] = $value;
 			}
-			
+
 			// found other theme-templates
 			$objTheme = $this->Database->prepare("SELECT templates FROM tl_theme WHERE templates!=?")
 									   ->execute('');
@@ -424,7 +424,7 @@ class tl_dma_eg extends \Backend
 				{
 
 					$strFolder = TL_ROOT .'/'. $objTheme->templates;
-					
+
 					// Find all matching templates
 					$arrFiles = preg_grep('/^' . preg_quote($strPrefix, '/') . '/i',  scan($strFolder));
 					$arrThemeTemplates = array();
@@ -433,7 +433,7 @@ class tl_dma_eg extends \Backend
 						$strName = basename($strTemplate);
 						$arrThemeTemplates[] = substr($strName, 0, strrpos($strName, '.'));
 					}
-					
+
 
 					natcasesort($arrThemeTemplates);
 					$arrThemeTemplates = array_unique($arrThemeTemplates);
@@ -446,12 +446,12 @@ class tl_dma_eg extends \Backend
 			}
 	   	return $arrTemplates;
 		}
-		else 
+		else
 		{
 			return $this->getTemplateGroup('dma_eg_');
-		}	
+		}
 	}
-	
+
 }
 
 ?>

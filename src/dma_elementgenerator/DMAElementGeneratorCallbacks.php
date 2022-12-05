@@ -138,10 +138,27 @@ class DMAElementGeneratorCallbacks extends \Backend
 		// Get field values
 		$fields = &self::$_dma_fields;
 
-
 		// Database table is prefixed
 		$strTable = 'tl_'.$strTableName;
 		$this->strTable = $strTable;
+
+		// HOOK: set custom fields
+        if (isset($GLOBALS['TL_HOOKS']['rewriteDmaFields']) && is_array($GLOBALS['TL_HOOKS']['rewriteDmaFields']))
+        {
+            foreach ($GLOBALS['TL_HOOKS']['rewriteDmaFields'] as $callback)
+            {
+
+                if (is_array($callback))
+                {
+                    $this->import($callback[0]);
+                    $fields = $this->{$callback[0]}->{$callback[1]}($this->strTable, $dc);
+                }
+                elseif (is_callable($callback))
+                {
+                    $fields = $callback($this->strTable, $dc);
+                }
+            }
+        }
 
 		// If field values are empty get them from Database
 		if (!is_array($fields))
@@ -322,7 +339,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 						}
 					}
 
-					if ($GLOBALS['BE_FFL'][$objField->type])
+					if ($GLOBALS['BE_FFL'][$objField->type] ?? null)
 					{
 
 
@@ -541,7 +558,8 @@ class DMAElementGeneratorCallbacks extends \Backend
             {
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $hyperlinkData;
                 $this->paletteReplace .= ',' . $title;
-                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$hyperlinkData];
+
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA'][$this->strTable]['fields'][$hyperlinkData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $hyperlinkData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $hyperlinkData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
@@ -564,7 +582,7 @@ class DMAElementGeneratorCallbacks extends \Backend
                 $title = DMA_EG_PREFIX . $objField->title . '_' . $objField->id . '--' . $imageData;
                 $this->paletteReplace .= ',' . $title;
 
-                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA']['tl_content']['fields'][$imageData];
+                $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title] = $GLOBALS['TL_DCA'][$this->strTable]['fields'][$imageData];
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['load_callback'] = array(array('DMAElementGeneratorCallbacks','load_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['save_callback'] = array(array('DMAElementGeneratorCallbacks','save_'.$objField->title . '--' . $imageData));
                 $GLOBALS['TL_DCA'][$this->strTable]['fields'][$title]['eval']['alwaysSave'] = true;
@@ -621,7 +639,7 @@ class DMAElementGeneratorCallbacks extends \Backend
 	 */
 	public function load_field($strName,$varValue)
 	{
-		return self::$_dma_fields[$strName];
+		return self::$_dma_fields[$strName] ?? '';
 	}
 
 	public function save_field($strName,$varValue)
@@ -630,7 +648,7 @@ class DMAElementGeneratorCallbacks extends \Backend
         $intDMAEGpid = str_replace(DMA_EG_PREFIX,'',\Input::post('type'));
         $this->getDcaInfos($intDMAEGpid,$strName);
 
-        if (($this->elementDca['type'] == 'fileTree' || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
+        if (((isset($this->elementDca['type']) && $this->elementDca['type'] == 'fileTree') || strpos($strName,"singleSRC")!==false) && version_compare(VERSION.BUILD, '3.20','>='))
         {
             if (strlen($varValue) == 16)
             {

@@ -100,7 +100,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['delete'],
 				'href'                => 'act=delete',
 				'icon'                => 'delete.gif',
-				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
+				'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'show' => array
 			(
@@ -135,7 +135,7 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
 	'subpalettes' => array
 	(
 		'useCheckboxCondition'  => 'subpaletteSelector,renderHiddenData',
-        'optionsType_manual'    => 'options',
+        'optionsType_manual'    => 'options,showLabelInFrontend',
         'optionsType_database'  => 'optDbTable,optDbTitle,optDbQuery',
 		'optionsType_array'		=> 'optArrayKey'
 	),
@@ -517,6 +517,13 @@ $GLOBALS['TL_DCA']['tl_dma_eg_fields'] = array
         'without_label' => array
         (
             'sql'                   => "char(1) NOT NULL default ''"
+        ),
+        'showLabelInFrontend' => array(
+	        'label'                 => &$GLOBALS['TL_LANG']['tl_dma_eg_fields']['showLabelInFrontend'],
+            'exclude'               => true,
+            'inputType'             => 'checkbox',
+            'eval'                  => array('tl_class' => 'w50 m12'),
+            'sql'                  => "char(1) NOT NULL default ''"
         )
 	)
 );
